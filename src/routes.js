@@ -8,6 +8,6 @@ import Content from './components/Common/Content';
 export default (
 	<Route path='/crmsadmin' component={App}>
 		<IndexRoute component={Index} />
-		<Route path='/crmsadmin/:title' component={Content} />	
+		<Route path=':title/:subtitle' component={Content} />
 	</Route>
 );

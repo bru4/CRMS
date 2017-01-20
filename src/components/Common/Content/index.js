@@ -7,10 +7,11 @@ function mapStateToProps(state) {
   };
 }
 
-const Content = (props) =>
-<div>
-	Content
+const Content = (props) =>{
+return<div>
+	{props.routeParams.title}
 </div>
+}
 
 export default connect(
   mapStateToProps,
