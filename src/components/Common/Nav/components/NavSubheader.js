@@ -8,7 +8,7 @@ return <div className="layout-wrapper">
 	<Menu mode="horizontal"
 	selectedKeys={[cur]} style={{marginLeft: 345}}>
 	{
-		title[0] && title[0].children.map((t)=><Menu.Item key={t.name}><Link to={t.path}>{t.title}</Link></Menu.Item>)
+		title && title.children.map((t)=><Menu.Item key={t.name}><Link to={t.path}>{t.title}</Link></Menu.Item>)
 	}
 	</Menu>
 </div>

@@ -72,7 +72,8 @@
     "redux": "^3.6.0",
     "redux-actions": "^1.2.0",
     "redux-logger": "^2.7.4",
-    "redux-saga": "^0.14.3"
+    "redux-saga": "^0.14.3",
+    "reselect": "^2.5.4"
   },
   "scripts": {
     "start": "node scripts/start.js",

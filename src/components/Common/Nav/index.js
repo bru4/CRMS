@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { title, subtitle } from './consant'
+import * as selectors from './selectors'
 
 import NavHeader from './components/NavHeader';
 import NavSubheader from './components/NavSubheader';
 import NavBreakcrumb from './components/NavBreakcrumb';
 
-function getSubtitle(){
-
+function getSubtitle(title, curtt){
+	return title.filter(t=>t.name===curtt)[0]
 }
 
 function mapStateToProps(state) {
@@ -26,13 +27,17 @@ const Nav = ({curtt, cursubtt}) =>
 			<NavHeader title={title} cur={curtt} />
 		</div>
 		{
-			curtt==='index'?null:<div className="layout-subheader">
-				<NavSubheader title={title.filter(t=>t.name===curtt)} cur={cursubtt} />
+			curtt==='index'?null:
+			<div className="layout-subheader">
+				<NavSubheader title={getSubtitle(title, curtt)} cur={cursubtt} />
 			</div>
 		}
-		<div className="layout-wrapper">
-			<NavBreakcrumb title={title.filter(t=>t.name===curtt)} cur={[curtt,cursubtt]} />
-		</div>
+		{
+			curtt==='index'?null:
+			<div className="layout-wrapper">
+				<NavBreakcrumb title={getSubtitle(title, curtt)} cur={[curtt,cursubtt]} />
+			</div>
+		}
 	</div>
 </div>
 
