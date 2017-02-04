@@ -1,7 +1,8 @@
-import merge from 'lodash/merge'
-import { routerReducer as routing } from 'react-router-redux'
-import { combineReducers } from 'redux'
-import navReducer from './Common/Nav/reducers'
+import merge from 'lodash/merge';
+import { routerReducer as routing } from 'react-router-redux';
+import { combineReducers } from 'redux';
+import { reducer as NavReducer } from './Common/Nav';
+
 const base = (state = '', action) => {
 	switch (action.type) {
 		case 'FILTER':
@@ -15,7 +16,7 @@ const base = (state = '', action) => {
 
 const rootReducer = combineReducers({
 	base,
-	nav:navReducer,
+	nav: NavReducer,
 	routing
 });
 

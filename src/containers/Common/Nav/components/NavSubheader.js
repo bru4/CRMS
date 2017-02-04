@@ -2,9 +2,8 @@ import React from 'react'
 import { Menu } from 'antd'
 import { Link } from 'react-router'
 
-const NavSubheader = ({ title, cur }) =>{
-	console.log(title);
-return <div className="layout-wrapper">
+const NavSubheader = ({ title, cur }) =>
+<div className="layout-wrapper">
 	<Menu mode="horizontal"
 	selectedKeys={[cur]} style={{marginLeft: 345}}>
 	{
@@ -12,6 +11,5 @@ return <div className="layout-wrapper">
 	}
 	</Menu>
 </div>
-}
 
 export default NavSubheader

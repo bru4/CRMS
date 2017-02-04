@@ -6,7 +6,7 @@ const title = (state = initState, action) => {
 	switch (action.type) {
 		case '@@router/LOCATION_CHANGE':
 			let path = data.pathname.split('/');
-			console.log(path);
+			//console.log(path);
 			return path.length > 2 ? path[2] : initState;
 		default:
 			return state;

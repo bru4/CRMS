@@ -1,22 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
-import { title, subtitle } from './consant'
-import * as selectors from './selectors'
+import { title } from '../constants';
+import { getSubtitle, gettitleList } from '../selectors'
 
-import NavHeader from './components/NavHeader';
-import NavSubheader from './components/NavSubheader';
-import NavBreakcrumb from './components/NavBreakcrumb';
+import NavHeader from './NavHeader';
+import NavSubheader from './NavSubheader';
+import NavBreakcrumb from './NavBreakcrumb';
 
-function getSubtitle(title, curtt){
-	return title.filter(t=>t.name===curtt)[0]
-}
 
-function mapStateToProps(state) {
+function mapStateToProps({nav}) {
 	return {
-		curtt:state.nav.title,
-		cursubtt:state.nav.subtitle,
+		curtt:nav.title,
+		cursubtt:nav.subtitle,
 	};
 }
 
@@ -35,7 +31,7 @@ const Nav = ({curtt, cursubtt}) =>
 		{
 			curtt==='index'?null:
 			<div className="layout-wrapper">
-				<NavBreakcrumb title={getSubtitle(title, curtt)} cur={[curtt,cursubtt]} />
+				<NavBreakcrumb titleList={gettitleList(title, curtt, cursubtt)}/>
 			</div>
 		}
 	</div>

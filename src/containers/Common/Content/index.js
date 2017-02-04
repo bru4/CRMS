@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import  Member from 'containers/Member';
 
 function mapStateToProps(state) {
   return {
@@ -8,8 +9,9 @@ function mapStateToProps(state) {
 }
 
 const Content = (props) =>{
+	console.log(props)
 return<div>
-	{props.routeParams.title}
+	{props.params.title==='member'?<Member />:null}
 </div>
 }
 

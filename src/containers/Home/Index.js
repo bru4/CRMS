@@ -8,7 +8,7 @@ function mapStateToProps(state) {
   };
 }
 
-const Index = ({add, addAsync, num}) =>
+const Index = (props) =>
 	<div>
 		<h1>Index</h1>
 	</div>
