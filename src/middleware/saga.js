@@ -1,23 +1,42 @@
-import { takeEvery, takeLatest } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { fork, take, put, call, select } from 'redux-saga/effects'
+import * as actions from '../containers/actions'
+import { selectors as navSelectors } from '../containers/Common/Nav'
+import { fetchList } from './api'
 
-function* watchAndLog(getState) {
-  yield* takeEvery('*', function* logger(action) {
-    console.log('action', action)
-    console.log('state after', getState())
-  })
-}
-// 一个工具函数：返回一个 Promise，这个 Promise 将在 1 秒后 resolve
-export const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const { list } = actions;
+console.log(actions)
 
-// Our worker Saga: 将异步执行 increment 任务
-export function* incrementAsync() {
-  yield delay(1000)
-  yield put({ type: 'ADD' })
+/******************************************************************************/
+/***************************** Subroutines ************************************/
+/******************************************************************************/
+
+function* loadList(){
+    const title = yield select(navSelectors.pageTitleSelector);
+    const subTitle = yield select(navSelectors.pageSubtitleSelector);
+    if(title !== 'index'){
+        yield put(list.request(title));
+        const {response, error} = yield fork(fetchList, title)
+        if (response) {
+            yield put(list.success(title, response))
+        } else {
+            yield put(list.failure(title, error))
+        }        
+    }
 }
 
-// Our watcher Saga: 在每个 INCREMENT_ASYNC action 调用后，派生一个新的 incrementAsync 任务
-export function* watchIncrementAsync() {
-  yield* takeEvery('ADD_ASYNC', incrementAsync)
+/******************************************************************************/
+/******************************* WATCHERS *************************************/
+/******************************************************************************/
+
+function* watchRouterFetch() {
+    while (true) {
+        const action = yield take('@@router/LOCATION_CHANGE');
+        yield fork(loadList);
+    }
 }
-export default watchIncrementAsync;
+
+export default function* root() {
+    yield [
+        fork(watchRouterFetch),
+    ]
+}

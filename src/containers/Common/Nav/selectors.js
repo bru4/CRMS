@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 
-const pageTitleSelector = state => state.nav.title;
-const pageSubtitleSelector = state => state.nav.subtitle;
+export const pageTitleSelector = state => state.nav.title;
+export const pageSubtitleSelector = state => state.nav.subtitle;
 export const getSubtitle = (title, curtt) => title.filter(t => t.name === curtt)[0];
 export const gettitleList = (title, curtt, cursubtt) => {
 	let result = [],

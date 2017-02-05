@@ -7,8 +7,8 @@ const App = ({ children }) =>
 		{children}
 	</div>
 
-App.PropTypes = {
-	children: PropTypes.object
+App.propTypes = {
+	children: PropTypes.node
 };
 
 export default App;
