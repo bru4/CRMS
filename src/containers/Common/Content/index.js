@@ -1,21 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import  Member from 'containers/Member';
+import components from './components';
+//import * as constants from './constants';
+import reducer from './reducer';
+//import * as selectors from './selectors';
 
-function mapStateToProps(state) {
-  return {
-
-  };
-}
-
-const Content = (props) =>{
-	console.log(props)
-return<div>
-	{props.params.title==='member'?<Member />:null}
-</div>
-}
-
-export default connect(
-  mapStateToProps,
-// Implement map dispatch to props
-)(Content)
+const Content = components;
+export default Content;
+export {
+    //constants,
+    reducer,
+    //selectors
+};

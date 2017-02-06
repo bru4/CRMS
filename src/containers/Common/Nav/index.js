@@ -6,7 +6,7 @@ import * as selectors from './selectors';
 const Nav = components;
 export default Nav;
 export {
-	constants,
-	reducer,
-	selectors
+    constants,
+    reducer,
+    selectors
 };

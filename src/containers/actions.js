@@ -19,8 +19,8 @@ const LIST = createRequestTypes('LIST')
 
 export const list = {
     request: createAction(LIST.REQUEST, type => type),
-    success: createAction(LIST.SUCCESS, (login, response) => { login, response }),
-    failure: createAction(LIST.FAILURE, (login, error) => { login, error }),
+    success: createAction(LIST.SUCCESS, (title, res) => ({ title, res })),
+    failure: createAction(LIST.FAILURE, (title, error) => ({ title, error })),
 }
 
 export const resetErrorMessage = createAction('RESET_ERROR_MESSAGE')

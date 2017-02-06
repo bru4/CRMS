@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import { reducer as NavReducer } from './Common/Nav';
+import { reducer as ContentReducer } from './Common/Content';
 
 const base = (state = '', action) => {
 	switch (action.type) {
@@ -17,7 +18,8 @@ const base = (state = '', action) => {
 const rootReducer = combineReducers({
 	base,
 	nav: NavReducer,
-	routing
+	useList: ContentReducer,
+	routing,
 });
 
 export default rootReducer;

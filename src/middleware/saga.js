@@ -4,7 +4,12 @@ import { selectors as navSelectors } from '../containers/Common/Nav'
 import { fetchList } from './api'
 
 const { list } = actions;
-console.log(actions)
+
+const getEntity = (title, subtitle) => ({
+    title: title === 'trial' && subtitle.includes('feedback') ? 'feedback' : title,
+    type: subtitle.includes('all') ? 10 : 1,
+})
+
 
 /******************************************************************************/
 /***************************** Subroutines ************************************/
@@ -13,14 +18,15 @@ console.log(actions)
 function* loadList(){
     const title = yield select(navSelectors.pageTitleSelector);
     const subTitle = yield select(navSelectors.pageSubtitleSelector);
-    if(title !== 'index'){
-        yield put(list.request(title));
-        const {response, error} = yield fork(fetchList, title)
-        if (response) {
-            yield put(list.success(title, response))
+    if(title === 'member' || title === 'trial'){
+        const entity = getEntity(title, subTitle);
+        yield put(list.request(entity));
+        const { json, error} = yield call(fetchList, entity);
+        if (json) {
+            yield put(list.success(entity, json))
         } else {
-            yield put(list.failure(title, error))
-        }        
+            yield put(list.failure(entity, error))
+        }
     }
 }
 
