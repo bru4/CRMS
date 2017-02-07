@@ -18,7 +18,7 @@ const base = (state = '', action) => {
 const rootReducer = combineReducers({
 	base,
 	nav: NavReducer,
-	useList: ContentReducer,
+	content: ContentReducer,
 	routing,
 });
 

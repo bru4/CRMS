@@ -1,29 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import Memberlist from './Memberlist'
 
-function mapStateToProps(state) {
-  return {
+const Member = ({list, total, type, showDetail}) =>
+    <div>
+        <Memberlist
+            list={list}
+            total={total}
+            showDetail={showDetail}
+        />
+    </div>
 
-  };
-}
-
-export class Member extends React.Component {
-  static propTypes = {
-    name: React.PropTypes.string,
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>Member</div>
-    );
-  }
-}
-
-export default connect(
-  mapStateToProps,
-// Implement map dispatch to props
-)(Member)
+export default Member;

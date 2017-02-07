@@ -16,6 +16,7 @@ const getEntity = (title, subtitle) => ({
 /******************************************************************************/
 
 function* loadList(){
+    console.log('in')
     const title = yield select(navSelectors.pageTitleSelector);
     const subTitle = yield select(navSelectors.pageSubtitleSelector);
     if(title === 'member' || title === 'trial'){
