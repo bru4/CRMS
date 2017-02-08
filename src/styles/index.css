@@ -1,9 +1,15 @@
 /*-------------
        Nav
   -------------*/
-.nav-index .layout-header {
+.nav-index .nav-header {
 	height: 64px;
 	overflow: hidden;
+  background: #404040;
+}
+.nav-index .layout-wrapper{
+  padding: 0 50px;
+  width: 1200px;
+  margin: 0 auto;
 }
 .nav-index .layout-logo {
   text-align: center;
@@ -15,6 +21,6 @@
   margin: 16px 30px;
   float: left;
 }
-.nav-index .layout-subheader{
+.nav-index .nav-subheader{
   height: 50px;
 }

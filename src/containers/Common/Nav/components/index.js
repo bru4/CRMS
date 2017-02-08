@@ -19,18 +19,18 @@ function mapStateToProps({nav}) {
 const Nav = ({curtt, cursubtt}) =>
 <div className='nav-index'>
 	<div className="layout-top">
-		<div className="layout-header">
+		<div className="nav-header">
 			<NavHeader title={title} cur={curtt} />
 		</div>
 		{
 			curtt==='index'?null:
-			<div className="layout-subheader">
+			<div className="nav-subheader">
 				<NavSubheader title={getSubtitle(title, curtt)} cur={cursubtt} />
 			</div>
 		}
 		{
 			curtt==='index'?null:
-			<div className="layout-wrapper">
+			<div className="nav-breakcrumb">
 				<NavBreakcrumb titleList={gettitleList(title, curtt, cursubtt)}/>
 			</div>
 		}
