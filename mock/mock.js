@@ -1,10 +1,6 @@
-var Mock = require('mockjs');
+const Mock = require('mockjs');
+const fetchMock = require('fetch-mock');
 
-const configureMock = () => {
-	Mock.mock(/\/crms\/api/g,({ url, type, body })=>{
-        console.log(url, type, body)
-        return url;
-    })
-}
+fetchMock.mock(/\/crms\/api/g)
 
-module.exports = configureMock;
+module.exports = fetchMock;

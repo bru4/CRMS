@@ -37,7 +37,7 @@ function* loadList(){
 
 function* watchRouterFetch() {
     while (true) {
-        const action = yield take('@@router/LOCATION_CHANGE');
+        yield take('@@router/LOCATION_CHANGE');
         yield fork(loadList);
     }
 }

@@ -11,6 +11,7 @@ function mapStateToProps(state) {
 const Index = (props) =>
 	<div>
 		<h1>Index</h1>
+		{props.children}
 	</div>
 
 export default connect(

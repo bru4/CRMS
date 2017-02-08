@@ -24,3 +24,50 @@
 .nav-index .nav-subheader{
   height: 50px;
 }
+/*-------------
+    Detailtag
+  -------------*/
+.detailcontent .ant-menu-inline{
+  border: none;
+}
+.detailcontent .detailItem{
+  margin: 20px 0;
+}
+.detailcontent .detailPic{
+  height: 200px;
+  overflow: hidden;
+}
+.detailcontent .detailPic img{
+  width: 100%;
+  height: 100%;
+}
+.detailcontent .detailItem .itemTitle{
+  display: inline-block;
+  width: 80px;
+  padding-right: 8px;
+  text-align: left;
+}
+.detailcontent .ant-menu .detailItem:first-child{
+  margin-top: 0;
+}
+.detailcontent .detailTT .ant-menu-submenu-title{
+  font-weight: bolder;
+  font-size: 14px;
+}
+.detailwrap .imgbox{
+  position: fixed;
+  top: 5%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background: #000;
+  text-align: center;
+  z-index: 1111;
+}
+.detailwrap .imgbox img{
+  height: 100%;
+}
+.contentwrap .toolbar{
+  height: 40px;
+  line-height: 40px;
+}

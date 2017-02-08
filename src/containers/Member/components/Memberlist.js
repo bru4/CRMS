@@ -19,8 +19,8 @@ const getState = text => {
 }
 
 
-const Memberlist = ({list, total, showDetail}) => {
-    //console.log(showDetail)
+const Memberlist = ({list, total, showDetail, type}) => {
+    console.log(type)
     const pagination = {
         total: total,
         pageSize: 20,
@@ -70,7 +70,7 @@ const Memberlist = ({list, total, showDetail}) => {
         key: 'price',
         dataIndex: 'price',
         render: (text) => {
-            let item = shoptype.find(i => i.value === text);
+            let item = averagespend.find(i => i.value === text);
             return item ? item.label : text;
         },
     }, {
@@ -85,15 +85,21 @@ const Memberlist = ({list, total, showDetail}) => {
     }, {
         title: '操作',
         key: 'operation',
-        render: (text, record, index) => <a onClick={()=>showDetail({index, record, type:'all'})}>查看</a>,
+        render: (text, record, index) => <a onClick={()=>showDetail({index, record, type:'member'})}>查看</a>,
     }];
     return (
         <div>
-            <Table loading={list?false:true} dataSource={list?list:[]} scroll={{ x: 1200 }} columns={columns} pagination={pagination} rowKey='mobile' >
+            <Table
+                loading={list?false:true}
+                dataSource={list?list:[]}
+                scroll={{ x: 1200 }}
+                columns={columns}
+                pagination={pagination}
+                rowKey='mobile'
+            />
                 {/*
                 <Column title='操作' width={120} key='operation' render={(text, record, index) =>
                         <div><a onClick={()=>this.showDetail(index, record, 'all')}>查看</a></div>}/>*/}
-            </Table>
         </div>
     );
 }

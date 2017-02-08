@@ -1,9 +1,9 @@
 import React from 'react';
-import Memberlist from './Memberlist'
+import Feedbacklist from './Feedbacklist'
 
-const Member = ({list, total, type, showDetail}) =>
+const Feedback = ({list, total, type, showDetail}) =>
     <div>
-        <Memberlist
+        <Feedbacklist
             list={list}
             total={total}
             type={type}
@@ -11,4 +11,4 @@ const Member = ({list, total, type, showDetail}) =>
         />
     </div>
 
-export default Member;
+export default Feedback;
