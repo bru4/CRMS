@@ -100,7 +100,7 @@ const Triallist = ({list, total, showDetail}) => {
                 scroll={{ x: 1200 }}
                 columns={columns}
                 pagination={pagination}
-                rowKey='idx'
+                rowKey={(record, index)=>index}
             />
         </div>
     )
