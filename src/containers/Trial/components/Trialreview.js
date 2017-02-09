@@ -16,22 +16,7 @@ const getState = text => {
             return text;
     }
 }
-const getStatus = text =>{
-    switch(text){
-        case '0':
-        return '试用待审核';
-        case '1':
-        return '申请不通过';
-        case '2':
-        return '反馈未提交';
-        case '3':
-        return '反馈审批中';
-        case '4':
-        return '反馈不通过';
-        case '5':
-        return '反馈通过';
-    }
-}
+
 const Triallist = ({list, total, showDetail}) => {
     const pagination = {
         total: total,
@@ -41,10 +26,6 @@ const Triallist = ({list, total, showDetail}) => {
         },
     }
     const columns = [{
-        title: '序号',
-        key: 'id',
-        render: (text, record, index) => index + 1,
-    }, {
         title: '申请产品',
         key: 'productname',
         dataIndex: 'productname',
@@ -83,11 +64,6 @@ const Triallist = ({list, total, showDetail}) => {
         dataIndex: 'state',
         render: (text) => getState(text),
     }, {
-        title: '试用状态',
-        key: 'status',
-        dataIndex: 'status',
-        render: (text) => getStatus(text),
-    }, {
         title: '操作',
         key: 'operation',
         render: (text, record, index) => <a onClick={()=>showDetail({index, record, type:'trial'})}>查看</a>,
@@ -100,7 +76,7 @@ const Triallist = ({list, total, showDetail}) => {
                 scroll={{ x: 1200 }}
                 columns={columns}
                 pagination={pagination}
-                rowKey='id'
+                rowKey='mobile'
             />
         </div>
     )

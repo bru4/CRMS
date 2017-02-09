@@ -16,10 +16,10 @@ const base = (state = '', action) => {
 };
 
 const rootReducer = combineReducers({
+	routing,
 	base,
 	nav: NavReducer,
 	content: ContentReducer,
-	routing,
 });
 
 export default rootReducer;

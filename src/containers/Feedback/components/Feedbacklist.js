@@ -2,20 +2,6 @@ import React from 'react'
 import { Table } from 'antd';
 import moment from'moment';
 
-const getState = text => {
-    switch (text) {
-        case 0:
-            return '未提交';
-        case 1:
-            return '待审核';
-        case 2:
-            return '已认证';
-        case 3:
-            return '认证失败';
-        default:
-            return text;
-    }
-}
 const getQA = (list, index) => list&&list.length>0?<div>问题:{list[index].question} <br/> 回答:{list[index].answer}</div>:null;
 const Feedbacklist = ({list, total, showDetail}) => {
     const pagination = {
@@ -82,15 +68,10 @@ const Feedbacklist = ({list, total, showDetail}) => {
         dataIndex: 'q8',
         render: (text, record) => getQA(record.feedBacklist, '7')
     }, {
-        title: '状态',
-        key: 'state',
-        dataIndex: 'state',
-        render: (text) => getState(text),
-    }, {
-        title: '试用状态',
-        key: 'status',
-        dataIndex: 'status',
-        render: (text) => getState(text),
+        title: '申请日期',
+        key: 'createtime',
+        dataIndex: 'createtime',
+        render: text => moment(text).format('YYYY-MM-DD HH:mm:ss'),
     }, {
         title: '操作',
         key: 'operation',
@@ -104,7 +85,7 @@ const Feedbacklist = ({list, total, showDetail}) => {
                 scroll={{ x: 1200 }}
                 columns={columns}
                 pagination={pagination}
-                rowKey='mobile'
+                rowKey='id'
             />
         </div>
     )

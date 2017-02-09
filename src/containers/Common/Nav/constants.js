@@ -4,7 +4,7 @@ export const title = [{
 	path: '/crmsadmin',
 	children: []
 }, {
-	title: '试用',
+	title: '试用管理',
 	name: 'trial',
 	path: '/crmsadmin/trial/trialreview',
 	children: [{
@@ -25,11 +25,11 @@ export const title = [{
 		path: '/crmsadmin/trial/feedbackall'
 	}]
 }, {
-	title: '会员',
+	title: '会员管理',
 	name: 'member',
 	path: '/crmsadmin/member/memberreview',
 	children: [{
-		title: '认证审核',
+		title: '餐饮审核',
 		name: 'memberreview',
 		path: '/crmsadmin/member/memberreview'
 	}, {

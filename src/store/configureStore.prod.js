@@ -9,7 +9,7 @@ const configureStore = preloadedState => {
     const rm = routerMiddleware(browserHistory);
 	const store = createStore(
 		rootReducer,
-		initialState,
+		preloadedState,
 		applyMiddleware(sagaMiddleware, rm)
 	)
 

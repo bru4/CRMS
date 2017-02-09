@@ -2,7 +2,6 @@ import React from 'react';
 import { Table } from 'antd';
 import moment from'moment';
 import { averagespend, profession, shoptype } from 'containers/constants'
-
 const getState = text => {
     switch (text) {
         case 0:
@@ -19,7 +18,7 @@ const getState = text => {
 }
 
 
-const Memberlist = ({list, total, showDetail, type}) => {
+const Memberlist = ({list, total, showDetail, type, pass, reject}) => {
     console.log(type)
     const pagination = {
         total: total,
@@ -85,22 +84,19 @@ const Memberlist = ({list, total, showDetail, type}) => {
     }, {
         title: '操作',
         key: 'operation',
-        render: (text, record, index) => <a onClick={()=>showDetail({index, record, type:'member'})}>查看</a>,
+        render: (text, record, index) => type==='all'?
+        <a onClick={()=>showDetail({index, record, type:'member'})}>查看</a>:
+        <div><a onClick={()=>showDetail({index, record, type:'member'})}>查看</a> | <a onClick={()=>pass({index, record, type:'member'})}>通过</a> | <a onClick={()=>reject({index, record, type:'member'})}>拒绝</a></div> ,
     }];
     return (
-        <div>
-            <Table
-                loading={list?false:true}
-                dataSource={list?list:[]}
-                scroll={{ x: 1200 }}
-                columns={columns}
-                pagination={pagination}
-                rowKey='mobile'
-            />
-                {/*
-                <Column title='操作' width={120} key='operation' render={(text, record, index) =>
-                        <div><a onClick={()=>this.showDetail(index, record, 'all')}>查看</a></div>}/>*/}
-        </div>
+        <Table
+            loading={list?false:true}
+            dataSource={list?list:[]}
+            scroll={{ x: 1200 }}
+            columns={columns}
+            pagination={pagination}
+            rowKey='mobile'
+        />
     );
 }
 

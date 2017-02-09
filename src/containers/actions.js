@@ -15,6 +15,8 @@ export function createRequestTypes(base) {
   }, {})
 }
 const LIST = createRequestTypes('LIST')
+const TABLE = createRequestTypes('TABLE')
+const REVIEW = createRequestTypes('REVIEW')
 //const TRIAL = createRequestTypes('TRIAL')
 
 export const list = {
@@ -22,5 +24,14 @@ export const list = {
     success: createAction(LIST.SUCCESS, (title, res) => ({ title, res })),
     failure: createAction(LIST.FAILURE, (title, error) => ({ title, error })),
 }
-
+export const tabel = {
+    request: createAction(TABLE.REQUEST, type => type),
+    success: createAction(TABLE.SUCCESS, res => (res.data)),
+    failure: createAction(TABLE.FAILURE, error => ({ error })),
+}
+export const review = {
+    request: createAction(REVIEW.REQUEST, type => type),
+    success: createAction(REVIEW.SUCCESS, res => (res.data)),
+    failure: createAction(REVIEW.FAILURE, error => ({ error })),
+}
 export const resetErrorMessage = createAction('RESET_ERROR_MESSAGE')
