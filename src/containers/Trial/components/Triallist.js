@@ -42,7 +42,7 @@ const Triallist = ({list, total, showDetail}) => {
     }
     const columns = [{
         title: '序号',
-        key: 'id',
+        key: 'idx',
         render: (text, record, index) => index + 1,
     }, {
         title: '申请产品',
@@ -100,7 +100,7 @@ const Triallist = ({list, total, showDetail}) => {
                 scroll={{ x: 1200 }}
                 columns={columns}
                 pagination={pagination}
-                rowKey='id'
+                rowKey='idx'
             />
         </div>
     )

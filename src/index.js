@@ -9,8 +9,8 @@ import Root from './containers/Root/index';
 import rootSaga from './middleware/saga'
 import 'styles/index.css';
 
-//import configureMock from '../mock/mock';
-//configureMock();
+import startFetchMock from '../mock/mock';
+startFetchMock();
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
