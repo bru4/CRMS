@@ -2,7 +2,7 @@ import 'isomorphic-fetch'
 
 const API_ROOT = 'http://cs.udianhuo.com/crms/api';
 
-export const fetchList = ({ title, type }) => fetch(`${API_ROOT}/youzan/${title}/query`, {
+export const fetchList = ({ title, type }) => fetch(`${API_ROOT}/${title}/query`, {
     method: 'post',
     mode: 'cors',
     headers: {
@@ -27,7 +27,7 @@ export const fetchList = ({ title, type }) => fetch(`${API_ROOT}/youzan/${title}
     error => ({error: error.message || 'Something bad happened'})
 );
 
-export const fetchTable = ({title, timeRange, listtype}) => fetch(`${API_ROOT}/youzan/${title}/export`,{
+export const fetchTable = ({title, timeRange, listtype}) => fetch(`${API_ROOT}/${title}/export`,{
     method: 'post',
     mode: 'cors',
     headers: {
@@ -52,7 +52,7 @@ export const fetchTable = ({title, timeRange, listtype}) => fetch(`${API_ROOT}/y
     error => ({error: error.message || 'Something bad happened'})
 );
 
-export const uploadresult = ({index, record, type}, result) => fetch(`${API_ROOT}/youzan/${type}/uploadresult`,{
+export const uploadresult = ({index, record, type}, result) => fetch(`${API_ROOT}/${type}/uploadresult`,{
     method: 'post',
     mode: 'cors',
     headers: {

@@ -90,6 +90,7 @@ const Memberlist = ({list, total, showDetail, type, pass, reject}) => {
     }];
     return (
         <Table
+            rowClassName={(record, index)=>index%2===0?'even':'odd'}
             loading={list?false:true}
             dataSource={list?list:[]}
             scroll={{ x: 1200 }}
