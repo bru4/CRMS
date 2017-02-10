@@ -102,22 +102,19 @@ const Memberlist = ({list, total, showDetail, type, pass, reject}) => {
                     </div>
         }
     ];
-    return (<Table
-        rowClassName={(record, index) => index % 2 === 0
-        ? 'even'
-        : 'odd'}
-        loading={list
-        ? false
-        : true}
-        dataSource={list
-        ? list
-        : []}
-        scroll={{
-        x: 1200
-    }}
+    return (
+    <Table
+        rowClassName={(record, index) => index % 2 === 0 ? 'even' : 'odd'}
+        loading={list ? false : true}
+        dataSource={list ? list : []}
+        scroll={{x: 1200}}
         columns={columns}
         pagination={pagination}
-        rowKey='mobile'/>);
+        rowKey='openid'
+        rowSelection={type === 'all' ? null : {
+            onChange:(selectedRowKeys, selectedRows)=>{console.log(selectedRowKeys, selectedRows)}
+        }}
+    />);
 }
 
 Memberlist.propTypes = {

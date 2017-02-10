@@ -8,7 +8,7 @@ let mockMemberList = () => Mock.mock({
         {
             'truename':'@cname',
             'mobile': '@natural(10000000000,19999999999)',
-            'position': '@natural(0,6)',
+            'position': '@natural(0,4)',
             'createtime': '@natural(1400000000000,1582916702000)',
             'restauranttame': '小小饭吧',
             'mode': '@natural(0,20)',
@@ -20,7 +20,7 @@ let mockMemberList = () => Mock.mock({
             'scale': null,
             'status': null,
             'recordid': null,
-            'openid': 'o-YCKv4sM6Vd3-1ZY8abVgaUG4Q4',
+            'openid': 'o-@string(11)-@string(14)',
             'remark': null,
             'picture': 'http://cs.udianhuo.com/pic/o-YCKv4sM6Vd3-1ZY8abVgaUG4Q4shopnamephotos0.jpeg;http://cs.udianhuo.com/pic/o-YCKv4sM6Vd3-1ZY8abVgaUG4Q4kitchenphotos0.jpeg;http://cs.udianhuo.com/pic/o-YCKv4sM6Vd3-1ZY8abVgaUG4Q4cookbookphotos0.jpeg;',
             'restaurantname': '@cword(3, 7)',
