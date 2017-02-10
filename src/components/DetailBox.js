@@ -51,75 +51,87 @@ export const DetailBox = ({show, showDetail, data, model}) => {
         data.record?
         <div>
         <Row className='detailItem'>
-            <Col span={12}><span className='itemTitle'>申请人:</span > {
-                data.record.truename
-            } </Col>
-            <Col span={12}><span className="itemTitle">手机号码:</span > {
-                data.record.mobile
-            } </Col>
-        </Row > <p className='detailItem'>
-                <span className="itemTitle">申请类型:</span>{model}</p> < p className = 'detailItem' > <span className="itemTitle">申请理由:</span>
-                {
-                data.record.reason || model
-            } </p>
-        <p className='detailItem'><span className="itemTitle">申请时间:</span > {
-                moment(data.record.createtime).format('YYYY-MM-DD HH:mm:ss')
-            } </p>
+            <Col span={12}>
+                <span className='itemTitle'>申请人:</span>
+                {data.record.truename}
+            </Col>
+            <Col span={12}>
+                <span className="itemTitle">手机号码:</span>
+                {data.record.mobile}
+            </Col>
+        </Row>
+        <p className='detailItem'>
+            <span className="itemTitle">申请类型:</span>{model}
+        </p>
+        <p className = 'detailItem'>
+            <span className="itemTitle">申请理由:</span>
+            {data.record.reason || model}
+        </p>
+        <p className='detailItem'>
+            <span className="itemTitle">申请时间:</span>
+            {moment(data.record.createtime).format('YYYY-MM-DD HH:mm:ss')}
+        </p>
         <Menu defaultOpenKeys={openKeys} mode="inline">
             <SubMenu className='detailTT' key='1' title="餐饮信息">
-            <Row className='detailItem'>
-                <Col span={12}><span className="itemTitle">餐厅名称:</span > {
-                data.record.restaurantname
-            } </Col>
-                <Col span={12}><span className="itemTitle">职位: </span > {
-                data.record.position && profession
-                    .find(item => item.value == data.record.position)
-                    .label
-            } </Col>
-                {/ * 这里因为需要mock数据所以采用了 "==" 应该试用 * /}
-            </Row > <Row className='detailItem'>
-                <Col span={12}>
-                    <span className="itemTitle">业态:
-                    </span>{data.record.mode && shoptype
-                        .find(item => item.value == data.record.mode)
-                        .label}</Col>
-                {/*这里因为需要mock数据所以采用了"=="应该试用*/}
-                <Col span={12}>
-                    <span className="itemTitle">人均:
-                    </span>{data.record.price && averagespend
-                        .find(item => item.value == data.record.price)
-                        .label}</Col>
-                {/*这里因为需要mock数据所以采用了"=="应该试用*/}
-            </Row> < Row className = 'detailItem' > <span className="itemTitle">地址:
-                </span>
-                {
-                data.record.restaurantaddress
-            } </Row>
-            </SubMenu > <SubMenu className='detailTT' key='2' title="餐厅招牌照片">
-                <Row className='detailPic' type='flex'>
-                    {shopnamepic && shopnamepic.length > 0
-                        ? shopnamepic.map((item, index) =>< Col key = {
-                            index
-                        }
-                        span = {
-                            6
-                        } > <img src={item} alt="店招" onClick={showBig}/> </Col>):<Menu.Item></Menu.Item >}
+                <Row className='detailItem'>
+                    <Col span={12}>
+                        <span className="itemTitle">餐厅名称:</span>
+                        {data.record.restaurantname}
+                    </Col>
+                    <Col span={12}>
+                        <span className="itemTitle">职位:</span>
+                        {data.record.position && profession.find(item => item.value == data.record.position).label}
+                    </Col>
+                    {/* 这里因为需要mock数据所以采用了 "==" 应该试用 */}
                 </Row>
-            </SubMenu> < SubMenu className = 'detailTT' key = '3' title = "餐厅后厨照片" > <Row className='detailPic' type='flex'>
-                {kitchenpic && kitchenpic.map((item, index) =>< Col key = {
-                    index
-                }
-                span = {
-                    6
-                } > <img src={item} alt="后厨" onClick={showBig}/> </Col>)}
-            </Row> </SubMenu>
+                <Row className='detailItem'>
+                    <Col span={12}>
+                        <span className="itemTitle">业态:</span>
+                        {data.record.mode && shoptype.find(item => item.value == data.record.mode).label}
+                    </Col>
+                    {/*这里因为需要mock数据所以采用了"=="应该试用*/}
+                    <Col span={12}>
+                        <span className="itemTitle">人均:</span>
+                        {data.record.price && averagespend.find(item => item.value == data.record.price).label}
+                    </Col>
+                    {/*这里因为需要mock数据所以采用了"=="应该试用*/}
+                </Row>
+                <Row className = 'detailItem'>
+                    <span className="itemTitle">地址:</span>
+                    {data.record.restaurantaddress}
+                </Row>
+            </SubMenu>
+            <SubMenu className='detailTT' key='2' title="餐厅招牌照片">
+                <Row className='detailPic' type='flex'>
+                    {
+                        shopnamepic && shopnamepic.length > 0
+                        ? shopnamepic.map((item, index) =>
+                        <Col key = {index} span = {6} >
+                            <img src={item} alt="店招" onClick={showBig}/>
+                        </Col>)
+                        : <Menu.Item></Menu.Item>
+                    }
+                </Row>
+            </SubMenu>
+            <SubMenu className = 'detailTT' key = '3' title = "餐厅后厨照片" >
+                <Row className='detailPic' type='flex'>
+                    {
+                        kitchenpic && kitchenpic.map((item, index) => <Col key={index} span={6}><img src={item} alt="后厨" onClick={showBig}/></Col>)
+                    }
+                </Row>
+            </SubMenu>
             <SubMenu className='detailTT' key='4' title="餐厅菜单照片">
                 <Row className='detailPic' type='flex'>
-                    {cookbookpic&&cookbookpic.map((item,index)=><Col key={index} span={6}><img src={item} alt="菜单" onClick={showBig}/> </Col>)
-    } </Row>
-            </SubMenu > </Menu> </div>:null
+                    {
+                        cookbookpic&&cookbookpic.map((item,index)=><Col key={index} span={6}><img src={item} alt="菜单" onClick={showBig}/></Col>)
+                    }
+                </Row>
+            </SubMenu>
+        </Menu>
+        </div>
+        :null
     }
-    </Modal > </div>)
+    </Modal> </div>)
 }
 
 export default DetailBox
