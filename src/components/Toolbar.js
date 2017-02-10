@@ -2,7 +2,7 @@ import React from 'react'
 import { DatePicker, Row, Col, Button, Select, message } from 'antd';
 const { RangePicker } = DatePicker;
 
-const Toolbar = ({type, exportTable, change, pass, listtype, title}) => {
+const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) => {
     let timeRange = null;
     const selectTime = (dates) => {
 		timeRange = dates;
@@ -18,7 +18,7 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title}) => {
         change(title, val)
     }
     const passAll = () => {
-        pass('passAll')
+        pass({index: selected.keys, record:selected.records, result:'1', type: title})
     }
     return(
         type==='all'?

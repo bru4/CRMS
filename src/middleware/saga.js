@@ -1,27 +1,18 @@
-import { fork, take, put, call, select } from 'redux-saga/effects'
+import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from '../containers/actions'
-import { selectors as navSelectors } from '../containers/Common/Nav'
 import { fetchList, fetchTable, uploadresult } from './api'
-import { message, Modal, Button } from 'antd';
+import { message } from 'antd';
 
 const { list, tabel, review } = actions;
-
-const getEntity = (title, subtitle) => ({
-    title: title === 'trial' && subtitle.includes('feedback') ? 'feedback' : title,
-    type: subtitle.includes('all') ? 10 : 1,
-})
-
 
 /******************************************************************************/
 /***************************** Subroutines ************************************/
 /******************************************************************************/
 
-function* loadList(tv){
-    const title = yield select(navSelectors.pageTitleSelector);
-    const subTitle = yield select(navSelectors.pageSubtitleSelector);
-    if(title === 'member' || title === 'trial'){
-        const entity = tv?{title:tv.title, type:tv.val}:getEntity(title, subTitle);
-        yield put(list.request(entity));
+function* loadList(title, type){
+    if(title && type){
+        let entity = {title, type};
+        yield put(list.request({title, type}));
         const { json, error} = yield call(fetchList, entity);
         if (json.code === '1000') {
             yield put(list.success(entity, json.data))
@@ -41,31 +32,41 @@ function* fetchTableUrl(data){
         yield put(tabel.failure(error||json))
     }
 }
-function* fetchReviewResult(result, type){
-    console.log(result, type)
-    const { json, error} = yield call(uploadresult, result, type);
+function* uploadReviewResult(data){
+    console.log(data)
+    /*const { json, error} = yield call(uploadresult, data);
     console.log(json, error);
     if (json.code === '1000') {
-        yield put(review.success(result))
+        yield put(review.success(data.index))
     } else {
         message.error(json.msg)
         yield put(review.failure(error||json))
-    }
+    }*/
 }
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
-
+function* watchKistFetch() {
+    for (let i = 0; i < 1; i++) {
+        const action = yield take('LOAD_LIST');
+        let title = action.payload.title;
+        let type = action.payload.subtitle.includes('all')?10:1;
+        yield fork(loadList, title, type);
+    }
+}
 function* watchRouterFetch() {
     while (true) {
         const { payload:data } = yield take('@@router/LOCATION_CHANGE');
-        yield fork(loadList);
+        let path = data.pathname.split('/');
+        let title = path.length > 3 ? path[2] : null;
+        let type = path[3].includes('all')?10:1;
+        yield fork(loadList, title, type);
     }
 }
 function* watchListChange() {
     while (true) {
         const action = yield take('CHANGE_DATA');
-        yield fork(loadList, action.payload);
+        yield fork(loadList, action.payload.title, action.payload.type);
     }
 }
 function* watchExportTalbel(){
@@ -76,20 +77,8 @@ function* watchExportTalbel(){
 }
 function* watchReviewReq(){
     while(true) {
-        const req = yield take('REVIEW_CKECK');
-        if(req.payload.result==='1'){
-            Modal.confirm({
-                title: '确认要通过该审核?',
-                onOk: () => new Promise(resolve => {
-                    fork(fetchReviewResult, req.payload, '1');
-                    resolve();
-                }),
-                onCancel() {},
-            })
-        }
-        if(req.payload.result==='0'){
-            yield fork(fetchReviewResult, req.payload, '0');
-        }
+        const req = yield take('UPLOAD_REVIEW_RESULT');
+        yield fork(uploadReviewResult, req.payload);
     }
 }
 export default function* root() {
@@ -97,6 +86,7 @@ export default function* root() {
         fork(watchRouterFetch),
         fork(watchListChange),
         fork(watchExportTalbel),
-        //fork(watchReviewReq),
+        fork(watchKistFetch),
+        fork(watchReviewReq),
     ]
 }

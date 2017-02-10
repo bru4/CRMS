@@ -2,20 +2,19 @@ import {initstate} from './model.js'
 import {combineReducers} from 'redux'
 
 const base = (state = initstate.base, action) => {
-    const payload = action.payload;
+    //const payload = action.payload;
     switch (action.type) {
         case 'TOGGLE_DETAIL':
-        //console.log(payload);
             return Object.assign({}, state, {
                 detail: !state.detail,
             });
-        case 'TOGGLE_CKECKBOX':
+        /*case 'TOGGLE_CKECKBOX':
             let {result, ...other } = payload;
             return Object.assign({}, state, {
                 checkbox: !state.checkbox,
                 result: result,
                 cur: {...other},
-            });
+            });*/
         default:
             return state;
     }
@@ -29,14 +28,15 @@ const list = (state = initstate.list, action) => {
                 total: payload.res.total,
             });
         case 'CHANGE_DATA':
+        console.log(payload.type)
             return Object.assign({}, state, {
-                listtype: payload.val,
+                listtype: payload.type,
             });
-        case 'TOGGLE_CKECKBOX':
+        /*case 'TOGGLE_CKECKBOX':
             let {result, ...other } = payload;
             return Object.assign({}, state, {
                 ...other
-            })
+            })*/
         default:
             return state;
     }
@@ -45,7 +45,6 @@ const cur = (state = initstate.cur, action) => {
     const payload = action.payload;
     switch (action.type) {
         case 'TOGGLE_DETAIL':
-        //console.log(payload);
             let data = payload?payload:state.cur
             return Object.assign({}, state, {
                 ...data,
@@ -54,8 +53,21 @@ const cur = (state = initstate.cur, action) => {
             return state;
     }
 }
+const selected = (state = initstate.selected, action) => {
+    const payload = action.payload;
+    switch (action.type) {
+        case 'SELECT_ROWS':
+            return Object.assign({}, state, {
+                keys: payload.keys,
+                records: payload.records,
+            });
+        default:
+            return state;
+    }
+}
 export default combineReducers({
     base,
     userlist:list,
-    cur
+    cur,
+    selected,
 })

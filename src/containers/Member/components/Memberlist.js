@@ -16,7 +16,7 @@ const getState = text => {
             return text;
     }
 }
-const Memberlist = ({list, total, toggleDetail, type, pass, reject, toggleCheckbox}) => {
+const Memberlist = ({list, total, toggleDetail, type, toggleCheckbox, selectRows}) => {
     const pagination = {
         total: total,
         pageSize: 20,
@@ -120,7 +120,7 @@ const Memberlist = ({list, total, toggleDetail, type, pass, reject, toggleCheckb
         pagination={pagination}
         rowKey='openid'
         rowSelection={type === 'all' ? null : {
-            onChange:(selectedRowKeys, selectedRows)=>{console.log(selectedRowKeys, selectedRows)}
+            onChange: selectRows
         }}
     />);
 }

@@ -4,7 +4,7 @@ import moment from 'moment'
 import {averagespend, profession, shoptype} from 'containers/constants'
 
 function showBig() {}
-export const DetailBox = ({show, toggleDetail, data, model}) => {
+export const DetailBox = ({show, toggleDetail, data, model, toggleCheckbox}) => {
     const openKeys = ['1'];
     let shopnamepic,
         kitchenpic,
@@ -29,13 +29,14 @@ export const DetailBox = ({show, toggleDetail, data, model}) => {
     }
     console.log(model)
     const footer = model === 'all'
-        ? [ <Button key = "back" onClick = {
-                () => toggleDetail(null)
-            } > 返回 </Button>]:[
-					<Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,
-					<Button key="pass" onClick={()=>{this.handleCancel();/*pass()*/}}>通过</Button>,
-					<Button key="submit" onClick={()=>{this.handleCancel();/*reject()*/}}>拒绝</Button>
-				];
+        ? [
+            <Button key = "back" onClick={()=>toggleDetail(null)}>返回</Button>
+          ]
+        : [
+            <Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,
+            <Button key="pass" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'1'})}}>通过</Button>,
+            <Button key="submit" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'0'})}}>拒绝</Button>
+        ];
     return(
     <div className='detailwrap'>
         <Modal
@@ -83,7 +84,10 @@ export const DetailBox = ({show, toggleDetail, data, model}) => {
                             <span className="itemTitle">职位:</span>
                             {data.record.position && profession.find(item => item.value == data.record.position).label}
                         </Col>
-                        {/* 这里因为需要mock数据所以采用了 "==" 应该试用 */}
+                        {/*
+                            这里因为需要mock数据所以采用了 "==" 应该试用,
+                            另外后台自己添加数据并没有用code值 为字符串,所以渲染出错
+                        */}
                     </Row>
                     <Row className='detailItem'>
                         <Col span={12}>

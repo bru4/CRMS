@@ -5,17 +5,16 @@ import React from 'react';
 //import * as selectors from './selectors';
 import Memberlist from './components/Memberlist'
 
-const Member = ({list, total, type, toggleDetail, pass, reject, toggleCheckbox, params}) =>{
-    console.log(params)
+const Member = ({list, total, toggleDetail, toggleCheckbox, type, selectRows}) =>{
+    //console.log(params)
     return <div>
         <Memberlist
             list = {list}
             total = {total}
             type = {type}
             toggleDetail = {toggleDetail}
-            pass = {pass}
-            reject = {reject}
             toggleCheckbox = {toggleCheckbox}
+            selectRows = {selectRows}
         />
     </div>
 }
