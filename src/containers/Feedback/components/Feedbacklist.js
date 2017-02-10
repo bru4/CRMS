@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import moment from'moment';
 
 const getQA = (list, index) => list&&list.length>0?<div>问题:{list[index].question} <br/> 回答:{list[index].answer}</div>:null;
-const Feedbacklist = ({list, total, showDetail}) => {
+const Feedbacklist = ({list, total, toggleDetail}) => {
     const pagination = {
         total: total,
         pageSize: 20,
@@ -75,7 +75,7 @@ const Feedbacklist = ({list, total, showDetail}) => {
     }, {
         title: '操作',
         key: 'operation',
-        render: (text, record, index) => <a onClick={()=>showDetail({index, record, type:'feedback'})}>查看</a>,
+        render: (text, record, index) => <a onClick={()=>toggleDetail({index, record, type:'feedback'})}>查看</a>,
     }];
     return(
         <div>

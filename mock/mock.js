@@ -71,19 +71,25 @@ let mockTrialList = () => Mock.mock({
 //response
 const startFetchMock = () =>{
     fetchMock.mock(/\/crms\/api\/member\/query/, {
-        body:{
+        body: {
             code: '1000',
             data: mockMemberList(),
             msg: '成功',
         }
     });
     fetchMock.mock(/\/crms\/api\/trial\/query/, {
-        body:{
+        body: {
             code: '1000',
             data: mockTrialList(),
             msg: '成功',
         }
     });
+    fetchMock.mock(/\/crms\/api\/member\/uploadresult/, {
+        body: {
+            code: '1000',
+            msg: '成功',
+        }
+    })
 }
 
 module.exports = startFetchMock;

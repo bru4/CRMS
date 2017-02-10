@@ -1,6 +1,7 @@
 import {initstate} from './model.js'
+import {combineReducers} from 'redux'
 
-const content = (state = initstate, action) => {
+const content = (state = initstate.base, action) => {
     const data = action.payload;
     switch (action.type) {
         // case 'LIST_REQUEST':
@@ -13,19 +14,27 @@ const content = (state = initstate, action) => {
                 list: data.res.datalist,
                 total: data.res.total,
             });
-        case 'SHOW_DETAIL':
+        case 'CHANGE_DATA':
+            return Object.assign({}, state, {
+                listtype: data.val,
+            });
+        case 'TOGGLE_DETAIL':
         //console.log(data);
             return Object.assign({}, state, {
                 detail: !state.detail,
                 cur: data?data:state.cur,
             });
-        case 'CHANGE_DATA':
+        case 'TOGGLE_CKECKBOX':
+            let {result, ...other } = data;
             return Object.assign({}, state, {
-                listtype: data.val,
+                checkbox: !state.checkbox,
+                result: result,
+                cur: {...other},
             });
-        // case 'TABLE_SUCCESS':
-        //     return state;
         default: return state;
     }
+}
+const list = (state = initstate.list, action) => {
+
 }
 export default content

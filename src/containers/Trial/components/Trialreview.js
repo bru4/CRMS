@@ -17,7 +17,7 @@ const getState = text => {
     }
 }
 
-const Triallist = ({list, total, showDetail}) => {
+const Triallist = ({list, total, toggleDetail}) => {
     const pagination = {
         total: total,
         pageSize: 20,
@@ -66,7 +66,7 @@ const Triallist = ({list, total, showDetail}) => {
     }, {
         title: '操作',
         key: 'operation',
-        render: (text, record, index) => <a onClick={()=>showDetail({index, record, type:'trial'})}>查看</a>,
+        render: (text, record, index) => <a onClick={()=>toggleDetail({index, record, type:'trial'})}>查看</a>,
     }];
     return(
         <div>

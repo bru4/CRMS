@@ -1,4 +1,3 @@
-import 'isomorphic-fetch'
 
 const API_ROOT = 'http://cs.udianhuo.com/crms/api';
 
@@ -59,14 +58,12 @@ export const uploadresult = ({index, record, type}, result) => fetch(`${API_ROOT
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-  'resultlist': [
-    {
-      'mobile': record.mobile,
-      'openid': record.openid,
-      'result': result,
-    }
-  ]
-}),
+        'resultlist': [{
+            'mobile': record.mobile,
+            'openid': record.openid,
+            'result': result,
+        }]
+    }),
 })
 .then(response => response.json().then(json => ({ json, response })))
 .then(({ json, response }) => {

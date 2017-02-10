@@ -2,7 +2,7 @@ import { fork, take, put, call, select } from 'redux-saga/effects'
 import * as actions from '../containers/actions'
 import { selectors as navSelectors } from '../containers/Common/Nav'
 import { fetchList, fetchTable, uploadresult } from './api'
-import { message } from 'antd';
+import { message, Modal, Button } from 'antd';
 
 const { list, tabel, review } = actions;
 
@@ -21,7 +21,6 @@ function* loadList(tv){
     const subTitle = yield select(navSelectors.pageSubtitleSelector);
     if(title === 'member' || title === 'trial'){
         const entity = tv?{title:tv.title, type:tv.val}:getEntity(title, subTitle);
-        console.log(entity)
         yield put(list.request(entity));
         const { json, error} = yield call(fetchList, entity);
         if (json.code === '1000') {
@@ -47,7 +46,7 @@ function* fetchReviewResult(result, type){
     const { json, error} = yield call(uploadresult, result, type);
     console.log(json, error);
     if (json.code === '1000') {
-        yield put(review.success(json))
+        yield put(review.success(result))
     } else {
         message.error(json.msg)
         yield put(review.failure(error||json))
@@ -59,7 +58,7 @@ function* fetchReviewResult(result, type){
 
 function* watchRouterFetch() {
     while (true) {
-        yield take('@@router/LOCATION_CHANGE');
+        const { payload:data } = yield take('@@router/LOCATION_CHANGE');
         yield fork(loadList);
     }
 }
@@ -77,10 +76,20 @@ function* watchExportTalbel(){
 }
 function* watchReviewReq(){
     while(true) {
-        const pass = yield take('REVIEW_PASS');
-        yield fork(fetchReviewResult, pass.payload, '1');
-        const reject = yield take('REVIEW_REJECT');
-        yield fork(fetchReviewResult, reject.payload, '0');
+        const req = yield take('REVIEW_CKECK');
+        if(req.payload.result==='1'){
+            Modal.confirm({
+                title: '确认要通过该审核?',
+                onOk: () => new Promise(resolve => {
+                    fork(fetchReviewResult, req.payload, '1');
+                    resolve();
+                }),
+                onCancel() {},
+            })
+        }
+        if(req.payload.result==='0'){
+            yield fork(fetchReviewResult, req.payload, '0');
+        }
     }
 }
 export default function* root() {
@@ -88,6 +97,6 @@ export default function* root() {
         fork(watchRouterFetch),
         fork(watchListChange),
         fork(watchExportTalbel),
-        fork(watchReviewReq),
+        //fork(watchReviewReq),
     ]
 }

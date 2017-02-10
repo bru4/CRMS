@@ -59,6 +59,9 @@
 .detailcontent .ant-menu-inline{
   border: none;
 }
+.detailcontent .detailBaseinfo{
+  padding: 0 16px;
+}
 .detailcontent .detailItem{
   margin: 20px 0;
 }

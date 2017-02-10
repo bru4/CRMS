@@ -1,6 +1,8 @@
 import { createAction } from 'redux-actions';
 
-export const showDetail = createAction('SHOW_DETAIL', data => data);
+export const loadList = createAction('LOAD_LIST', data => data);
+export const toggleDetail = createAction('TOGGLE_DETAIL', data => data);
+export const toggleCheckbox = createAction('TOGGLE_CKECKBOX', data => data);
 export const exportTable = createAction('EXPORT_TABLE', data => data);
 export const changeData = createAction('CHANGE_DATA', (title, val) => ({title, val}));
 export const pass = createAction('REVIEW_PASS', data => data);

@@ -6,36 +6,36 @@ export const title = [{
 }, {
 	title: '试用管理',
 	name: 'trial',
-	path: '/crmsadmin/trial/trialreview',
+	path: '/crmsadmin/trial/review',
 	children: [{
 		title: '试用审核',
-		name: 'trialreview',
-		path: '/crmsadmin/trial/trialreview'
+		name: 'review',
+		path: '/crmsadmin/trial/review'
 	}, {
 		title: '全部试用',
-		name: 'trialall',
-		path: '/crmsadmin/trial/trialall'
+		name: 'all',
+		path: '/crmsadmin/trial/all'
 	}, {
 		title: '反馈审核',
 		name: 'feedbackreview',
-		path: '/crmsadmin/trial/feedbackreview'
+		path: '/crmsadmin/feedback/feedbackreview'
 	}, {
 		title: '全部反馈',
 		name: 'feedbackall',
-		path: '/crmsadmin/trial/feedbackall'
+		path: '/crmsadmin/feedback/feedbackall'
 	}]
 }, {
 	title: '会员管理',
 	name: 'member',
-	path: '/crmsadmin/member/memberreview',
+	path: '/crmsadmin/member/review',
 	children: [{
 		title: '餐饮审核',
-		name: 'memberreview',
-		path: '/crmsadmin/member/memberreview'
+		name: 'review',
+		path: '/crmsadmin/member/review'
 	}, {
 		title: '全部会员',
-		name: 'memberall',
-		path: '/crmsadmin/member/memberall'
+		name: 'all',
+		path: '/crmsadmin/member/all'
 	}]
 }, {
 	title: '订单',

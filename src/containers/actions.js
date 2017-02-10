@@ -31,7 +31,7 @@ export const tabel = {
 }
 export const review = {
     request: createAction(REVIEW.REQUEST, type => type),
-    success: createAction(REVIEW.SUCCESS, res => (res.data)),
+    success: createAction(REVIEW.SUCCESS, result => result),
     failure: createAction(REVIEW.FAILURE, error => ({error}))
 }
 export const resetErrorMessage = createAction('RESET_ERROR_MESSAGE')
