@@ -7,7 +7,13 @@ const NavSubheader = ({ title, cur }) =>
 	<Menu mode="horizontal"
 	selectedKeys={[cur]} style={{marginLeft: 345}}>
 	{
-		title && title.children.map((t)=><Menu.Item key={t.name}><Link to={t.path}>{t.title}</Link></Menu.Item>)
+		title && title.children.map(t => {
+			return(
+				<Menu.Item key={t.name}>
+					<Link to={t.path}>{t.title}</Link>
+				</Menu.Item>
+			)
+		})
 	}
 	</Menu>
 </div>

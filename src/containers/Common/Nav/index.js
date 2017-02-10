@@ -26,7 +26,7 @@ const Nav = ({curtt, cursubtt}) =>
 <div className='nav-index'>
 	<div className="layout-top">
 		<div className="nav-header">
-			<NavHeader title={title} cur={curtt} />
+			<NavHeader title={title} cur={curtt==='feedback'?'trial':curtt} />
 		</div>
 		{
 			curtt==='index'?null:

@@ -2,9 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from './action'
 
-function mapStateToProps(state) {
-		return {num: state.Home};
-}
 /*const clickHandler = async () => {
 		const data = await fetch('/hello', {
 				method: 'post',
@@ -31,10 +28,13 @@ function mapStateToProps(state) {
 };*/
 
 const Index = (props) => <div>
-		<h1>Index</h1>
-		{props.children}
+	<h1>Index</h1>
+	{props.children}
 </div>
 
+function mapStateToProps(state) {
+	return {num: state.Home};
+}
 export default connect(mapStateToProps, {
-		...actions
+	...actions
 })(Index)
