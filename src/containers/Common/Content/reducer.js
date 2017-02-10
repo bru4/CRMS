@@ -1,40 +1,61 @@
 import {initstate} from './model.js'
 import {combineReducers} from 'redux'
 
-const content = (state = initstate.base, action) => {
-    const data = action.payload;
+const base = (state = initstate.base, action) => {
+    const payload = action.payload;
     switch (action.type) {
-        // case 'LIST_REQUEST':
-        //     return Object.assign({}, state, {
-        //         title: data.title,
-        //         type: data.type === 10 ? 'all' : 'review',
-        //     });
-        case 'LIST_SUCCESS':
-            return Object.assign({}, state, {
-                list: data.res.datalist,
-                total: data.res.total,
-            });
-        case 'CHANGE_DATA':
-            return Object.assign({}, state, {
-                listtype: data.val,
-            });
         case 'TOGGLE_DETAIL':
-        //console.log(data);
+        //console.log(payload);
             return Object.assign({}, state, {
                 detail: !state.detail,
-                cur: data?data:state.cur,
             });
         case 'TOGGLE_CKECKBOX':
-            let {result, ...other } = data;
+            let {result, ...other } = payload;
             return Object.assign({}, state, {
                 checkbox: !state.checkbox,
                 result: result,
                 cur: {...other},
             });
-        default: return state;
+        default:
+            return state;
     }
 }
 const list = (state = initstate.list, action) => {
-
+    const payload = action.payload;
+    switch (action.type) {
+        case 'LIST_SUCCESS':
+            return Object.assign({}, state, {
+                list: payload.res.datalist,
+                total: payload.res.total,
+            });
+        case 'CHANGE_DATA':
+            return Object.assign({}, state, {
+                listtype: payload.val,
+            });
+        case 'TOGGLE_CKECKBOX':
+            let {result, ...other } = payload;
+            return Object.assign({}, state, {
+                ...other
+            })
+        default:
+            return state;
+    }
 }
-export default content
+const cur = (state = initstate.cur, action) => {
+    const payload = action.payload;
+    switch (action.type) {
+        case 'TOGGLE_DETAIL':
+        //console.log(payload);
+            let data = payload?payload:state.cur
+            return Object.assign({}, state, {
+                ...data,
+            });
+        default:
+            return state;
+    }
+}
+export default combineReducers({
+    base,
+    userlist:list,
+    cur
+})
