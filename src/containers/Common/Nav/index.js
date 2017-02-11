@@ -52,5 +52,5 @@ export {
     //components,
     constants,
     reducer,
-    selectors
+    selectors,
 };

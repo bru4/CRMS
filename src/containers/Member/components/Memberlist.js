@@ -16,7 +16,7 @@ const getState = text => {
             return text;
     }
 }
-const Memberlist = ({list, total, toggleDetail, type, toggleCheckbox, selectRows}) => {
+const Memberlist = ({fetching, list, total, toggleDetail, type, toggleCheckbox, selectRows}) => {
     const pagination = {
         total: total,
         pageSize: 20,
@@ -113,7 +113,7 @@ const Memberlist = ({list, total, toggleDetail, type, toggleCheckbox, selectRows
     return (
     <Table
         rowClassName={(record, index) => index % 2 === 0 ? 'even' : 'odd'}
-        loading={list ? false : true}
+        loading={fetching}
         dataSource={list ? list : []}
         scroll={{x: 1200}}
         columns={columns}

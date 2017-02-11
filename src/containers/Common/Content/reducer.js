@@ -8,13 +8,6 @@ const base = (state = initstate.base, action) => {
             return Object.assign({}, state, {
                 detail: !state.detail,
             });
-        /*case 'TOGGLE_CKECKBOX':
-            let {result, ...other } = payload;
-            return Object.assign({}, state, {
-                checkbox: !state.checkbox,
-                result: result,
-                cur: {...other},
-            });*/
         default:
             return state;
     }
@@ -22,21 +15,21 @@ const base = (state = initstate.base, action) => {
 const list = (state = initstate.list, action) => {
     const payload = action.payload;
     switch (action.type) {
+        case 'LIST_REQUEST':
+            return Object.assign({}, initstate.list, {
+                fetching: true,
+            })
         case 'LIST_SUCCESS':
             return Object.assign({}, state, {
                 list: payload.res.datalist,
                 total: payload.res.total,
+                fetching: false,
             });
         case 'CHANGE_DATA':
         console.log(payload.type)
             return Object.assign({}, state, {
                 listtype: payload.type,
             });
-        /*case 'TOGGLE_CKECKBOX':
-            let {result, ...other } = payload;
-            return Object.assign({}, state, {
-                ...other
-            })*/
         default:
             return state;
     }

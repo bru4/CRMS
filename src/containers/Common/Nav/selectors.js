@@ -1,4 +1,4 @@
-//import { createSelector } from 'reselect'
+import { createSelector } from 'reselect'
 
 export const pageTitleSelector = state => state.nav.title;
 export const pageSubtitleSelector = state => state.nav.subtitle;
@@ -18,3 +18,7 @@ export const gettitleList = (title, curtt, cursubtt) => {
     result.push(cur.children.filter(t => t.name === cursubtt)[0].title);
     return result;
 }
+export const typeSelector = createSelector(
+    pageSubtitleSelector,
+    subtitle => subtitle.includes('all')?'all':'review'
+)

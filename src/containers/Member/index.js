@@ -5,10 +5,11 @@ import React from 'react';
 //import * as selectors from './selectors';
 import Memberlist from './components/Memberlist'
 
-const Member = ({list, total, toggleDetail, toggleCheckbox, type, selectRows}) =>{
+const Member = ({fetching, list, total, toggleDetail, toggleCheckbox, type, selectRows}) =>{
     //console.log(params)
     return <div>
         <Memberlist
+            fetching = {fetching}
             list = {list}
             total = {total}
             type = {type}

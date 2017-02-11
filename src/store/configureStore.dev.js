@@ -4,8 +4,10 @@ import { browserHistory } from 'react-router';
 //import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import rootReducer from '../containers/rootReducer';
-import DevTools from '../containers/Root/DevTools'
+//import DevTools from '../containers/Root/DevTools'
 import createSagaMiddleware, { END } from 'redux-saga'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const configureStore = preloadedState => {
     const sagaMiddleware = createSagaMiddleware();
@@ -13,9 +15,9 @@ const configureStore = preloadedState => {
     const store = createStore(
         rootReducer,
         preloadedState,
-        compose(
+        composeEnhancers(
             applyMiddleware(sagaMiddleware, rm, createLogger()),
-            DevTools.instrument()
+            //DevTools.instrument()
         )
     );
 

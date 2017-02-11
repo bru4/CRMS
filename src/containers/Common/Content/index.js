@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import DetailBox from 'components/DetailBox'
 import Toolbar from 'components/Toolbar'
 import { Modal } from 'antd'
-
+import { selectors as navSelectors } from '../Nav'
 //import * as constants from './constants';
 import * as actions from './actions';
 import reducer from './reducer';
 //import * as selectors from './selectors';
-//console.log(actions);
+console.log(navSelectors);
 
 class Content extends React.Component {
     constructor(props){
@@ -36,11 +36,10 @@ class Content extends React.Component {
         //this.props.toggleCheckbox
     }
     render(){
-        const type = this.props.params.subtitle.includes('all')?'all':'review';
         return (
             <div className='contentwrap'>
                 <Toolbar
-                    type = {type}
+                    type = {this.props.type}
                     title = {this.props.title}
                     exportTable = {this.props.exportTable}
                     change = {this.props.changeData}
@@ -50,9 +49,10 @@ class Content extends React.Component {
                 />
                 {
                     this.props.children && React.cloneElement(this.props.children, {
+                        fetching: this.props.userlist.fetching,
                         list: this.props.userlist.list,
                         total: this.props.userlist.total,
-                        type: type,
+                        type: this.props.type,
                         toggleDetail: this.props.toggleDetail,
                         toggleCheckbox: this.clickHandleCheckbox,
                         selectRows: this.props.selectRows,
@@ -62,16 +62,17 @@ class Content extends React.Component {
                     show={this.props.base.detail}
                     toggleDetail={this.props.toggleDetail}
                     data={this.props.cur}
-                    model={type}
+                    model={this.props.type}
                     toggleCheckbox={this.clickHandleCheckbox}
                 />
             </div>
         );
     }
 }
-const mapStateToProps = ({ content, nav }) => ({
-    ...content,
-    ...nav,
+const mapStateToProps = (state) => ({
+    type: navSelectors.typeSelector(state),
+    ...state.content,
+    ...state.nav,
 });
 
 export default connect(
