@@ -3,9 +3,9 @@ import {Table} from 'antd';
 import moment from 'moment';
 import {averagespend, profession, shoptype, getState} from 'containers/constants'
 
-const Memberlist = ({fetching, list, total, toggleDetail, type, toggleCheckbox, selectRows}) => {
+const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows}) => {
     const pagination = {
-        total: total,
+        total: data.total,
         pageSize: 20,
         onChange: (current) => {
             console.log('Current: ', current);
@@ -100,8 +100,8 @@ const Memberlist = ({fetching, list, total, toggleDetail, type, toggleCheckbox, 
     return (
     <Table
         rowClassName={(record, index) => index % 2 === 0 ? 'even' : 'odd'}
-        loading={fetching}
-        dataSource={list ? list : []}
+        loading={data.fetching}
+        dataSource={data.list ? data.list : []}
         scroll={{x: 1200}}
         columns={columns}
         pagination={pagination}

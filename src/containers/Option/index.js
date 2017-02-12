@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import React from 'react'
+import { Form } from 'antd'
 
 const Option = (props) => {
     return(
         <div>
-            Option
+            <Form />
         </div>
     )
 }

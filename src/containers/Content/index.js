@@ -1,7 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import DetailBox from 'components/DetailBox'
-import Toolbar from 'components/Toolbar'
+//import { connect } from 'react-redux'
+//import DetailBox from 'components/DetailBox'
+//import Toolbar from 'components/Toolbar'
 import { Modal } from 'antd'
 import { selectors as navSelectors } from '../Nav'
 //import * as constants from './constants';
@@ -16,11 +16,11 @@ class Content extends React.Component {
     }
     
     componentWillMount() {
-        console.log(this.props)
-        this.props.loadList({
+        //console.log(this.props)
+        /*this.props.loadList({
             title: this.props.title,
             subtitle: this.props.subtitle,
-        });
+        });*/
     }
     clickHandleCheckbox = res => {
         let text = res.result==='1'?'是否确定 通过 此用户的申请?':'是否确定 拒绝 此用户的申请?'
@@ -38,7 +38,8 @@ class Content extends React.Component {
     render(){
         return (
             <div className='contentwrap'>
-                <Toolbar
+                {this.props.children}
+                {/*<Toolbar
                     type = {this.props.type}
                     title = {this.props.title}
                     exportTable = {this.props.exportTable}
@@ -59,20 +60,20 @@ class Content extends React.Component {
                         selectRows: this.props.selectRows,
                     })
                     : this.props.children
-                }
+                }*/}
 
-                <DetailBox
+                {/*<DetailBox
                     show={this.props.base.detail}
                     toggleDetail={this.props.toggleDetail}
                     data={this.props.cur}
                     model={this.props.type}
                     toggleCheckbox={this.clickHandleCheckbox}
-                />
+                />*/}
             </div>
         );
     }
 }
-const mapStateToProps = (state) => ({
+/*const mapStateToProps = (state) => ({
     type: navSelectors.typeSelector(state),
     ...state.content,
     ...state.nav,
@@ -83,8 +84,8 @@ export default connect(
         ...actions,
     }
     // Implement map dispatch to props
-)(Content);
-
+)(Content);*/
+export default Content;
 export {
 	actions,
     //constants,

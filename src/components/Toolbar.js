@@ -1,6 +1,7 @@
 import React from 'react'
 import { DatePicker, Row, Col, Button, Select, message } from 'antd';
 const { RangePicker } = DatePicker;
+const Option = Select.Option;
 
 const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) => {
     let timeRange = null;
@@ -35,9 +36,9 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
             <Col span={2} offset={1}><Button onClick={exportData}>导出会员</Button></Col>
             <Col span={2} offset={1}>
                 <Select size="large" defaultValue="10" style={{ width: 200 }} onChange={changeData}>
-                    <Select.Option value="10">全部会员</Select.Option>
-                    <Select.Option value="2">已认证会员</Select.Option>
-                    <Select.Option value="3">认证失败会员</Select.Option>
+                    <Option value="10">全部会员</Option>
+                    <Option value="2">已认证会员</Option>
+                    <Option value="3">认证失败会员</Option>
                 </Select>
             </Col>
         </Row>:

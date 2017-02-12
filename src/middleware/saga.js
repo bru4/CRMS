@@ -83,13 +83,15 @@ function* watchListFetch() {
     }
 }
 function* watchRouterFetch() {
-    let title = yield select(state=>state.nav.title);
-    let type = yield select(state=>state.nav.subtitle);
-    type = type.includes('all')?10:1;
-    while (title === 'member' || title === 'trial' || title === 'feedback') {
-    console.log(title, type);
+    while (true) {
         yield take('@@router/LOCATION_CHANGE');
-        yield fork(loadList, title, type);
+        let title = yield select(state=>state.nav.title);
+        let subtitle = yield select(state=>state.nav.subtitle);
+        let type = subtitle.includes('all')?10:1;
+            //console.log(title, type)
+        if(title === 'member' || title === 'trial' || title === 'feedback'){
+            yield fork(loadList, title, type);
+        }
     }
 }
 function* watchListChange() {
