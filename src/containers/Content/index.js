@@ -48,7 +48,8 @@ class Content extends React.Component {
                     selected = {this.props.selected}
                 />
                 {
-                    this.props.children && React.cloneElement(this.props.children, {
+                    this.props.children && this.props.title==='member' || this.props.title==='trial' || this.props.title==='feedback'
+                    ? React.cloneElement(this.props.children, {
                         fetching: this.props.userlist.fetching,
                         list: this.props.userlist.list,
                         total: this.props.userlist.total,
@@ -57,7 +58,9 @@ class Content extends React.Component {
                         toggleCheckbox: this.clickHandleCheckbox,
                         selectRows: this.props.selectRows,
                     })
+                    : this.props.children
                 }
+
                 <DetailBox
                     show={this.props.base.detail}
                     toggleDetail={this.props.toggleDetail}

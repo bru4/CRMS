@@ -1,8 +1,8 @@
 import merge from 'lodash/merge';
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { reducer as NavReducer } from './Common/Nav';
-import { reducer as ContentReducer } from './Common/Content';
+import { reducer as NavReducer } from './Nav';
+import { reducer as ContentReducer } from './Content';
 
 const base = (state = '', action) => {
 	switch (action.type) {

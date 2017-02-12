@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import Nav from './Common/Nav/index';
+import Nav from './Nav';
 
 const App = ({children}) =>
 <div className="App">

@@ -3,10 +3,11 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
 import App from './containers/App';
 import Index from './containers/Home/Index';
-import Content from './containers/Common/Content';
+import Content from './containers/Content';
 import Member from './containers/Member';
 import Trial from './containers/Trial';
 import Feedback from './containers/Feedback';
+import Option from './containers/Option';
 export default (
     <Route path='/' component={App}>
     	<IndexRedirect to='/crmsadmin' />
@@ -16,6 +17,7 @@ export default (
 				<Route path='member/:subtitle' component={Member} />
 				<Route path='trial/:subtitle' component={Trial} />
 				<Route path='feedback/:subtitle' component={Feedback} />
+				<Route path='option/:subtitle' component={Option} />
 			</Route>
         </Route>
     </Route>

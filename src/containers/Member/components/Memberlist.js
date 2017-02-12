@@ -1,21 +1,8 @@
 import React from 'react';
 import {Table} from 'antd';
 import moment from 'moment';
-import {averagespend, profession, shoptype} from 'containers/constants'
-const getState = text => {
-    switch (text) {
-        case 0:
-            return '未提交';
-        case 1:
-            return '待审核';
-        case 2:
-            return '已认证';
-        case 3:
-            return '认证失败';
-        default:
-            return text;
-    }
-}
+import {averagespend, profession, shoptype, getState} from 'containers/constants'
+
 const Memberlist = ({fetching, list, total, toggleDetail, type, toggleCheckbox, selectRows}) => {
     const pagination = {
         total: total,

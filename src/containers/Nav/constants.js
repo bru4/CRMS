@@ -38,7 +38,7 @@ export const title = [{
 		path: '/crmsadmin/member/all'
 	}]
 }, {
-	title: '订单',
+	title: '订单管理',
 	name: 'order',
 	path: '/crmsadmin/order/0',
 	children: [{
@@ -47,12 +47,12 @@ export const title = [{
 		path: '/crmsadmin/order/0'
 	}]
 }, {
-	title: '标签',
-	name: 'tag',
-	path: '/crmsadmin/tag/0',
+	title: '商城设置',
+	name: 'option',
+	path: '/crmsadmin/option/register',
 	children: [{
-		title: '标签',
-		name: '0',
-		path: '/crmsadmin/tag/0'
+		title: '注册送券',
+		name: 'register',
+		path: '/crmsadmin/option/register'
 	}]
 }];

@@ -85,7 +85,7 @@ module.exports = {
 			containers: `${paths.appSrc}/containers/`,
 			images: `${paths.appSrc}/images/`,
 			sources: `${paths.appSrc}/sources/`,
-			styles: `${paths.appSrc}/styles/`
+			styles: `${paths.appSrc}/styles/`,
 		}
 	},
 

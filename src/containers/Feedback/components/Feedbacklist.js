@@ -78,16 +78,14 @@ const Feedbacklist = ({list, total, toggleDetail}) => {
         render: (text, record, index) => <a onClick={()=>toggleDetail({index, record, type:'feedback'})}>查看</a>,
     }];
     return(
-        <div>
-            <Table
-                loading={list?false:true}
-                dataSource={list?list:[]}
-                scroll={{ x: 1200 }}
-                columns={columns}
-                pagination={pagination}
-                rowKey='id'
-            />
-        </div>
+        <Table
+            loading={list?false:true}
+            dataSource={list?list:[]}
+            scroll={{ x: 1200 }}
+            columns={columns}
+            pagination={pagination}
+            rowKey={(record, index)=>index}
+        />
     )
 }
 

@@ -1,4 +1,4 @@
-import { fork, take, put, call } from 'redux-saga/effects'
+import { fork, take, put, call, select } from 'redux-saga/effects'
 import * as actions from '../containers/actions'
 import { fetchList, fetchTable, uploadresult } from './api'
 import { message } from 'antd';
@@ -9,19 +9,40 @@ const { list, tabel, review } = actions;
 /***************************** Subroutines ************************************/
 /******************************************************************************/
 
+/**
+ * 请求后台列表数据接口的处理函数
+ * 通过call api中的fetchList, 用来查询服务器上query接口的实现查不同模块的列表数据功能
+ * @param {string} title   表示目前查询的模块 目前有member trial feedback
+ * @param {string} type    表示查询类型 目前有 1 待审核 2 审核通过 3 审核不通过 10 全部
+ */
 function* loadList(title, type){
+    console.log(title, type)
     if(title && type){
         let entity = {title, type};
         yield put(list.request({title, type}));
         const { json, error} = yield call(fetchList, entity);
-        if (json.code === '1000') {
-            yield put(list.success(entity, json.data))
+        console.log(json, error)
+        if (json) {
+            switch(json.code){
+                case '1000':
+                    yield put(list.success(entity, json.data))
+                    return;
+                default:
+                    message.error(json.msg)
+                    yield put(list.failure(entity, json.msg))
+                    return;
+            }
         } else {
-            message.error(json.msg)
+            message.error('网络错误')
             yield put(list.failure(entity, error))
         }
     }
 }
+/**
+ * 获取下载表格链接
+ * 通过call api中的 fetchTable, 获取用户需要的
+ * @param {object} data   分别有属性 {str} title 表示导出哪个模块, {array} timeRange 表示导出数据的时间范围 第一个为startday 第二个为endday 都为moment类型数据, {str} listtype 标识下载类型 3 未认证, 2 已认证 ，10 全部
+ */
 function* fetchTableUrl(data){
     const { json, error} = yield call(fetchTable, data);
     if (json.code === '1000') {
@@ -32,6 +53,11 @@ function* fetchTableUrl(data){
         yield put(tabel.failure(error||json))
     }
 }
+/**
+ * 上传审核结果
+ * 通过call api中的 uploadresult, 提交审核用户资料和结果
+ * @param {objec} data 分别有 index 数据在列表中的index, record 用户数据, result 审核结果, type 上传结果的模块
+ */
 function* uploadReviewResult(data){
     console.log(data)
     /*const { json, error} = yield call(uploadresult, data);
@@ -46,20 +72,23 @@ function* uploadReviewResult(data){
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
-function* watchKistFetch() {
+function* watchListFetch() {
     for (let i = 0; i < 1; i++) {
         const action = yield take('LOAD_LIST');
         let title = action.payload.title;
-        let type = action.payload.subtitle.includes('all')?10:1;
-        yield fork(loadList, title, type);
+        if(title === 'member' || title === 'trial' || title === 'feedback'){
+            let type = action.payload.subtitle.includes('all')?10:1;
+            yield fork(loadList, title, type);
+        }
     }
 }
 function* watchRouterFetch() {
-    while (true) {
-        const { payload:data } = yield take('@@router/LOCATION_CHANGE');
-        let path = data.pathname.split('/');
-        let title = path.length > 3 ? path[2] : null;
-        let type = path[3].includes('all')?10:1;
+    let title = yield select(state=>state.nav.title);
+    let type = yield select(state=>state.nav.subtitle);
+    type = type.includes('all')?10:1;
+    while (title === 'member' || title === 'trial' || title === 'feedback') {
+    console.log(title, type);
+        yield take('@@router/LOCATION_CHANGE');
         yield fork(loadList, title, type);
     }
 }
@@ -86,7 +115,7 @@ export default function* root() {
         fork(watchRouterFetch),
         fork(watchListChange),
         fork(watchExportTalbel),
-        fork(watchKistFetch),
+        fork(watchListFetch),
         fork(watchReviewReq),
     ]
 }

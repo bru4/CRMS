@@ -93,4 +93,34 @@ export const averagespend = [{
 }, {
 	label: '80以上',
 	value: '3'
-}]
+}];
+export const getState = text => {
+    switch (text) {
+        case 0:
+            return '未提交';
+        case 1:
+            return '待审核';
+        case 2:
+            return '已认证';
+        case 3:
+            return '认证失败';
+        default:
+            return text;
+    }
+}
+export const getStatus = text =>{
+    switch(text){
+        case '0':
+        return '试用待审核';
+        case '1':
+        return '申请不通过';
+        case '2':
+        return '反馈未提交';
+        case '3':
+        return '反馈审批中';
+        case '4':
+        return '反馈不通过';
+        case '5':
+        return '反馈通过';
+    }
+}
