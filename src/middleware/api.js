@@ -7,7 +7,7 @@ const checkJson = ({json, response}) => {
         return {json};
     }
 }
-export const fetchList = ({title, type}) =>
+export const fetchList = ({title, type, page}) =>
     fetch(`${API_ROOT}/${title}/query`, {
         method: 'post',
         mode: 'cors',
@@ -15,7 +15,7 @@ export const fetchList = ({title, type}) =>
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'currentpage': 0,
+            'currentpage': page?page:0,
             'pagesize': 20,
             'querytype': type,
         }),

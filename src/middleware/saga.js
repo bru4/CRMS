@@ -1,5 +1,5 @@
 import { fork, take, put, call, select } from 'redux-saga/effects'
-import * as actions from '../containers/actions'
+import * as actions from './actions'
 import { fetchList, fetchTable, uploadresult } from './api'
 import { message } from 'antd';
 
@@ -14,11 +14,12 @@ const { list, tabel, review } = actions;
  * 通过call api中的fetchList, 用来查询服务器上query接口的实现查不同模块的列表数据功能
  * @param {string} title   表示目前查询的模块 目前有member trial feedback
  * @param {string} type    表示查询类型 目前有 1 待审核 2 审核通过 3 审核不通过 10 全部
+ * @param {string} page    当查询全部的时候 表示查询页数 没有的话就不传
  */
-function* loadList(title, type){
-    console.log(title, type)
+function* loadList(title, type, page){
+    console.log(title, type, page)
     if(title && type){
-        let entity = {title, type};
+        let entity = {title, type, page};
         yield put(list.request({title, type}));
         const { json, error} = yield call(fetchList, entity);
         console.log(json, error)
@@ -60,14 +61,16 @@ function* fetchTableUrl(data){
  */
 function* uploadReviewResult(data){
     console.log(data)
-    /*const { json, error} = yield call(uploadresult, data);
-    console.log(json, error);
+    const { json, error} = yield call(uploadresult, data);
     if (json.code === '1000') {
-        yield put(review.success(data.index))
+        yield put(review.success({
+            type: data.type,
+            index: data.index,
+        }))
     } else {
         message.error(json.msg)
         yield put(review.failure(error||json))
-    }*/
+    }
 }
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
@@ -100,6 +103,12 @@ function* watchListChange() {
         yield fork(loadList, action.payload.title, action.payload.type);
     }
 }
+function* watchPageChange(){
+    while (true) {
+        const action = yield take('CHANGE_PAGE');
+        yield fork(loadList, action.payload.title, 10, action.payload.page);
+    }
+}
 function* watchExportTalbel(){
     while(true) {
         const action = yield take('EXPORT_TABLE');
@@ -116,6 +125,7 @@ export default function* root() {
     yield [
         fork(watchRouterFetch),
         fork(watchListChange),
+        fork(watchPageChange),
         fork(watchExportTalbel),
         fork(watchListFetch),
         fork(watchReviewReq),

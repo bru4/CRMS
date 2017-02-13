@@ -3,13 +3,18 @@ import {Table} from 'antd';
 import moment from 'moment';
 import {averagespend, profession, shoptype, getState} from 'containers/constants'
 
-const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows}) => {
+const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) => {
+    console.log(type);
     const pagination = {
         total: data.total,
         pageSize: 20,
-        onChange: (current) => {
-            console.log('Current: ', current);
-        }
+        onChange: type==='all'
+            ? (current)=>{
+                changePage('member', current);
+            }
+            : (current)=>{
+                console.log(current);
+            }
     }
     const columns = [
         {
@@ -90,8 +95,8 @@ const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows}) => {
             render: (text, record, index) => type === 'all'
                 ? <a onClick={() => toggleDetail({index, record, type: 'member'})}>查看</a>
                 : <div>
-                        <a onClick={() => toggleDetail({index, record, type: 'member'})}>查看</a> | <a onClick={() => toggleCheckbox({index, record, type: 'member', result:'1'})}>通过</a> | <a onClick={() => toggleCheckbox({index, record, type: 'member', result:'0'})}>拒绝</a>
-                  </div>,
+                    <a onClick={() => toggleDetail({index, record, type: 'member'})}>查看</a> | <a onClick={() => toggleCheckbox({index, record, type: 'member', result:'1'})}>通过</a> | <a onClick={() => toggleCheckbox({index, record, type: 'member', result:'0'})}>拒绝</a>
+                </div>,
         }
     ];
     if(type==='review'){
@@ -107,7 +112,8 @@ const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows}) => {
         pagination={pagination}
         rowKey='openid'
         rowSelection={type === 'all' ? null : {
-            onChange: selectRows
+            selectedRowKeys: selectedKeys,
+            onChange: selectRows,
         }}
     />);
 }

@@ -19,7 +19,9 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
         change(title, val)
     }
     const passAll = () => {
-        pass({index: selected.keys, record:selected.records, result:'1', type: title})
+        if(selected.keys.length){
+            pass({index: selected.keys, record:selected.records, result:'1', type: title})
+        }
     }
     return(
         type==='all'?

@@ -106,7 +106,9 @@ export const DetailBox = ({show, toggleDetail, data, model, toggleCheckbox}) => 
                         {data.record.restaurantaddress}
                     </Row>
                 </Collapse.Panel>
-                <Collapse.Panel className='detailTT' key='2' header="餐厅招牌照片">
+                {
+                    pics ?
+                    <Collapse.Panel className='detailTT' key='2' header="餐厅招牌照片">
                     <Row className='detailPic' type='flex'>
                         {
                             shopnamepic && shopnamepic.length > 0
@@ -117,21 +119,31 @@ export const DetailBox = ({show, toggleDetail, data, model, toggleCheckbox}) => 
                             : null
                         }
                     </Row>
-                </Collapse.Panel>
-                <Collapse.Panel className = 'detailTT' key = '3' header = "餐厅后厨照片" >
+                    </Collapse.Panel>
+                    : null
+                }
+                {
+                    pics ?
+                    <Collapse.Panel className = 'detailTT' key = '3' header = "餐厅后厨照片" >
                     <Row className='detailPic' type='flex'>
                         {
                             kitchenpic && kitchenpic.map((item, index) => <Col key={index} span={6}><img src={item} alt="后厨" onClick={showBig}/></Col>)
                         }
                     </Row>
-                </Collapse.Panel>
-                <Collapse.Panel className='detailTT' key='4' header="餐厅菜单照片">
+                    </Collapse.Panel>
+                    : null
+                }
+                {
+                    pics ?
+                    <Collapse.Panel className='detailTT' key='4' header="餐厅菜单照片">
                     <Row className='detailPic' type='flex'>
                         {
                             cookbookpic&&cookbookpic.map((item,index)=><Col key={index} span={6}><img src={item} alt="菜单" onClick={showBig}/></Col>)
                         }
                     </Row>
-                </Collapse.Panel>
+                    </Collapse.Panel>
+                    : null
+                }
             </Collapse>
             </div>
         }
