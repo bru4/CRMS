@@ -69,6 +69,11 @@ function* uploadReviewResult(data){
         yield put(review.failure(error||json))
     }
 }
+/**
+ * 添加优惠券信息
+ * 通过call api中的addCoupon 将商城设置的优惠券设置到本地服务器自动发券
+ * @param {object} {type, name, id} type 为发券的类型 name 为发券的名称 id为优惠券编号
+ */
 function* addCouponHandle({type, name, id}) {
     const { json, error} = yield call(addCoupon, type, name, id);
     if (json.code === '1000') {
@@ -78,9 +83,16 @@ function* addCouponHandle({type, name, id}) {
         yield put(resetErrorMessage(error||json))
     }
 }
-function* pointHandle(openid) {
-    if(typeof openid ==='string'){
-        const { json, error} = yield call(queryPoint, openid);
+/**
+ * 查询用户积分
+ * 如果传过来的是string 就是根据openid查询用户积分 如果是object 就是为用户添加积分
+ * @param {string/object} entity 两种格式：
+ * string为openid
+ * object为{ openid, point, reason, mobile, name}
+ */
+function* pointHandle(entity) {
+    if(typeof entity ==='string'){
+        const { json, error} = yield call(queryPoint, entity);
         console.log(json)
         if (json.code === '1000') {
             yield put(fetchUserPoint(json.data.points));
@@ -89,8 +101,8 @@ function* pointHandle(openid) {
             yield put(resetErrorMessage(error||json))
         }
     }
-    if(typeof openid === 'object'){
-        const { json, error} = yield call(addPoint, openid);
+    if(typeof entity === 'object'){
+        const { json, error} = yield call(addPoint, entity);
         if (json.code === '1000') {
             message.success('添加成功');
             yield put(fetchUserPoint(json.data.totalpoints));
@@ -100,6 +112,10 @@ function* pointHandle(openid) {
         }
     }
 }
+/**
+ * 查询优惠券信息
+ * 在载入时和第一次查询用户信息一起查询,获取目前所有还在有效期内的优惠券
+ */
 function* loadCoupon() {
     const { json, error} = yield call(queryCoupon);
     if (json.code === '1000') {
@@ -109,6 +125,11 @@ function* loadCoupon() {
         yield put(resetErrorMessage(error||json))
     }
 }
+/**
+ * 为用户发优惠券
+ * 通过takeCoupon为用户添加某个还在有效期内的优惠券
+ * @param {object} entity 包含两个属性 openid 为用户ID groupid 为优惠券ID
+ */
 function* takeCouponHandle(entity) {
     const { json, error} = yield call(takeCoupon, entity);
     if (json.code === '1000') {
