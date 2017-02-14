@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 //import * as selectors from './selectors';
 import Memberlist from './components/Memberlist'
 import { selectors as navSelectors } from 'containers/Nav'
-import { actions } from 'containers/Content'
+import { actions as contActions } from 'containers/Content'
+import * as ownActions from './actions'
 //import ListHoc from 'components/ListHOC'
 import Toolbar from 'components/Toolbar'
 import { Modal } from 'antd'
@@ -38,6 +39,9 @@ class Member extends Component {
         })
         //this.props.toggleCheckbox
     }
+    addPonintHandle = () => {
+        
+    }
     render() {
         return (
         <div>
@@ -66,6 +70,9 @@ class Member extends Component {
                 toggleDetail = {this.props.toggleDetail}
                 model = {this.props.type}
                 toggleCheckbox = {this.clickHandleCheckbox}
+                addPoint = {this.props.addPoint}
+                coupon = {this.props.base.coupon}
+                takeCoupon = {this.props.takeCoupon}
             />
         </div>
         )
@@ -79,7 +86,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, {
-        ...actions,
+        ...contActions,
+        ...ownActions,
     }
     // Implement map dispatch to props
 )(Member);

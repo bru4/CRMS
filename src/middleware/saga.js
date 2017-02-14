@@ -1,9 +1,9 @@
 import { fork, take, put, call, select } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon } from './api'
 import { message } from 'antd';
 
-const { list, tabel, review } = actions;
+const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
 
 /******************************************************************************/
 /***************************** Subroutines ************************************/
@@ -17,12 +17,10 @@ const { list, tabel, review } = actions;
  * @param {string} page    当查询全部的时候 表示查询页数 没有的话就不传
  */
 function* loadList(title, type, page){
-    console.log(title, type, page)
     if(title && type){
         let entity = {title, type, page};
         yield put(list.request({title, type}));
         const { json, error} = yield call(fetchList, entity);
-        console.log(json, error)
         if (json) {
             switch(json.code){
                 case '1000':
@@ -60,7 +58,6 @@ function* fetchTableUrl(data){
  * @param {objec} data 分别有 index 数据在列表中的index, record 用户数据, result 审核结果, type 上传结果的模块
  */
 function* uploadReviewResult(data){
-    console.log(data)
     const { json, error} = yield call(uploadresult, data);
     if (json.code === '1000') {
         yield put(review.success({
@@ -70,6 +67,56 @@ function* uploadReviewResult(data){
     } else {
         message.error(json.msg)
         yield put(review.failure(error||json))
+    }
+}
+function* addCouponHandle({type, name, id}) {
+    const { json, error} = yield call(addCoupon, type, name, id);
+    if (json.code === '1000') {
+        message.success('添加成功');
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json))
+    }
+}
+function* pointHandle(openid) {
+    if(typeof openid ==='string'){
+        const { json, error} = yield call(queryPoint, openid);
+        console.log(json)
+        if (json.code === '1000') {
+            yield put(fetchUserPoint(json.data.points));
+        } else {
+            message.error(json.msg)
+            yield put(resetErrorMessage(error||json))
+        }
+    }
+    if(typeof openid === 'object'){
+        const { json, error} = yield call(addPoint, openid);
+        if (json.code === '1000') {
+            message.success('添加成功');
+            yield put(fetchUserPoint(json.data.totalpoints));
+        } else {
+            message.error(json.msg)
+            yield put(resetErrorMessage(error||json))
+        }
+    }
+}
+function* loadCoupon() {
+    const { json, error} = yield call(queryCoupon);
+    if (json.code === '1000') {
+        yield put(fetchCoupon(json.data));
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json))
+    }
+}
+function* takeCouponHandle(entity) {
+    const { json, error} = yield call(takeCoupon, entity);
+    if (json.code === '1000') {
+        message.success('添加成功');
+        //yield put(fetchCoupon(json.data));
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json))
     }
 }
 /******************************************************************************/
@@ -82,6 +129,7 @@ function* watchListFetch() {
         if(title === 'member' || title === 'trial' || title === 'feedback'){
             let type = action.payload.subtitle.includes('all')?10:1;
             yield fork(loadList, title, type);
+            yield fork(loadCoupon);
         }
     }
 }
@@ -121,6 +169,36 @@ function* watchReviewReq(){
         yield fork(uploadReviewResult, req.payload);
     }
 }
+function* watchAddCoupon(){
+    while(true) {
+        const action = yield take('ADD_COUPON');
+        yield fork(addCouponHandle, action.payload);
+    }
+}
+function* watchUserPoint(){
+    while(true){
+        const action = yield take('TOGGLE_DETAIL');
+        if(action.payload){
+            console.log(action.payload.record);
+            yield fork(pointHandle, action.payload.record.openid)
+        }
+    }
+}
+function* watchPointAdd(){
+    while(true){
+        const action = yield take('ADD_POINT');
+        if(action.payload){
+            console.log(action.payload);
+            yield fork(pointHandle, action.payload)
+        }
+    }
+}
+function* watchTakeCoupon(){
+    while(true) {
+        const action = yield take('TAKE_COUPON');
+        yield fork(takeCouponHandle, action.payload);
+    }
+}
 export default function* root() {
     yield [
         fork(watchRouterFetch),
@@ -129,5 +207,9 @@ export default function* root() {
         fork(watchExportTalbel),
         fork(watchListFetch),
         fork(watchReviewReq),
+        fork(watchAddCoupon),
+        fork(watchUserPoint),
+        fork(watchPointAdd),
+        fork(watchTakeCoupon),
     ]
 }

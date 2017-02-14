@@ -4,7 +4,6 @@ import moment from 'moment';
 import {averagespend, profession, shoptype, getState} from 'containers/constants'
 
 const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) => {
-    console.log(type);
     const pagination = {
         total: data.total,
         pageSize: 20,

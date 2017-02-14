@@ -12,7 +12,7 @@ const coupon = (state = couponInitialState, action) => {
         case 'ADD_COUPON':
             return state;
         case 'RESET_COUPON':
-            return state;
+            return couponInitialState;
         default:
             return state;
     }

@@ -2,7 +2,7 @@ const Mock = require('mockjs');
 const fetchMock = require('fetch-mock/es5/client');
 
 //model
-let mockMemberList = () => Mock.mock({
+const mockMemberList = () => Mock.mock({
     'total': '@natural(50,72)',
     'datalist|20':[
         {
@@ -35,7 +35,7 @@ let mockMemberList = () => Mock.mock({
     ]
 });
 
-let mockTrialList = () => Mock.mock({
+const mockTrialList = () => Mock.mock({
     'total': '@natural(50,72)',
     'datalist|20':[
         {
@@ -67,7 +67,7 @@ let mockTrialList = () => Mock.mock({
     ]
 });
 
-let mockFeedbackList = () => Mock.mock({
+const mockFeedbackList = () => Mock.mock({
     'total': '@natural(50,72)',
     'datalist|20':[
         {
@@ -154,34 +154,129 @@ let mockFeedbackList = () => Mock.mock({
         }
     ]
 });
-
+const getPoint = () => Mock.mock('@integer(50, 1000)');
 //response
 const startFetchMock = () =>{
-    fetchMock.mock(/\/crms\/api\/member\/query/, {
+    fetchMock.mock(/\/member\/querypoints/, {
+        body: {
+            code: '1000',
+            msg: '成功',
+            data: {
+                points: getPoint()
+            }
+        }
+    });
+    fetchMock.mock(/\/member\/query/, {
         body: {
             code: '1000',
             data: mockMemberList(),
             msg: '成功',
         }
     });
-    fetchMock.mock(/\/crms\/api\/trial\/query/, {
+    fetchMock.mock(/\/trial\/query/, {
         body: {
             code: '1000',
             data: mockTrialList(),
             msg: '成功',
         }
     });
-    fetchMock.mock(/\/crms\/api\/feedback\/query/, {
+    fetchMock.mock(/\/feedback\/query/, {
         body: {
             code: '1000',
             data: mockFeedbackList(),
             msg: '成功',
         }
     });
-    fetchMock.mock(/\/crms\/api\/(\w+)\/uploadresult/, {
+    fetchMock.mock(/\/(\w+)\/uploadresult/, {
         body: {
             code: '1000',
             msg: '成功',
+        }
+    });
+    fetchMock.mock(/\/center\/addcoupon/, {
+        body: {
+            code: '1000',
+            msg: '成功',
+        }
+    });
+    fetchMock.mock(/\/youzan\/getcoupons/, {
+        body: {
+            code: '1000',
+            msg: '成功',
+            data: [{
+                'total': 1000,
+                'stat_fetch_num': 1,
+                'at_least': '200.00',
+                'is_at_least': 1,
+                'coupon_type': 'PROMOCARD',
+                'start_at': '2017-01-09 09:43:49',
+                'stat_fetch_user_num': 1,
+                'quota': 0,
+                'title': '提交反馈成功',
+                'stat_use_num': 0,
+                'stock': 999,
+                'created': '2017-01-09 09:43:53',
+                'description': '',
+                'value': '50.00',
+                'is_sync_weixin': 0,
+                'fetch_url': 'https://h5.koudaitong.com/v2/ump/promocard/fetch?alias=an84iagf',
+                'is_share': 1,
+                'need_user_level': 0,
+                'status': 0,
+                'user_level_name': '',
+                'group_id': '1655008',
+                'value_random_to': '0.00',
+                'is_forbid_preference': 0,
+                'expire_notice': 0,
+                'weixin_card_id': '',
+                'end_at': '2018-01-09 09:42:14',
+                'range_type': 'ALL',
+                'is_random': 0
+            }, {
+                'total': 1000,
+                'stat_fetch_num': 8,
+                'at_least': '50.00',
+                'is_at_least': 1,
+                'coupon_type': 'PROMOCARD',
+                'start_at': '2017-01-09 09:41:41',
+                'stat_fetch_user_num': 1,
+                'quota': 0,
+                'title': '注册送券',
+                'stat_use_num': 0,
+                'stock': 992,
+                'created': '2017-01-09 09:42:08',
+                'description': '',
+                'value': '30.00',
+                'is_sync_weixin': 0,
+                'fetch_url': 'https://h5.koudaitong.com/v2/ump/promocard/fetch?alias=15ffsprxp',
+                'is_share': 0,
+                'need_user_level': 0,
+                'status': 0,
+                'user_level_name': '',
+                'group_id': '1655004',
+                'value_random_to': '0.00',
+                'is_forbid_preference': 0,
+                'expire_notice': 0,
+                'weixin_card_id': '',
+                'end_at': '2018-01-09 09:41:27',
+                'range_type': 'ALL',
+                'is_random': 0
+            }]
+        }
+    });
+    fetchMock.mock(/\/member\/addpoints/, {
+        body: {
+            'code': '1000',
+            'msg': 'success',
+            'data': {
+                'totalpoints': 9999
+            }
+        }
+    });
+    fetchMock.mock(/\/member\/takecoupon/, {
+        body: {
+            'code': '1000',
+            'msg': 'success',
         }
     })
 }

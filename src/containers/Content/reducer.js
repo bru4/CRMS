@@ -2,11 +2,15 @@ import {initstate} from './model.js'
 import {combineReducers} from 'redux'
 
 const base = (state = initstate.base, action) => {
-    //const payload = action.payload;
+    const payload = action.payload;
     switch (action.type) {
         case 'TOGGLE_DETAIL':
             return Object.assign({}, state, {
                 detail: !state.detail,
+            });
+        case 'FETCH_COUPON':
+            return Object.assign({}, state, {
+                coupon: payload,
             });
         default:
             return state;
@@ -75,9 +79,18 @@ const cur = (state = initstate.cur, action) => {
     const payload = action.payload;
     switch (action.type) {
         case 'TOGGLE_DETAIL':
-            let data = payload?payload:state.cur
+            if(payload === null){
+                return Object.assign({}, state, {
+                    point: -1,
+                });
+            }
+            let data = payload?payload:state.cur;
             return Object.assign({}, state, {
                 ...data,
+            });
+        case 'FETCH_USER_POINT':
+            return Object.assign({}, state, {
+                points: payload,
             });
         default:
             return state;

@@ -1,11 +1,10 @@
 import { connect } from 'react-redux'
 import React from 'react'
-import { Form, Input, Button, Col, Row } from 'antd'
+import { Form, Input, Button, Col, Row, Select } from 'antd'
 import * as actions from './actions'
 import reducer from './reducer'
 
 const Option = ({addCoupon, form}) => {
-    console.log(form);
     const formItemLayout = {
       labelCol: { span: 8 },
       wrapperCol: { span: 10 },
@@ -15,30 +14,50 @@ const Option = ({addCoupon, form}) => {
     }
     const checkCoupon = (e) => {
         e.preventDefault();
-        console.log('in')
+        form.validateFields((errors, values)=>{
+            if (errors) {
+                console.log(errors);
+            } else {
+                addCoupon(values);
+            }
+        });
+    }
+    const resetCoupon = () => {
+        form.resetFields()
     }
     const { getFieldDecorator } = form;
     return(
         <div>
             <h2>注册送券设置</h2>
-            <Form onSubmit={checkCoupon}>
+            <Form onSubmit={checkCoupon} onReset={resetCoupon}>
                 <Form.Item
                     label="类型"
                     {...formItemLayout}
                 >
-                    {getFieldDecorator('type')(<Input placeholder="输入优惠券的类型" />)}
+                    {getFieldDecorator('type', {
+                        rules: [{required: true, message: '必须输入优惠券类型'}],
+                    })(
+                        <Select placeholder="输入优惠券的类型">
+                            <Select.Option value="0">每月送券</Select.Option>
+                        </Select>
+                    )}
                 </Form.Item>
                 <Form.Item
                     label="名称"
                     {...formItemLayout}
                 >
-                    {getFieldDecorator('name')(<Input placeholder="输入优惠券的名称" />)}
+                    {getFieldDecorator('name', {
+                        rules: [{required: true, message: '必须输入优惠券名称'}],
+                    })(<Input placeholder="输入优惠券的名称" />)}
                 </Form.Item>
                 <Form.Item
                     label="编号"
                     {...formItemLayout}
                 >
-                    {getFieldDecorator('id')(<Input placeholder="输入优惠券的编号" />)}
+                    {getFieldDecorator('id', {
+                        rules: [{type: 'number', required: true, message: '必须输入优惠券id编号(数字)'}],
+                        getValueFromEvent: (e) => Number(e.target.value),
+                    })(<Input placeholder="输入优惠券的编号" />)}
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
                     <Row gutter={30}>
