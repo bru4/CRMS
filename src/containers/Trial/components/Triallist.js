@@ -57,7 +57,10 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             title: '状态',
             key: 'state',
             dataIndex: 'state',
-            render: (text) => getState(text),
+            render: (text) => {
+                let state = getState(text);
+
+            },
         }, {
             title: '试用状态',
             key: 'status',

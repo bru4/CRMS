@@ -53,11 +53,13 @@ fetch(`${API_ROOT}/${title}/export`, {
 
 const getResultList = (index, record, result) => {
     if (typeof index === 'number') {
-        return [{
-            'mobile': record.mobile,
-            'openid': record.openid,
-            'result': result,
-        }];
+        return {
+            resultlist: [{
+                'mobile': record.mobile,
+                'openid': record.openid,
+                'result': result,
+            }]
+        };
     } else {
         let reslist = [];
         for (let i = 0, len = index.length; i < len; i++) {
@@ -67,7 +69,7 @@ const getResultList = (index, record, result) => {
                 'result': result,
             });
         }
-        return reslist;
+        return {reslist};
     }
 }
 export const uploadresult = ({index, record, type, result}) =>
