@@ -26,8 +26,10 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
     return(
         type==='all'?
         <Row className='toolbar'>
-            <Col span={6} offset={2}>
+            <Col span={2} offset={2}>开始日期:</Col>
+            <Col span={6}>
                 <RangePicker
+                    style={{width:'100%'}}
                     showTime
                     format="YYYY-MM-DD HH:mm:ss"
                     onChange={selectTime}
@@ -36,7 +38,7 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
                 />
             </Col>
             <Col span={2} offset={1}><Button onClick={exportData}>导出会员</Button></Col>
-            <Col span={2} offset={1}>
+            <Col span={4} offset={6}>
                 <Select size="large" defaultValue="10" style={{ width: 200 }} onChange={changeData}>
                     <Option value="10">全部会员</Option>
                     <Option value="2">已认证会员</Option>

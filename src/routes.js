@@ -9,29 +9,26 @@ import Trial from './containers/Trial';
 import Feedback from './containers/Feedback';
 import Option from './containers/Option';
 import Order from './containers/Order';
+import Login from './components/Login';
+const checkIn = (nextState, replace, next) => {
+	var tokenInfo = sessionStorage.tokenInfo;
+	if(tokenInfo) {
+		next()//如果有值直接下一步
+	} else {
+		replace('/crmsadmin/login')//如果token信息为空就直接到登录页面
+		next();
+	}
+}
 export default (
 	<Route path='/crmsadmin' component={App}>
 		<IndexRoute component={Index} />
-		<Route component={Content}>
+		<Route component={Content}  onEnter={checkIn}>
 			<Route path='member/:subtitle' component={Member} />
 			<Route path='trial/:subtitle' component={Trial} />
 			<Route path='feedback/:subtitle' component={Feedback} />
 			<Route path='option/:subtitle' component={Option} />
 			<Route path='order/:subtitle' component={Order} />
 		</Route>
+		<Route path='login' component={Login}/>
     </Route>
 );
-/*
-	<Route path='/' component={App}>
-    	<IndexRedirect to='/crmsadmin' />
-    	<Route path='/crmsadmin' >
-        	<IndexRoute component={Index} />
-        	<Route component={Content}>
-				<Route path='member/:subtitle' component={Member} />
-				<Route path='trial/:subtitle' component={Trial} />
-				<Route path='feedback/:subtitle' component={Feedback} />
-				<Route path='option/:subtitle' component={Option} />
-			</Route>
-        </Route>
-    </Route>
-*/

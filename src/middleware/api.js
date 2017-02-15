@@ -170,13 +170,32 @@ fetch(`${API_ROOT}/youzan/getcoupons`, {
 
 export const takeCoupon = entity =>
 fetch(`${API_ROOT}/member/takecoupon`, {
-    method: 'get',
+    method: 'post',
     mode: 'cors',
     headers: {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
         ...entity,
+    }),
+})
+.then(getJsonRes)
+.then(checkJson)
+.then(
+    data => data,
+    error => ({
+        error: error.message || 'Something bad happened'
+    })
+);
+export const queryUser = mobile =>
+fetch(`${API_ROOT}/member/querybymobile`, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        mobile: mobile,
     }),
 })
 .then(getJsonRes)

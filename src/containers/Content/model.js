@@ -1,6 +1,6 @@
 export const initstate = {
     cur:{
-        points: -1,        //  用户的积分
+        points: '',        //  用户的积分
         index: -1,         //  用户在列表中的 index 或 only key 值
         record: {},        //  用户信息对象
         type: '',          //  用户数据所在的模块 member / trial / feedback

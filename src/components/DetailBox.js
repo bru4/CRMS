@@ -9,8 +9,6 @@ class DetailBox extends React.Component {
     constructor(props) {
         super(props);
     }
-
-
     addPonintHandle = (points) => {
         const { data } = this.props;
         let entity = {};
@@ -47,7 +45,6 @@ class DetailBox extends React.Component {
                 .split(';')
             : '';
         let openKeys = model === 'review'?['1', '2', '3', '4']:[];
-        console.log(openKeys)
         if (pics) {
             pics.length -= 1;
             shopnamepic = pics.filter(val => val.search(/shopname/g) > 0
@@ -85,12 +82,12 @@ class DetailBox extends React.Component {
                         </Col>
                     </Row>
                     <p className='detailItem'>
-                        <span className="itemTitle">申请类型:</span>{model}
+                        <span className="itemTitle">申请类型:</span>{model==='all'?'查看全部':'审核申请'}
                     </p>
                     <Row className='detailItem'>
                         <Col span={12}>
                             <span className='itemTitle'>当前积分:</span>
-                            {data.points===-1?'查询中...':data.points}
+                            {data.points?data.points:'查询中...'}
                         </Col>
                         {
                             addPoint && model === 'all'
@@ -108,7 +105,7 @@ class DetailBox extends React.Component {
                     <Row className='detailItem'>
                         <Col span={12}>
                             <span className='itemTitle'>申请理由:</span>
-                            {data.record.reason || model}
+                            {data.record.reason || '无'}
                         </Col>
                         {
                             coupon && model === 'all'
@@ -128,7 +125,7 @@ class DetailBox extends React.Component {
                         {moment(data.record.createtime).format('YYYY-MM-DD HH:mm:ss')}
                     </p>
                 </div>
-                <Collapse activeKey={openKeys} bordered={false}>
+                <Collapse defaultActiveKey={openKeys} bordered={false}>
                     <Collapse.Panel className='detailTT' key='1' header="餐饮信息">
                         <Row className='detailItem'>
                             <Col span={12}>

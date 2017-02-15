@@ -25,7 +25,7 @@ const list = (state = initstate.list, action) => {
             })
         case 'LIST_SUCCESS':
             return Object.assign({}, state, {
-                list: payload.res.datalist,
+                list: payload.res.datalist?payload.res.datalist:[payload.res],
                 total: payload.res.total,
                 fetching: false,
             });
@@ -81,7 +81,7 @@ const cur = (state = initstate.cur, action) => {
         case 'TOGGLE_DETAIL':
             if(payload === null){
                 return Object.assign({}, state, {
-                    point: -1,
+                    points: '',
                 });
             }
             let data = payload?payload:state.cur;

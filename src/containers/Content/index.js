@@ -5,7 +5,9 @@ import reducer from './reducer';
 const Content = props => {
     return (
         <div className='contentwrap'>
+            <div className='content'>
             {props.children}
+            </div>
         </div>
     );
 }

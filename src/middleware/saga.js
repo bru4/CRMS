@@ -1,6 +1,6 @@
 import { fork, take, put, call, select } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -140,6 +140,15 @@ function* takeCouponHandle(entity) {
         yield put(resetErrorMessage(error||json))
     }
 }
+function* queryUserHandle(mobile) {
+    const { json, error} = yield call(queryUser, mobile);
+    if (json.code === '1000') {
+        yield put(list.success({title:'member', type:10}, json.data));
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json))
+    }
+}
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
@@ -220,6 +229,12 @@ function* watchTakeCoupon(){
         yield fork(takeCouponHandle, action.payload);
     }
 }
+function* watchQueryUser(){
+    while(true) {
+        const action = yield take('QUERY_USER_MOBILE');
+        yield fork(queryUserHandle, action.payload);
+    }
+}
 export default function* root() {
     yield [
         fork(watchRouterFetch),
@@ -232,5 +247,6 @@ export default function* root() {
         fork(watchUserPoint),
         fork(watchPointAdd),
         fork(watchTakeCoupon),
+        fork(watchQueryUser),
     ]
 }

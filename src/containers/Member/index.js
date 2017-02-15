@@ -13,7 +13,7 @@ import * as ownActions from './actions'
 import Toolbar from 'components/Toolbar'
 import { Modal } from 'antd'
 import DetailBox from 'components/DetailBox'
-
+import Search from 'components/Search'
 class Member extends Component {
     constructor(props){
         super(props)
@@ -44,7 +44,7 @@ class Member extends Component {
     }
     render() {
         return (
-        <div>
+        <div className='member'>
             <h2>{this.props.type === 'all'?'全部会员':'餐饮审核'}</h2>
             <Toolbar
                 type = {this.props.type}
@@ -55,6 +55,7 @@ class Member extends Component {
                 listtype = {this.props.userlist.listtype}
                 selected = {this.props.selected}
             />
+            {this.props.type==='all'?<Search search={this.props.queryByMobile} />:null}
             <Memberlist
                 type = {this.props.type}
                 data = {this.props.userlist}
