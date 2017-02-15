@@ -1,6 +1,5 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
-let px2rem = require('postcss-px2rem');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -168,9 +167,6 @@ module.exports = {
 	// We use PostCSS for autoprefixing only.
 	postcss: function() {
 		return [
-			px2rem({
-				remUnit: 75
-			}),
 			autoprefixer({
 				browsers: [
 					'>1%',
