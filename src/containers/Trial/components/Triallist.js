@@ -57,9 +57,9 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             title: '状态',
             key: 'state',
             dataIndex: 'state',
-            render: (text) => {
+            render: (text, record, index) => {
                 let state = getState(text);
-
+                return text===1?<a onClick={() => toggleCheckbox({index, record, type: 'member', result:'1'})}>state</a>:state;
             },
         }, {
             title: '试用状态',
