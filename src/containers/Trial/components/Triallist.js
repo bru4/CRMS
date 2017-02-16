@@ -54,7 +54,7 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             key: 'reason',
             dataIndex: 'reason',
         }, {
-            title: '状态',
+            title: '认证状态',
             key: 'state',
             dataIndex: 'state',
             render: (text, record, index) => {
