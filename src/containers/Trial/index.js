@@ -25,7 +25,7 @@ class Trial extends Component {
     }
     
     clickHandleCheckbox = res => {
-        let text = res.result==='1'?'是否确定 通过 此用户的认证申请?':'是否确定 拒绝 此用户的认证申请?'
+        let text = res.result==='1'?'是否确定 通过 此用户的审核申请?':'是否确定 拒绝 此用户的审核申请?'
         Modal.confirm({
             title: '操作确认',
             content: text,
