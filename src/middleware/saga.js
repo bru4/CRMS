@@ -235,6 +235,8 @@ function* watchQueryUser(){
         yield fork(queryUserHandle, action.payload);
     }
 }
+
+/******************************************************************************/
 export default function* root() {
     yield [
         fork(watchRouterFetch),
