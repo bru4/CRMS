@@ -2,6 +2,7 @@
   "name": "app-start",
   "version": "1.0.0",
   "private": true,
+  "homepage": "/crmsadmin/",
   "devDependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
