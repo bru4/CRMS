@@ -30,8 +30,7 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
             <Col span={6}>
                 <RangePicker
                     style={{width:'100%'}}
-                    showTime
-                    format="YYYY-MM-DD HH:mm:ss"
+                    format="YYYY-MM-DD"
                     onChange={selectTime}
                     placeholder={['开始时间', '结束时间']}
                     disabledDate={current=>current && current.valueOf() > Date.now()}

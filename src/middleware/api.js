@@ -37,8 +37,8 @@ fetch(`${API_ROOT}/${title}/export`, {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        'startday': timeRange[0].format('X'),
-        'endday': timeRange[1].format('X'),
+        'startday': timeRange[0].format('YYYY-MM-DD'),
+        'endday': timeRange[1].format('YYYY-MM-DD'),
         'type': listtype
     }),
 })
