@@ -46,7 +46,7 @@ function* fetchTableUrl(data){
     const { json, error} = yield call(fetchTable, data);
     if (json.code === '1000') {
         yield put(tabel.success(json))
-        location.href = json.data.downloadurl;
+        location.href = json.data;
     } else {
         message.error(json.msg)
         yield put(tabel.failure(error||json))

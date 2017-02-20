@@ -9,6 +9,7 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
 		timeRange = dates;
 	}
     const exportData = () => {
+        console.log(timeRange, listtype, title)
         if(timeRange===null){
             message.error('选择有效的日期');
         }else{

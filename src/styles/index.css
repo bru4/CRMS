@@ -118,4 +118,8 @@ html,body{
 .search-bar{
   height: 30px;
   line-height: 30px;
+  overflow: hidden;
+}
+.search-bar-input{
+  height: 24px;
 }

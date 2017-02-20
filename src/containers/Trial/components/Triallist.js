@@ -59,7 +59,10 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             dataIndex: 'state',
             render: (text, record, index) => {
                 let state = getState(text);
-                return text===1?<a onClick={() => toggleCheckbox({index, record, type: 'member', result:'1'})}>{state}</a>:state;
+                if(type === 'all'){
+                    return state;
+                }
+                return text===1?<a onClick={() => toggleDetail({index, record, type: 'member'})}>{state}</a>:state;
             },
         }, {
             title: '试用状态',
@@ -74,7 +77,7 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
                 if(type === 'all'){
                     return <a onClick={() => toggleDetail({index, record, type: 'trial'})}>查看</a>
                 } else {
-                    return record.state === 1 || record.state === 2
+                    return record.state === 2
                     ? <div>
                         <a onClick={() => toggleDetail({index, record, type: 'trial'})}>查看</a> | <a onClick={() => toggleCheckbox({index, record, type: 'trial', result:'1'})}>通过</a> | <a onClick={() => toggleCheckbox({index, record, type: 'trial', result:'0'})}>拒绝</a>
                     </div>

@@ -98,8 +98,8 @@ fetch(`${API_ROOT}/center/addcoupon`, {
     },
     body: JSON.stringify({
         'title': name,
-        'id': id.toString(),
-        'group': type,
+        'groupid': id.toString(),
+        'type': type,
     }),
 })
 .then(getJsonRes)

@@ -14,7 +14,7 @@ class DetailBox extends React.Component {
         let entity = {};
         entity.openid = data.record.openid;
         entity.points = points;
-        entity.reason = 'aa';
+        entity.reason = `手动增加${points}分`;
         entity.mobile = data.record.mobile;
         entity.name = data.record.truename;
         this.props.addPoint(entity);
@@ -22,19 +22,25 @@ class DetailBox extends React.Component {
     takeCouponHandle = (couponid) => {
         const { data } = this.props;
         let entity = {};
-        entity.couponid = couponid;
+        entity.groupid = couponid;
         entity.openid = data.record.openid;
         this.props.takeCoupon(entity);
     }
     render() {
         let {show, toggleDetail, data, model, toggleCheckbox, addPoint, coupon} = this.props;
-        let footer = model === 'all'
-        ? [<Button key = "back" onClick={()=>toggleDetail(null)}>返回</Button>]
-        : [
-            <Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,
-            <Button key="pass" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'1'})}}>通过</Button>,
-            <Button key="submit" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'0'})}}>拒绝</Button>
-        ];
+        let footer = [];
+        console.log(data.type);
+        if(model === 'all'){
+            footer = [<Button key = "back" onClick={()=>toggleDetail(null)}>返回</Button>];
+        }else if(data.record.state === 1 && data.type === 'trial'){
+            footer = [<Button key = "back" onClick={()=>toggleDetail(null)}>返回</Button>];
+        }else {
+            footer = [
+                <Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,
+                <Button key="pass" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'1'})}}>通过</Button>,
+                <Button key="submit" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'0'})}}>拒绝</Button>
+            ]
+        }
         let shopnamepic,
             kitchenpic,
             cookbookpic,
