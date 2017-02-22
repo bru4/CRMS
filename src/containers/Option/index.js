@@ -38,7 +38,8 @@ const Option = ({addCoupon, form}) => {
                         rules: [{required: true, message: '必须输入优惠券类型'}],
                     })(
                         <Select placeholder="输入优惠券的类型">
-                            <Select.Option value="0">每月送券</Select.Option>
+                            <Select.Option value={0}>每月送券</Select.Option>
+                            <Select.Option value={1}>反馈完成送券</Select.Option>
                         </Select>
                     )}
                 </Form.Item>

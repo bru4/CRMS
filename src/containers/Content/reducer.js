@@ -25,7 +25,7 @@ const list = (state = initstate.list, action) => {
             })
         case 'LIST_SUCCESS':
             return Object.assign({}, state, {
-                list: payload.res===null?null:payload.res.datalist,
+                list: payload.res!==null && payload.res.datalist?payload.res.datalist:[payload.res],
                 total: payload.res===null?0:payload.res.total,
                 fetching: false,
             });

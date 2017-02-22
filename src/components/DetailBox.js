@@ -4,10 +4,13 @@ import moment from 'moment'
 import {averagespend, profession, shoptype} from 'containers/constants'
 import PointAdd from './PointAdd'
 import CouponTake from './CouponTake'
-function showBig() {}
+
 class DetailBox extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showBig: false,
+        }
     }
     addPonintHandle = (points) => {
         const { data } = this.props;
@@ -26,6 +29,12 @@ class DetailBox extends React.Component {
         entity.openid = data.record.openid;
         this.props.takeCoupon(entity);
     }
+    showBig = (e) => {
+		this.setState({
+			showBig: !this.state.showBig,
+			img: e.target.src
+		})
+	}
     render() {
         let {show, toggleDetail, data, model, toggleCheckbox, addPoint, coupon} = this.props;
         let footer = [];
@@ -65,6 +74,7 @@ class DetailBox extends React.Component {
         }
         return(
         <div className='detailwrap'>
+            {this.state.showBig?<div className='imgbox' onClick={this.showBig} ><img src={this.state.img} /></div>:null}
             <Modal
                 wrapClassName='detailcontent'
                 title="申请内容"
@@ -140,24 +150,18 @@ class DetailBox extends React.Component {
                             </Col>
                             <Col span={12}>
                                 <span className="itemTitle">职位:</span>
-                                {data.record.position && profession.find(item => item.value == data.record.position).label}
+                                {(typeof data.record.position) === 'number' && profession.find(item => item.value === data.record.position).label}
                             </Col>
-                            {/*
-                                这里因为需要mock数据所以采用了 "==" 应该试用,
-                                另外后台自己添加数据并没有用code值 为字符串,所以渲染出错
-                            */}
                         </Row>
                         <Row className='detailItem'>
                             <Col span={12}>
                                 <span className="itemTitle">业态:</span>
-                                {data.record.mode && shoptype.find(item => item.value == data.record.mode).label}
+                                {(typeof data.record.mode) === 'number' && shoptype.find(item => item.value === data.record.mode).label}
                             </Col>
-                            {/*这里因为需要mock数据所以采用了"=="应该试用*/}
                             <Col span={12}>
                                 <span className="itemTitle">人均:</span>
-                                {data.record.price && averagespend.find(item => item.value == data.record.price).label}
+                                {(typeof data.record.price) === 'number' && averagespend.find(item => item.value == data.record.price).label}
                             </Col>
-                            {/*这里因为需要mock数据所以采用了"=="应该试用*/}
                         </Row>
                         <Row className='detailItem'>
                             <span className="itemTitle">地址:</span>
@@ -172,7 +176,7 @@ class DetailBox extends React.Component {
                                 shopnamepic && shopnamepic.length > 0
                                 ? shopnamepic.map((item, index) =>
                                 <Col key = {index} span = {6} >
-                                    <img src={item} alt="店招" onClick={showBig}/>
+                                    <img src={item} alt="店招" onClick={this.showBig}/>
                                 </Col>)
                                 : null
                             }
@@ -185,7 +189,7 @@ class DetailBox extends React.Component {
                         <Collapse.Panel className = 'detailTT' key = '3' header = "餐厅后厨照片" >
                         <Row className='detailPic' type='flex'>
                             {
-                                kitchenpic && kitchenpic.map((item, index) => <Col key={index} span={6}><img src={item} alt="后厨" onClick={showBig}/></Col>)
+                                kitchenpic && kitchenpic.map((item, index) => <Col key={index} span={6}><img src={item} alt="后厨" onClick={this.showBig}/></Col>)
                             }
                         </Row>
                         </Collapse.Panel>
@@ -196,7 +200,7 @@ class DetailBox extends React.Component {
                         <Collapse.Panel className='detailTT' key='4' header="餐厅菜单照片">
                         <Row className='detailPic' type='flex'>
                             {
-                                cookbookpic&&cookbookpic.map((item,index)=><Col key={index} span={6}><img src={item} alt="菜单" onClick={showBig}/></Col>)
+                                cookbookpic&&cookbookpic.map((item,index)=><Col key={index} span={6}><img src={item} alt="菜单" onClick={this.showBig}/></Col>)
                             }
                         </Row>
                         </Collapse.Panel>
