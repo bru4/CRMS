@@ -103,7 +103,7 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
             render: (text, record, index) => type === 'all'
                 ? <a onClick={() => toggleDetail({index, record, type: 'feedback'})}>查看</a>
                 : <div>
-                    <a onClick={() => toggleDetail({index, record, type: 'feedback'})}>查看</a> | <a onClick={() => toggleCheckbox({index, record, type: 'feedback', result:'1'})}>通过</a> | <a onClick={() => toggleCheckbox({index, record, type: 'feedback', result:'0'})}>拒绝</a>
+                    <a onClick={() => toggleDetail({index, record, type: 'feedback'})}>查看</a> | <a onClick={() => toggleCheckbox({index, record, type: 'feedback', result: 1})}>通过</a> | <a onClick={() => toggleCheckbox({index, record, type: 'feedback', result: 0})}>拒绝</a>
                 </div>,
     }];
     if(type==='review'){

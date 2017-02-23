@@ -46,8 +46,8 @@ class DetailBox extends React.Component {
         }else {
             footer = [
                 <Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,
-                <Button key="pass" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'1'})}}>通过</Button>,
-                <Button key="submit" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result:'0'})}}>拒绝</Button>
+                <Button key="pass" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result: 1})}}>通过</Button>,
+                <Button key="submit" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result: 0})}}>拒绝</Button>
             ]
         }
         let shopnamepic,
