@@ -15,7 +15,7 @@ export const profession = [{
     value: 4
 }, {
     label: '其他(餐饮从业者、美食爱好者)',
-    value: 9
+    value: 5
 }];
 export const shoptype = [{
     label: '中餐店',
@@ -126,11 +126,11 @@ export const getStatus = text => {
 }
 export const getTrueAnswer = text => {
     switch (text) {
-        case '0':
+        case 0:
             return '满意';
-        case '1':
+        case 1:
             return '一般';
-        case '2':
+        case 2:
             return '不满意';
     }
 }

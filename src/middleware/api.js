@@ -17,7 +17,7 @@ fetch(`${API_ROOT}/${title}/query`, {
     body: JSON.stringify({
         'currentpage': page?page:0,
         'pagesize': 20,
-        'querytype': type,
+        'querytype': Number(type),
     }),
 })
 .then(getJsonRes)
