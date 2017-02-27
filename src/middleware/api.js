@@ -6,7 +6,8 @@ const checkJson = ({json, response}) => {
     } else {
         return {json};
     }
-}
+};
+
 export const fetchList = ({title, type, page}) =>
 fetch(`${API_ROOT}/${title}/query`, {
     method: 'post',
@@ -71,7 +72,8 @@ const getResultList = (index, record, result) => {
         }
         return {reslist};
     }
-}
+};
+
 export const uploadresult = ({index, record, type, result}) =>
 fetch(`${API_ROOT}/${type}/uploadresult`, {
     method: 'post',
@@ -89,6 +91,7 @@ fetch(`${API_ROOT}/${type}/uploadresult`, {
         error: error.message || 'Something bad happened'
     })
 );
+
 export const addCoupon = (type, name, id) =>
 fetch(`${API_ROOT}/center/addcoupon`, {
     method: 'post',
@@ -187,6 +190,7 @@ fetch(`${API_ROOT}/member/takecoupon`, {
         error: error.message || 'Something bad happened'
     })
 );
+
 export const queryUser = mobile =>
 fetch(`${API_ROOT}/member/querybymobile`, {
     method: 'post',
@@ -197,6 +201,23 @@ fetch(`${API_ROOT}/member/querybymobile`, {
     body: JSON.stringify({
         mobile: mobile,
     }),
+})
+.then(getJsonRes)
+.then(checkJson)
+.then(
+    data => data,
+    error => ({
+        error: error.message || 'Something bad happened'
+    })
+);
+
+export const queryProduct = () =>
+fetch(`${API_ROOT}/trial/queryproduct`, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json'
+    },
 })
 .then(getJsonRes)
 .then(checkJson)

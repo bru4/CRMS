@@ -1,6 +1,6 @@
 import { fork, take, put, call, select } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -149,6 +149,15 @@ function* queryUserHandle(mobile) {
         yield put(resetErrorMessage(error||json))
     }
 }
+function* queryProductHandle() {
+    const { json, error} = yield call(queryProduct);
+    if (json.code === '1000') {
+        yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json))
+    }
+}
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
@@ -235,7 +244,12 @@ function* watchQueryUser(){
         yield fork(queryUserHandle, action.payload);
     }
 }
-
+function* watchQueryProduct(){
+    while(true) {
+        yield take('QUERY_TRIAL_PRODUCT');
+        yield fork(queryProductHandle)
+    }
+}
 /******************************************************************************/
 export default function* root() {
     yield [
@@ -250,5 +264,6 @@ export default function* root() {
         fork(watchPointAdd),
         fork(watchTakeCoupon),
         fork(watchQueryUser),
+        fork(watchQueryProduct),
     ]
 }

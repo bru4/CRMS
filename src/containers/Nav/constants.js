@@ -23,6 +23,10 @@ export const title = [{
 		title: '全部反馈',
 		name: 'feedbackall',
 		path: '/crmsadmin/feedback/feedbackall'
+	}, {
+		title: '试用产品维护',
+		name: 'product',
+		path: '/crmsadmin/trial/product'
 	}]
 }, {
 	title: '会员管理',
