@@ -1,4 +1,7 @@
-const API_ROOT = 'http://cs.udianhuo.com/crms/api';
+
+//const API_ROOT = 'http://cs.udianhuo.com/crms/api';
+const API_ROOT = 'http://localhost/crms/api';
+
 const getJsonRes = response => response.json().then(json => ({json, response}));
 const checkJson = ({json, response}) => {
     if (!response.ok) {
