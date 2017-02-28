@@ -1,6 +1,9 @@
+/**
+ * 本项目上线只需修改API接口为正式环境的接口即可
+ */
 
-//const API_ROOT = 'http://cs.udianhuo.com/crms/api';
-const API_ROOT = 'http://stest.udianhuo.com/crms/api';
+const API_ROOT = 'http://cs.udianhuo.com/crms/api';
+//const API_ROOT = 'http://stest.udianhuo.com/crms/api';
 
 const getJsonRes = response => response.json().then(json => ({json, response}));
 const checkJson = ({json, response}) => {

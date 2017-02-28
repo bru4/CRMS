@@ -140,6 +140,11 @@ function* takeCouponHandle(entity) {
         yield put(resetErrorMessage(error||json))
     }
 }
+/**
+ * 通过手机号查找用户
+ * 通过queryUser查询到用户 然后将信息更新至content中的userlist显示
+ * @param {string} mobile 11位电话号码
+ */
 function* queryUserHandle(mobile) {
     const { json, error} = yield call(queryUser, mobile);
     if (json.code === '1000') {
@@ -149,6 +154,10 @@ function* queryUserHandle(mobile) {
         yield put(resetErrorMessage(error||json))
     }
 }
+/**
+ * 查询目前所有的试用产品
+ * 通过queryProduct 查询试用产品的信息 然后显示
+ */
 function* queryProductHandle() {
     const { json, error} = yield call(queryProduct);
     if (json.code === '1000') {
