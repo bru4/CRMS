@@ -68,15 +68,15 @@ const getResultList = (index, record, result) => {
             }]
         };
     } else {
-        let reslist = [];
+        let resultlist = [];
         for (let i = 0, len = index.length; i < len; i++) {
-            reslist.push({
+            resultlist.push({
                 'mobile': record[i].mobile,
                 'openid': record[i].openid,
                 'result': result,
             });
         }
-        return {reslist};
+        return {resultlist};
     }
 };
 
