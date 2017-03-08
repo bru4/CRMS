@@ -10,6 +10,7 @@ class Product extends Component {
         this.state = {
             showProductBox: false,
             editProduct: {},
+            loading: false,
         }
     }
     
@@ -35,6 +36,10 @@ class Product extends Component {
         });
     }
     
+    editSubmit() {
+        console.log('in');
+    }
+
     render() {
         const { showProductBox, editProduct } = this.state;
         return (
@@ -44,8 +49,11 @@ class Product extends Component {
                     <ProductList data={this.props.list} toggleProductEditor={this.toggleProductBox} />
                     <ProductTrialList data={this.props.triallist} />
                 </div>
-                <Modal title="新建/修改试用产品" visible={showProductBox}
-                    onOk={this.handleOk} onCancel={this.toggleProductBox}
+                <Modal title="新建/修改试用产品"
+                    visible={showProductBox}
+                    onOk={this.editSubmit}
+                    confirmLoading={this.state.loading}
+                    onCancel={this.toggleProductBox}
                 >
                     <ProductEditor product={editProduct} />
                 </Modal>
