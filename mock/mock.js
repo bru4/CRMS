@@ -156,10 +156,11 @@ const mockFeedbackList = () => Mock.mock({
 });
 const getPoint = () => Mock.mock('@integer(50, 1000)');
 const mockTrialProduct = () => Mock.mock({
-    'product|9': [{
-        'name': Mock.Random.cword(5),
-        'code': Mock.Random.string('number', 6),
-        'img': Mock.Random.image('200x100'),
+    'product|20': [{
+        'name': '@cword(5)',
+        'code': '@string("number", 6)',
+        'img': Mock.Random.image('224x224'),
+        'isused': '@natural(0, 1)',
     }]
 })
 //response
@@ -293,7 +294,6 @@ const startFetchMock = () =>{
             'msg': 'success',
         }
     });
-
 }
 
 module.exports = startFetchMock;

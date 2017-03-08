@@ -52,6 +52,7 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
         }, {
             title: '申请理由',
             key: 'reason',
+            width: 400,
             dataIndex: 'reason',
         }, {
             title: '认证状态',

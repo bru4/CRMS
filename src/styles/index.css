@@ -123,3 +123,74 @@ html,body{
 .search-bar-input{
   height: 24px;
 }
+/*-------------
+     Product
+  -------------*/
+.product-body{
+  display: flex;
+  justify-content: space-around;
+}
+.product-table{
+  width: 600px;
+  margin: 10px 0 0;
+}
+.product-table .product-img{
+  width: 100%;
+}
+.product-triallist{
+  height: 600px;
+}
+.product-triallist-body{
+  width: 375px;
+  height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.trial-product-item{
+  width: 112px;
+  height: 159px;
+  border: 1PX solid #bfbfbf;
+  margin: 20px 0 0;
+  position: relative;
+}
+.trial-product-item .item-check{
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  color: #b3b3b3;
+}
+.trial-product-item.checked .item-check{
+  color: #7ed320;
+}
+.product-item-img{
+  display: block;
+  width: 112px;
+  height: 112px;
+  margin: 6px 0 0;
+  border: 0;
+}
+.product-item-name{
+  text-align: center;
+  line-height: 20px;
+  font-size: 14px;
+}
+.product-editor .item{
+  display: flex;
+}
+.product-editor .input{
+  width: 250px;
+}
+.product-editor .uploader-trigger{
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  font-size: 28px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+}

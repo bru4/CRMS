@@ -1,4 +1,4 @@
-import { fork, take, put, call, select } from 'redux-saga/effects'
+import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
 import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct } from './api'
 import { message } from 'antd';
@@ -156,41 +156,39 @@ function* queryUserHandle(mobile) {
 }
 /**
  * 查询目前所有的试用产品
- * 通过queryProduct 查询试用产品的信息 然后显示
+ * 通过loadProduct 查询试用产品的信息 然后显示
  */
-function* queryProductHandle() {
+function* loadProduct() {
     const { json, error} = yield call(queryProduct);
+    console.log(json, error)
     if (json.code === '1000') {
         yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
     } else {
         message.error(json.msg)
-        yield put(resetErrorMessage(error||json))
+        yield put(resetErrorMessage(error||json));
     }
 }
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
 function* watchListFetch() {
-    for (let i = 0; i < 1; i++) {
+    let i = 0;
+    while (true) {
         const action = yield take('LOAD_LIST');
         let title = action.payload.title;
-        if(title === 'member' || title === 'trial' || title === 'feedback'){
-            let type = action.payload.subtitle.includes('all')?10:1;
+        let subtitle = action.payload.subtitle;
+        console.log(title, subtitle);
+        if(subtitle === 'product') {
+            yield fork(loadProduct);
+        }
+        if(title === 'member' || title === 'trial' && subtitle !== 'product'  || title === 'feedback'){
+            let type = subtitle.includes('all') ? 10 : 1;
             yield fork(loadList, title, type);
+        }
+        if(i === 0) {
             yield fork(loadCoupon);
         }
-    }
-}
-function* watchRouterFetch() {
-    while (true) {
-        yield take('@@router/LOCATION_CHANGE');
-        let title = yield select(state=>state.nav.title);
-        let subtitle = yield select(state=>state.nav.subtitle);
-        let type = subtitle.includes('all')?10:1;
-            //console.log(title, type)
-        if(title === 'member' || title === 'trial' || title === 'feedback'){
-            yield fork(loadList, title, type);
-        }
+        i++;
     }
 }
 function* watchListChange() {
@@ -253,16 +251,11 @@ function* watchQueryUser(){
         yield fork(queryUserHandle, action.payload);
     }
 }
-function* watchQueryProduct(){
-    while(true) {
-        yield take('QUERY_TRIAL_PRODUCT');
-        yield fork(queryProductHandle)
-    }
-}
+
 /******************************************************************************/
 export default function* root() {
     yield [
-        fork(watchRouterFetch),
+        //fork(watchRouterFetch),
         fork(watchListChange),
         fork(watchPageChange),
         fork(watchExportTalbel),
@@ -273,6 +266,5 @@ export default function* root() {
         fork(watchPointAdd),
         fork(watchTakeCoupon),
         fork(watchQueryUser),
-        fork(watchQueryProduct),
     ]
 }

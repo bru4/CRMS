@@ -1,4 +1,17 @@
-import {couponInitialState} from './model'
+const couponInitialState = {
+    type: {
+        name: '',
+        value: '',
+    }, //  优惠券的类型
+    name: {
+        name: '',
+        value: '',
+    }, //  优惠券的名字
+    id: {
+        name: '',
+        value: '',
+    }, //  优惠券的编号
+};
 
 const coupon = (state = couponInitialState, action) => {
     let payload = action.payload;

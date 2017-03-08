@@ -50,7 +50,7 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
         title: '您用有点火调料的用法及用量',
         key: 'q2',
         dataIndex: 'q2',
-        width: 120,
+        width: 220,
         render: (text, record) => getQA(record.feedBacklist, '1')
     }, {
         title: '您觉得有点火产品味道如何',
@@ -62,7 +62,7 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
         title: '味道的原因',
         key: 'q4',
         dataIndex: 'q4',
-        width: 140,
+        width: 200,
         render: (text, record) => getQA(record.feedBacklist, '3')
     }, {
         title: '是否愿意购买',
@@ -113,7 +113,7 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
         <Table
             loading={data.fetching}
             dataSource={data.list?data.list:[]}
-            scroll={{ x: 1500, y: 400 }}
+            scroll={{ x: 1680, y: 400 }}
             columns={columns}
             pagination={pagination}
             rowKey='recordid'
