@@ -157,7 +157,7 @@ const mockFeedbackList = () => Mock.mock({
 const getPoint = () => Mock.mock('@integer(50, 1000)');
 const mockTrialProduct = () => Mock.mock({
     'product|20': [{
-        'name': '@cword(5)',
+        'name': '@cword(3),@cword(5)',
         'code': '@string("number", 6)',
         'img': Mock.Random.image('224x224'),
         'isused': '@natural(0, 1)',

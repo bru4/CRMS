@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button } from 'antd'
-const ProductList = ({data, toggleProductEditor}) => {
+const ProductList = ({data, toggleProductEditor, toggleProductUsable}) => {
     const columns = [{
         title: '序号',
         key: 'id',
@@ -27,7 +27,7 @@ const ProductList = ({data, toggleProductEditor}) => {
         width: 100,
         key: 'isused',
         dataIndex: 'isused',
-        render: (text) => text === 0 ? '否' : '是',
+        render: (text, record, index) => text === 0 ? <a key={index} onClick={()=>toggleProductUsable(record)}>否</a> : <a key={index} onClick={()=>toggleProductUsable(record)}>是</a>,
     }, {
         title: '操作',
         width: 70,
