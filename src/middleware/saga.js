@@ -1,6 +1,6 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -168,9 +168,26 @@ function* loadProduct() {
         yield put(resetErrorMessage(error||json));
     }
 }
+function* queryPorductHandle(data) {
+    const { json, error} = yield call(updateProduct, data);
+    console.log(json, error)
+    if (json.code === '1000') {
+        //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
+        yield put({type:'GET_PRODUCT_CHANGE', payload: data});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json));
+    }
+}
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
+function* watchRouterFetch() {
+    while (true) {
+        yield take('@@router/LOCATION_CHANGE');
+        yield put({type: 'REMOVE_USERLIST'})
+    }
+}
 function* watchListFetch() {
     let i = 0;
     while (true) {
@@ -251,11 +268,16 @@ function* watchQueryUser(){
         yield fork(queryUserHandle, action.payload);
     }
 }
-
+function* watchPorductUpdate(){
+    while(true) {
+        const action = yield take('SUBMIT_PRODUCT_UPDATE');
+        yield fork(queryPorductHandle, action.payload);
+    }
+}
 /******************************************************************************/
 export default function* root() {
     yield [
-        //fork(watchRouterFetch),
+        fork(watchRouterFetch),
         fork(watchListChange),
         fork(watchPageChange),
         fork(watchExportTalbel),
@@ -266,5 +288,6 @@ export default function* root() {
         fork(watchPointAdd),
         fork(watchTakeCoupon),
         fork(watchQueryUser),
+        fork(watchPorductUpdate),
     ]
 }

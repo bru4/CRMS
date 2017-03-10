@@ -1,9 +1,98 @@
-import React from 'react'
-import { Form, Input, Upload, Icon } from 'antd';
+import { Form, Input, Upload, Icon, Modal, message } from 'antd';
+import React, { Component } from 'react';
+
+class PicturesWall extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            previewVisible: false,
+            sign: '',
+        }
+    }
+    
+    componentWillMount() {
+        const sign = fetch('http://cs.udianhuo.com/crms/api/center/wxyt/getsign?type=upload')
+            .then(res=> res.json())
+            .then(res=>res.data.sign)
+            .catch(error => error);
+        sign.then((val) => {
+            if(val.msg){
+                message.error(val.msg);
+                return;
+            }
+            this.setState({sign: val});
+        })
+
+    }
+
+    /*chooseFile = () => {
+        console.log('in')
+    }*/
+
+    handleCancel = () => this.setState({ previewVisible: false })
+
+    handlePreview = (file) => {
+        console.log(file);
+        this.setState({
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true,
+        });
+    }
+
+    handleChange = ({ fileList }) => this.setState({ fileList });
+    handleRemove = ({ fileList }) => this.setState({ fileList });
+    onSuccess(ret) {
+        console.log('onSuccess', ret);
+    }
+
+    onError(err) {
+        console.log('onError', err);
+    }
+
+    render() {
+        console.log(this.props);
+        const { previewVisible, sign } = this.state;
+        const { fileList } = this.props;
+        //const show = !!fileList.length;
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
+        return (
+        <div className="clearfix">
+            <Upload
+                action="http://web.image.myqcloud.com/photos/v2/10019081/activity10/0/"
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={this.handlePreview}
+                onRemove={this.handleRemove}
+                onSuccess={this.onSuccess}
+                onError={this.onError}
+                headers={{
+                    Authorization: sign,
+                }}
+            >
+                { fileList.length ? null : uploadButton }
+            </Upload>
+            {/*<input type="file" ref='imginput' />
+            <div className='img-item' onClick={this.chooseFile}>
+                {
+                    this.props.value ? <img src={this.props.value} alt=""/> : uploadButton
+                }
+            </div>*/}
+            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                <img alt="example" style={{ width: '100%' }} src={this.props.value} />
+            </Modal>
+        </div>
+        );
+    }
+}
 
 const ProductEditor = ({form}) => {
     const { getFieldDecorator, getFieldProps, getFieldValue } = form;
-    const img = getFieldValue('img');
+    const picture = getFieldValue('picture');
     return(
         <Form className='product-editor'>
             <div className="name-box">
@@ -33,20 +122,22 @@ const ProductEditor = ({form}) => {
                 )}
             </Form.Item>
             <Form.Item className='item' label='产品图片:'>
-                <Upload
-                    className="avatar-uploader"
-                    name="avatar"
-                    showUploadList={false}
-                    {...getFieldProps('img', {
-                        rules: [{ required: true, message: '请上传产品图片!' }],
-                    })}
-                >
-                    {
-                        img ?
-                        <img src={img} alt="" className="avatar" /> :
-                        <Icon type="plus" className="uploader-trigger" />
-                    }
-                </Upload>
+                {getFieldDecorator('picture', {
+                    rules: [{ required: true, message: '请输入产品名称!' }],
+                })(
+                    <PicturesWall />
+                )}
+                    {/*<PicturesWall
+                        fileList = {
+                            picture
+                            ? [{
+                                uid: 0,
+                                status: 'done',
+                                url: picture,
+                            }]
+                            : []
+                        }
+                    />*/}
             </Form.Item>
         </Form>
     )

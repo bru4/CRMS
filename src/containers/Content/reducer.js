@@ -19,6 +19,8 @@ const base = (state = initstate.base, action) => {
 const list = (state = initstate.list, action) => {
     const payload = action.payload;
     switch (action.type) {
+        case 'REMOVE_USERLIST':
+            return initstate.list;
         case 'LIST_REQUEST':
             return Object.assign({}, initstate.list, {
                 fetching: true,

@@ -52,15 +52,16 @@ class Product extends Component {
 
     render() {
         const { showProductBox } = this.state;
+        const { list, triallist, form } = this.props;
         return (
             <div className='product'>
                 <h2>试用产品维护</h2>
                 <div className='product-body'>
-                    <ProductList data={this.props.list}
+                    <ProductList data={list}
                         toggleProductEditor={this.toggleProductBox}
                         toggleProductUsable={this.toggleProductUsable}
                     />
-                    <ProductTrialList data={this.props.triallist} />
+                    <ProductTrialList data={triallist} />
                 </div>
                 <Modal title="新建/修改试用产品"
                     visible={showProductBox}
@@ -68,7 +69,7 @@ class Product extends Component {
                     confirmLoading={this.state.loading}
                     onCancel={this.toggleProductBox}
                 >
-                    <ProductEditor form={this.props.form} />
+                    <ProductEditor form={form} />
                 </Modal>
             </div>
         );
@@ -78,12 +79,10 @@ class Product extends Component {
 
 export default Form.create({
     onFieldsChange: (props, fields) => {
-        console.log(fields);
-        if(fields.img) {
-            let file = fields.img.value.file;
-            fields.img.value = 'aaaaa.jpg';
-            console.log(fields, file);
-            props.actions.productChange(fields);
+        if(fields.picture) {
+            console.log(fields);
+            let file = fields.picture.value.file;
+            props.actions.uploadImage(file);
         } else {
             props.actions.productChange(fields);
         }

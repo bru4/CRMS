@@ -9,7 +9,7 @@ const editProductInitState = {
         dirty: false,
         value: '',
     },
-    img: {
+    picture: {
         dirty: false,
         value: '',
     },
@@ -23,7 +23,10 @@ const listall = (state = [], action) => {
     let payload = action.payload;
     switch (action.type) {
         case 'GET_TRIAL_PRODUCT':
-            return [...payload.product];
+            return [...payload];
+        case 'GET_PRODUCT_CHANGE':
+            const { code, ...other } = payload;
+            return state.map((item) => item.code === code ? {...item, ...other} : item);
         default:
             return state;
     }
@@ -39,21 +42,24 @@ const editProduct = (state = editProductInitState, action) => {
                 return _.merge({}, state, {
                     code: { value: payload.code },
                     name: { value: payload.name },
-                    img: { value: payload.img },
+                    picture: { value: payload.picture },
                     isused: { value: payload.isused },
                 });
             }
         case 'PRODUCT_CHANGE':
             console.log(payload);
             let newState = {};
-            for (var key in payload) {
+            for (let key in payload) {
                 if (payload.hasOwnProperty(key)) {
-                    var element = payload[key];
-                    
+                    newState[key] = {
+                        dirty: true,
+                        value: payload[key].value,
+                    }
                 }
             }
+            console.log(newState);
             return Object.assign({}, state, {
-                ...payload,
+                ...newState,
             });
         default:
             return state;

@@ -4,7 +4,7 @@ export const getProductList = state => state.product.listall;
 export const getEditProduct = state => state.product.editProduct;
 export const getTrialProduct = createSelector([
     getProductList
-], (productList) => productList.filter(item => item.isused === 0));
+], (productList) => productList.filter(item => item.isused === 1));
 
 export default {
     getProductList,

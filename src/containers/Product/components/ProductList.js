@@ -9,8 +9,8 @@ const ProductList = ({data, toggleProductEditor, toggleProductUsable}) => {
     }, {
         title: '图片',
         width: 100,
-        key: 'img',
-        dataIndex: 'img',
+        key: 'picture',
+        dataIndex: 'picture',
         render: (text) => <img className='product-img' src={text} />,
     }, {
         title: '产品名称',
