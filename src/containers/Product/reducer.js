@@ -65,7 +65,16 @@ const editProduct = (state = editProductInitState, action) => {
             return state;
     }
 };
+const sign = (state = '', action) => {
+    switch (action.type) {
+        case 'GET_UPLOAD_SIGN':
+            return action.payload.sign;
+        default:
+            return state;
+    }
+}
 export default combineReducers({
     listall,
     editProduct,
+    sign,
 });

@@ -114,3 +114,4 @@ export const updateProduct = (data) => fetchHandle('/trial/product/update', 'pos
         ...data,
     }],
 });
+export const uploadSign = () => fetchHandle('/center/wxyt/getsign?type=upload', 'get')

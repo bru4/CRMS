@@ -1,6 +1,6 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -93,7 +93,6 @@ function* addCouponHandle({type, name, id}) {
 function* pointHandle(entity) {
     if(typeof entity ==='string'){
         const { json, error} = yield call(queryPoint, entity);
-        console.log(json)
         if (json.code === '1000') {
             yield put(fetchUserPoint(json.data.points));
         } else {
@@ -160,7 +159,6 @@ function* queryUserHandle(mobile) {
  */
 function* loadProduct() {
     const { json, error} = yield call(queryProduct);
-    console.log(json, error)
     if (json.code === '1000') {
         yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
     } else {
@@ -170,10 +168,19 @@ function* loadProduct() {
 }
 function* queryPorductHandle(data) {
     const { json, error} = yield call(updateProduct, data);
-    console.log(json, error)
     if (json.code === '1000') {
         //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
         yield put({type:'GET_PRODUCT_CHANGE', payload: data});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json));
+    }
+}
+function* uploadSignHandle() {
+    const { json, error} = yield call(uploadSign);
+    if (json.code === '1000') {
+        //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
+        yield put({type:'GET_UPLOAD_SIGN', payload: json.data});
     } else {
         message.error(json.msg)
         yield put(resetErrorMessage(error||json));
@@ -274,6 +281,13 @@ function* watchPorductUpdate(){
         yield fork(queryPorductHandle, action.payload);
     }
 }
+function* watchUpdateSign(){
+    while(true) {
+        yield take('QUERY_UPLOAD_SIGN');
+        yield fork(uploadSignHandle);
+    }
+}
+
 /******************************************************************************/
 export default function* root() {
     yield [
@@ -289,5 +303,6 @@ export default function* root() {
         fork(watchTakeCoupon),
         fork(watchQueryUser),
         fork(watchPorductUpdate),
+        fork(watchUpdateSign),
     ]
 }

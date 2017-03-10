@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Product from './components/Product'
 import actions from './actions'
 import reducer from './reducer'
-import selectors, { getTrialProduct, getProductList, getEditProduct } from './selector'
+import selectors, { getTrialProduct, getProductList, getEditProduct, getSign } from './selector'
 import { actions as conActions } from 'containers/Content'
 const { loadList } = conActions;
 const mapStateToProps = (state) => {
@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
         list: getProductList(state),
         triallist: getTrialProduct(state),
         editProduct: getEditProduct(state),
+        sign: getSign(state),
     }
 }
 

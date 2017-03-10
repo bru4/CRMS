@@ -18,6 +18,7 @@ class Product extends Component {
             title: 'trial',
             subtitle: 'product',
         });
+        this.props.actions.getUploadSign();
     }
 
     toggleProductBox = (data) => {
@@ -52,7 +53,7 @@ class Product extends Component {
 
     render() {
         const { showProductBox } = this.state;
-        const { list, triallist, form } = this.props;
+        const { list, triallist, form, sign } = this.props;
         return (
             <div className='product'>
                 <h2>试用产品维护</h2>
@@ -69,7 +70,7 @@ class Product extends Component {
                     confirmLoading={this.state.loading}
                     onCancel={this.toggleProductBox}
                 >
-                    <ProductEditor form={form} />
+                    <ProductEditor sign={sign} form={form} />
                 </Modal>
             </div>
         );
