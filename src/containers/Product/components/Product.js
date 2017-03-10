@@ -40,12 +40,20 @@ class Product extends Component {
         });
     }
 
-    editSubmit = (data) => {
+    editSubmit = () => {
         console.log('in');
-        this.props.form.validateFields((errors, values) => {
+        console.log(this.props.editProduct);
+        const { actions, form } = this.props;
+        form.validateFields((errors, values) => {
             console.log(errors, values);
             if(errors) {
                 
+            } else {
+                console.log(values);
+                actions.submitProductUpdate({
+                    name: `${values.firstname},${values.lastname}`,
+                    code: values.code,
+                });
             }
         })
         //this.props.actions.submitProductUpdate(data);
@@ -81,6 +89,7 @@ class Product extends Component {
 export default Form.create({
     onFieldsChange: (props, fields) => {
         if(fields.picture) {
+            console.log('-------------');
             console.log(fields);
             let file = fields.picture.value.file;
             props.actions.uploadImage(file);
@@ -89,10 +98,16 @@ export default Form.create({
         }
     },
     mapPropsToFields: ({editProduct}) => {
-        const { name, ...other } = editProduct;
+        const { name, picture, ...other } = editProduct;
         return {
             firstname: { value: name.value.split(',')[0]},
             lastname: { value: name.value.split(',')[1]},
+            picturelist: { value: {
+                fileList: [{
+                    uid: 0,
+                    url: picture,
+                }]
+            }},
             ...other,
         }
     },

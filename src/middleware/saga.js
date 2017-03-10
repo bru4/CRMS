@@ -170,6 +170,7 @@ function* queryPorductHandle(data) {
     const { json, error} = yield call(updateProduct, data);
     if (json.code === '1000') {
         //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
+        message.success('修改成功');
         yield put({type:'GET_PRODUCT_CHANGE', payload: data});
     } else {
         message.error(json.msg)

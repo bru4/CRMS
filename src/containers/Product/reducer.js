@@ -39,15 +39,18 @@ const editProduct = (state = editProductInitState, action) => {
             if(payload === null){
                 return editProductInitState;
             } else {
+                const firstname = payload.name.split(',')[0];
+                const lastname = payload.name.split(',')[1];
                 return _.merge({}, state, {
                     code: { value: payload.code },
+                    firstname: { value: firstname },
+                    lastname: { value:lastname ? lastname : '' },
                     name: { value: payload.name },
                     picture: { value: payload.picture },
                     isused: { value: payload.isused },
                 });
             }
         case 'PRODUCT_CHANGE':
-            console.log(payload);
             let newState = {};
             for (let key in payload) {
                 if (payload.hasOwnProperty(key)) {
@@ -57,7 +60,6 @@ const editProduct = (state = editProductInitState, action) => {
                     }
                 }
             }
-            console.log(newState);
             return Object.assign({}, state, {
                 ...newState,
             });
