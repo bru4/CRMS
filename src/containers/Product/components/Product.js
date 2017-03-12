@@ -41,18 +41,21 @@ class Product extends Component {
     }
 
     editSubmit = () => {
-        console.log('in');
+        console.log('editSubmit');
         console.log(this.props.editProduct);
         const { actions, form } = this.props;
         form.validateFields((errors, values) => {
             console.log(errors, values);
             if(errors) {
-                
+                console.log(errors);
             } else {
                 console.log(values);
                 actions.submitProductUpdate({
                     name: `${values.firstname},${values.lastname}`,
                     code: values.code,
+                });
+                this.setState({
+                    showProductBox: !this.state.showProductBox,
                 });
             }
         })
@@ -61,7 +64,7 @@ class Product extends Component {
 
     render() {
         const { showProductBox } = this.state;
-        const { list, triallist, form, sign } = this.props;
+        const { list, triallist, form, sign, actions } = this.props;
         return (
             <div className='product'>
                 <h2>试用产品维护</h2>
@@ -78,7 +81,11 @@ class Product extends Component {
                     confirmLoading={this.state.loading}
                     onCancel={this.toggleProductBox}
                 >
-                    <ProductEditor sign={sign} form={form} />
+                    <ProductEditor
+                        sign={sign}
+                        form={form}
+                        getImageUrl={actions.getImageUrl}
+                    />
                 </Modal>
             </div>
         );
@@ -89,26 +96,44 @@ class Product extends Component {
 export default Form.create({
     onFieldsChange: (props, fields) => {
         if(fields.picture) {
-            console.log('-------------');
+            console.log('onFieldsChange');
             console.log(fields);
             let file = fields.picture.value.file;
-            props.actions.uploadImage(file);
+            if(file.status === 'removed'){
+                props.actions.removeImageUrl(file);
+            } else {
+                props.actions.getImageUrl(file);
+            }
         } else {
             props.actions.productChange(fields);
         }
     },
     mapPropsToFields: ({editProduct}) => {
-        const { name, picture, ...other } = editProduct;
+        const { name, picture, code, isused } = editProduct;
+        console.log('mapPropsToFields:');
+        console.log(isused);
+        console.log(picture);
         return {
             firstname: { value: name.value.split(',')[0]},
             lastname: { value: name.value.split(',')[1]},
-            picturelist: { value: {
-                fileList: [{
-                    uid: 0,
-                    url: picture,
-                }]
-            }},
-            ...other,
+            isused: { value: isused.value },
+            code: { value: code.value },
+            picture: {
+                value: {
+                    file: {
+                        uid: 0,
+                        name: name.value,
+                        status: 'done',
+                        url: picture.value,
+                    },
+                    fileList: picture.value ? [{
+                        uid: 0,
+                        name: name.value,
+                        status: 'done',
+                        url: picture.value,
+                    }] : [],
+                },
+            },
         }
     },
     onValuesChange(_, values) {

@@ -202,7 +202,6 @@ function* watchListFetch() {
         const action = yield take('LOAD_LIST');
         let title = action.payload.title;
         let subtitle = action.payload.subtitle;
-        console.log(title, subtitle);
         if(subtitle === 'product') {
             yield fork(loadProduct);
         }
@@ -250,7 +249,6 @@ function* watchUserPoint(){
     while(true){
         const action = yield take('TOGGLE_DETAIL');
         if(action.payload){
-            console.log(action.payload.record);
             yield fork(pointHandle, action.payload.record.openid)
         }
     }
@@ -259,7 +257,6 @@ function* watchPointAdd(){
     while(true){
         const action = yield take('ADD_POINT');
         if(action.payload){
-            console.log(action.payload);
             yield fork(pointHandle, action.payload)
         }
     }

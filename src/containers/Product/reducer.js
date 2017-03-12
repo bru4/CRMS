@@ -35,6 +35,12 @@ const listall = (state = [], action) => {
 const editProduct = (state = editProductInitState, action) => {
     const payload = action.payload;
     switch (action.type) {
+        case 'GET_IMAGE_URL':
+            console.log(payload);
+            const res = payload.response;
+            return res ? Object.assign({}, state, {
+                picture: {value: res.data.download_url}
+            }) : state;
         case 'EDIT_PRODUCT_UPDATE':
             if(payload === null){
                 return editProductInitState;
@@ -46,6 +52,20 @@ const editProduct = (state = editProductInitState, action) => {
                     firstname: { value: firstname },
                     lastname: { value:lastname ? lastname : '' },
                     name: { value: payload.name },
+                    /*picture: {
+                        value: {
+                            file: {
+                                status: 'done',
+                                uid: 0,
+                                url: payload.picture,
+                            },
+                            fileList: [{
+                                status: 'done',
+                                uid: 0,
+                                url: payload.picture,
+                            }],
+                        },
+                    },*/
                     picture: { value: payload.picture },
                     isused: { value: payload.isused },
                 });
@@ -59,6 +79,25 @@ const editProduct = (state = editProductInitState, action) => {
                         value: payload[key].value,
                     }
                 }
+            }
+            console.log(payload);
+            console.log(newState);
+            console.log(state);
+            if(newState['firstname']) {
+                const lastname = state.name.value.split(',')[1];
+                return Object.assign({}, state, {
+                    name: {
+                        value: `${newState['firstname'].value},${lastname?lastname:''}`
+                    },
+                });
+            }
+            if(newState['lastname']) {
+                const firstname = state.name.value.split(',')[0];
+                return Object.assign({}, state, {
+                    name: {
+                        value: `${firstname?firstname:''},${newState['lastname'].value}`
+                    },
+                });
             }
             return Object.assign({}, state, {
                 ...newState,
