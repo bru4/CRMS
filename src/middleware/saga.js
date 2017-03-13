@@ -44,12 +44,15 @@ function* loadList(title, type, page){
  */
 function* fetchTableUrl(data){
     const { json, error} = yield call(fetchTable, data);
-    if (json.code === '1000') {
-        yield put(tabel.success(json))
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
+        yield put(tabel.success(json));
         location.href = json.data;
     } else {
         message.error(json.msg)
-        yield put(tabel.failure(error||json))
+        yield put(tabel.failure(json.msg));
     }
 }
 /**
@@ -59,7 +62,10 @@ function* fetchTableUrl(data){
  */
 function* uploadReviewResult(data){
     const { json, error} = yield call(uploadresult, data);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         yield put(review.success({
             type: data.type,
             index: data.index,
@@ -76,7 +82,10 @@ function* uploadReviewResult(data){
  */
 function* addCouponHandle({type, name, id}) {
     const { json, error} = yield call(addCoupon, type, name, id);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         message.success('添加成功');
     } else {
         message.error(json.msg)
@@ -93,7 +102,10 @@ function* addCouponHandle({type, name, id}) {
 function* pointHandle(entity) {
     if(typeof entity ==='string'){
         const { json, error} = yield call(queryPoint, entity);
-        if (json.code === '1000') {
+        if(error) {
+            message.error(error);
+            yield put(resetErrorMessage(error));
+        } else if (json.code === '1000') {
             yield put(fetchUserPoint(json.data.points));
         } else {
             message.error(json.msg)
@@ -102,7 +114,10 @@ function* pointHandle(entity) {
     }
     if(typeof entity === 'object'){
         const { json, error} = yield call(addPoint, entity);
-        if (json.code === '1000') {
+        if(error) {
+            message.error(error);
+            yield put(resetErrorMessage(error));
+        } else if (json.code === '1000') {
             message.success('添加成功');
             yield put(fetchUserPoint(json.data.totalpoints));
         } else {
@@ -117,7 +132,10 @@ function* pointHandle(entity) {
  */
 function* loadCoupon() {
     const { json, error} = yield call(queryCoupon);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         yield put(fetchCoupon(json.data));
     } else {
         message.error(json.msg)
@@ -131,7 +149,10 @@ function* loadCoupon() {
  */
 function* takeCouponHandle(entity) {
     const { json, error} = yield call(takeCoupon, entity);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         message.success('添加成功');
         //yield put(fetchCoupon(json.data));
     } else {
@@ -146,7 +167,10 @@ function* takeCouponHandle(entity) {
  */
 function* queryUserHandle(mobile) {
     const { json, error} = yield call(queryUser, mobile);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         yield put(list.success({title:'member', type:10}, json.data));
     } else {
         message.error(json.msg)
@@ -159,7 +183,10 @@ function* queryUserHandle(mobile) {
  */
 function* loadProduct() {
     const { json, error} = yield call(queryProduct);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
     } else {
         message.error(json.msg)
@@ -168,7 +195,10 @@ function* loadProduct() {
 }
 function* queryPorductHandle(data) {
     const { json, error} = data.type === 'update'?yield call(updateProduct, data):yield call(addProduct, data);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
         message.success(data.type === 'update'?'修改成功':'添加成功');
         yield put({type:'GET_PRODUCT_CHANGE', payload: data});
@@ -179,7 +209,10 @@ function* queryPorductHandle(data) {
 }
 function* wxytSignHandle() {
     const { json, error} = yield call(uploadSign);
-    if (json.code === '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
         yield put({type:'GET_UPLOAD_SIGN', payload: json.data});
     } else {
         message.error(json.msg)
@@ -188,7 +221,10 @@ function* wxytSignHandle() {
 }
 function* imageHandle(entity) {
     const { json, error} = yield call(uploadSign, entity);
-    if(json.code ===  '1000') {
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if(json.code ===  '1000') {
         const sign = json.data.sign;
         console.log(sign, entity)
         const data = yield call(removeImage, {
