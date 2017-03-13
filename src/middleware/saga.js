@@ -1,6 +1,6 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -167,26 +167,51 @@ function* loadProduct() {
     }
 }
 function* queryPorductHandle(data) {
-    const { json, error} = yield call(updateProduct, data);
+    const { json, error} = data.type === 'update'?yield call(updateProduct, data):yield call(addProduct, data);
     if (json.code === '1000') {
         //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
-        message.success('修改成功');
+        message.success(data.type === 'update'?'修改成功':'添加成功');
         yield put({type:'GET_PRODUCT_CHANGE', payload: data});
     } else {
         message.error(json.msg)
         yield put(resetErrorMessage(error||json));
     }
 }
-function* uploadSignHandle() {
+function* wxytSignHandle() {
     const { json, error} = yield call(uploadSign);
     if (json.code === '1000') {
-        //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
         yield put({type:'GET_UPLOAD_SIGN', payload: json.data});
     } else {
         message.error(json.msg)
         yield put(resetErrorMessage(error||json));
     }
 }
+function* imageHandle(entity) {
+    const { json, error} = yield call(uploadSign, entity);
+    if(json.code ===  '1000') {
+        const sign = json.data.sign;
+        console.log(sign, entity)
+        const data = yield call(removeImage, {
+            sign,
+            fileid: entity.fileid
+        });
+        console.log(data);
+        if(data.error){
+            message.error(data.error)
+            yield put(resetErrorMessage(data.error));
+        } else if (data.json.code === 0) {
+            //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
+            yield put({type:'REMOVE_IMAGE_SUCCESS', payload: data.json.data});
+        } else {
+            message.error(data.json.msg)
+            yield put(resetErrorMessage(data.json.msg));
+        }
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json));
+    }
+}
+
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
@@ -279,13 +304,28 @@ function* watchPorductUpdate(){
         yield fork(queryPorductHandle, action.payload);
     }
 }
-function* watchUpdateSign(){
+function* watchWxytSign(){
     while(true) {
         yield take('QUERY_UPLOAD_SIGN');
-        yield fork(uploadSignHandle);
+        yield fork(wxytSignHandle);
     }
 }
-
+function* watchImageDel(){
+    let lastimg = '';
+    while(true) {
+        const action = yield take('REMOVE_IMAGE_URL');
+        let arr = action.payload.url.split('/');
+        let fileid = arr[arr.length-1];
+        if(fileid !== lastimg) {
+            const entity = {
+                type: 'del',
+                fileid: fileid,
+            }
+            yield fork(imageHandle, entity);
+            lastimg = fileid;
+        }
+    }
+}
 /******************************************************************************/
 export default function* root() {
     yield [
@@ -301,6 +341,7 @@ export default function* root() {
         fork(watchTakeCoupon),
         fork(watchQueryUser),
         fork(watchPorductUpdate),
-        fork(watchUpdateSign),
+        fork(watchWxytSign),
+        fork(watchImageDel),
     ]
 }

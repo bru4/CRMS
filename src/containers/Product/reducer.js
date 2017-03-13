@@ -17,6 +17,7 @@ const editProductInitState = {
         dirty: false,
         value: 0,
     },
+    type: 'add',
 };
 
 const listall = (state = [], action) => {
@@ -39,7 +40,9 @@ const editProduct = (state = editProductInitState, action) => {
             console.log(payload);
             const res = payload.response;
             return res ? Object.assign({}, state, {
-                picture: {value: res.data.download_url}
+                picture: {
+                    value: res.data.download_url,
+                }
             }) : state;
         case 'EDIT_PRODUCT_UPDATE':
             if(payload === null){
@@ -48,24 +51,11 @@ const editProduct = (state = editProductInitState, action) => {
                 const firstname = payload.name.split(',')[0];
                 const lastname = payload.name.split(',')[1];
                 return _.merge({}, state, {
+                    type: 'update',
                     code: { value: payload.code },
                     firstname: { value: firstname },
                     lastname: { value:lastname ? lastname : '' },
                     name: { value: payload.name },
-                    /*picture: {
-                        value: {
-                            file: {
-                                status: 'done',
-                                uid: 0,
-                                url: payload.picture,
-                            },
-                            fileList: [{
-                                status: 'done',
-                                uid: 0,
-                                url: payload.picture,
-                            }],
-                        },
-                    },*/
                     picture: { value: payload.picture },
                     isused: { value: payload.isused },
                 });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ProductList from './ProductList'
 import ProductTrialList from './ProductTrialList'
-import { Modal, Form } from 'antd';
+import { Modal, Form, message } from 'antd';
 import ProductEditor from './ProductEditor'
 
 class Product extends Component {
@@ -35,6 +35,7 @@ class Product extends Component {
     toggleProductUsable = ({code, isused}) => {
         console.log(code, isused);
         this.props.actions.submitProductUpdate({
+            type: 'update',
             code,
             isused: isused ? 0 : 1,
         });
@@ -47,19 +48,30 @@ class Product extends Component {
         form.validateFields((errors, values) => {
             console.log(errors, values);
             if(errors) {
-                console.log(errors);
+                    for (let item in errors) {
+                        if (errors.hasOwnProperty(item)) {
+                            let element = errors[item];
+                            message.error(element.errors[0].message);return;
+                        }
+                    }
             } else {
                 console.log(values);
-                actions.submitProductUpdate({
-                    name: `${values.firstname},${values.lastname}`,
-                    code: values.code,
-                });
-                this.setState({
-                    showProductBox: !this.state.showProductBox,
-                });
+                const file = values.picture.file;
+                if(file.url === '') {
+                    message.error('请上传图片');
+                } else {
+                    actions.submitProductUpdate({
+                        type: this.props.editProduct.type,
+                        name: `${values.firstname},${values.lastname}`,
+                        code: values.code,
+                        picture: file.url,
+                    });
+                    this.setState({
+                        showProductBox: !this.state.showProductBox,
+                    });
+                }
             }
         })
-        //this.props.actions.submitProductUpdate(data);
     }
 
     render() {
@@ -75,7 +87,7 @@ class Product extends Component {
                     />
                     <ProductTrialList data={triallist} />
                 </div>
-                <Modal title="新建/修改试用产品"
+                <Modal title='新建/修改试用产品'
                     visible={showProductBox}
                     onOk={this.editSubmit}
                     confirmLoading={this.state.loading}
@@ -96,8 +108,8 @@ class Product extends Component {
 export default Form.create({
     onFieldsChange: (props, fields) => {
         if(fields.picture) {
-            console.log('onFieldsChange');
-            console.log(fields);
+            //console.log('onFieldsChange');
+            //console.log(fields);
             let file = fields.picture.value.file;
             if(file.status === 'removed'){
                 props.actions.removeImageUrl(file);
@@ -109,11 +121,9 @@ export default Form.create({
         }
     },
     mapPropsToFields: ({editProduct}) => {
-        const { name, picture, code, isused } = editProduct;
-        console.log('mapPropsToFields:');
-        console.log(isused);
-        console.log(picture);
+        const { name, picture, code, isused, type } = editProduct;
         return {
+            type: { value: type },
             firstname: { value: name.value.split(',')[0]},
             lastname: { value: name.value.split(',')[1]},
             isused: { value: isused.value },

@@ -114,4 +114,23 @@ export const updateProduct = (data) => fetchHandle('/trial/product/update', 'pos
         ...data,
     }],
 });
-export const uploadSign = () => fetchHandle('/center/wxyt/getsign?type=upload', 'get')
+export const addProduct = (data) => fetchHandle('/trial/product/add', 'post', {
+    ...data,
+});
+export const uploadSign = (data) => fetchHandle(`/center/wxyt/getsign?type=${data?data.type:''}&fileid=${data?data.fileid:''}`, 'get');
+export const removeImage = ({sign, fileid}) => fetch(`http://web.image.myqcloud.com/photos/v2/10019081/activity10/0/${fileid}/del`, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: sign,
+    },
+})
+.then(getJsonRes)
+.then(checkJson)
+.then(
+    data => data,
+    error => ({
+        error: error.message || 'Something bad happened'
+    })
+);

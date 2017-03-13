@@ -19,12 +19,6 @@ class ProductEditor extends Component {
 
     handleCancel = () => this.setState({ previewVisible: false })
 
-    handleChange = ({ event, file, fileList }) => {
-        console.log(this.props.getImageUrl);
-        console.log(event,file,fileList);
-        //this.setState({ fileList })
-    }
-
     render() {
         const { form, sign } = this.props;
         const { getFieldDecorator, getFieldValue } = form;
@@ -34,13 +28,13 @@ class ProductEditor extends Component {
         //const imageurl = picture.file.url;
         const uploadButton = (
             <div>
-                <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
+                <Icon type='plus' />
+                <div className='ant-upload-text'>Upload</div>
             </div>
         );
         return(
             <Form className='product-editor'>
-                <div className="name-box">
+                <div className='name-box'>
                 <Form.Item className='item-firstname' label='产品名称:'>
                     {getFieldDecorator('firstname', {
                         rules: [{ required: true, message: '请输入产品名称!' }],
@@ -74,10 +68,9 @@ class ProductEditor extends Component {
                             name='filecontent'
                             action='http://web.image.myqcloud.com/photos/v2/10019081/activity10/0/'
                             //actions='//jsonplaceholder.typicode.com/posts/'
-                            listType="picture-card"
+                            listType='picture-card'
                             fileList={fileList}
                             onPreview={this.handlePreview}
-                            onChange={this.handleChange}
                             headers={{
                                 Authorization: sign,
                             }}
@@ -87,7 +80,7 @@ class ProductEditor extends Component {
                     )}
                 </Form.Item>
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                    <img alt='example' style={{ width: '100%' }} src={this.state.previewImage} />
                 </Modal>
             </Form>
         );
