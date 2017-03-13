@@ -10,7 +10,6 @@ class ProductEditor extends Component {
     }
 
     handlePreview = (file) => {
-        console.log(file);
         this.setState({
             previewImage: file.url || file.thumbUrl,
             previewVisible: true,
@@ -23,9 +22,7 @@ class ProductEditor extends Component {
         const { form, sign } = this.props;
         const { getFieldDecorator, getFieldValue } = form;
         const picture = getFieldValue('picture');
-        console.log(picture);
         const fileList = picture.fileList;
-        //const imageurl = picture.file.url;
         const uploadButton = (
             <div>
                 <Icon type='plus' />
@@ -67,7 +64,6 @@ class ProductEditor extends Component {
                         <Upload
                             name='filecontent'
                             action='http://web.image.myqcloud.com/photos/v2/10019081/activity10/0/'
-                            //actions='//jsonplaceholder.typicode.com/posts/'
                             listType='picture-card'
                             fileList={fileList}
                             onPreview={this.handlePreview}
