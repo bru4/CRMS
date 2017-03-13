@@ -102,19 +102,20 @@ const Memberlist = ({data, type, toggleDetail, toggleCheckbox, selectRows, selec
         columns.shift();
     }
     return (
-    <Table
-        rowClassName={(record, index) => index % 2 === 0 ? 'even' : 'odd'}
-        loading={data.fetching}
-        dataSource={data.list ? data.list : []}
-        scroll={{x: 1200}}
-        columns={columns}
-        pagination={pagination}
-        rowKey='openid'
-        rowSelection={type === 'all' ? null : {
-            selectedRowKeys: selectedKeys,
-            onChange: selectRows,
-        }}
-    />);
+        <Table
+            rowClassName={(record, index) => index % 2 === 0 ? 'even' : 'odd'}
+            loading={data.fetching}
+            dataSource={data.list ? data.list : []}
+            scroll={{x: 1200}}
+            columns={columns}
+            pagination={pagination}
+            rowKey='mobile'
+            rowSelection={type === 'all' ? null : {
+                selectedRowKeys: selectedKeys,
+                onChange: selectRows,
+            }}
+        />
+    );
 }
 
 Memberlist.propTypes = {

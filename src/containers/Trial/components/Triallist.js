@@ -22,41 +22,54 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             render: (text, record, index) => index + 1,
         }, {
             title: '申请产品',
+            width: 80,
             key: 'productname',
             dataIndex: 'productname',
         }, {
             title: '姓名',
+            width: 70,
             key: 'truename',
             dataIndex: 'truename',
         }, {
             title: '餐厅名称',
+            width: 70,
             key: 'restaurantname',
             dataIndex: 'restaurantname',
         }, {
             title: '申请日期',
+            width: 100,
             key: 'createtime',
             dataIndex: 'createtime',
-            render: text => moment(text).format('YYYY-MM-DD HH:mm:ss'),
+            render: text => <div>{moment(text).format('YYYY-MM-DD')}<br />{moment(text).format('HH:mm:ss')}</div>,
         }, {
             title: '收货人姓名',
+            width: 100,
             key: 'receivername',
             dataIndex: 'receivername',
         }, {
             title: '收货电话',
+            width: 100,
             key: 'receivermobile',
             dataIndex: 'receivermobile',
         }, {
             title: '收货地址',
+            width: 250,
             key: 'receiverdistrict',
             dataIndex: 'receiverdistrict',
         }, {
             title: '申请理由',
             key: 'reason',
-            width: 400,
             dataIndex: 'reason',
+        }, {
+            title: '来源类型',
+            key: 'source',
+            width: 70,
+            dataIndex: 'source',
+            render: (text) => text===0?'微信内':'微信外',
         }, {
             title: '认证状态',
             key: 'state',
+            width: 70,
             dataIndex: 'state',
             render: (text, record, index) => {
                 let state = getState(text);
@@ -69,6 +82,7 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             title: '试用状态',
             key: 'status',
             dataIndex: 'status',
+            width: 80,
             render: (text) => getStatus(text),
         }, {
             title: '操作',
