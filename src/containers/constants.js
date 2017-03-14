@@ -126,11 +126,11 @@ export const getStatus = text => {
 }
 export const getTrueAnswer = text => {
     switch (text) {
-        case 0:
+        case '0':
             return '满意';
-        case 1:
+        case '1':
             return '一般';
-        case 2:
+        case '2':
             return '不满意';
     }
 }
