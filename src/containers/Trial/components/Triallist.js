@@ -19,12 +19,20 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
         {
             title: '序号',
             key: 'idx',
+            width: 50,
             render: (text, record, index) => index + 1,
         }, {
             title: '申请产品',
-            width: 80,
+            width: 150,
             key: 'productname',
             dataIndex: 'productname',
+            render: (text) => {
+                let arr = text.split(';');
+                
+                return arr.length === 1 ? text: <div>
+                    {arr.map((t,i)=> <div key={i}>{t}</div>)}
+                </div>
+            },
         }, {
             title: '姓名',
             width: 70,
@@ -58,6 +66,7 @@ const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, select
             dataIndex: 'receiverdistrict',
         }, {
             title: '申请理由',
+            width: 150,
             key: 'reason',
             dataIndex: 'reason',
         }, {

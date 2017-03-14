@@ -25,9 +25,16 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
     }, {
         title: '申请产品',
         key: 'productname',
-        width: 100,
+        width: 150,
         fixed: 'left',
         dataIndex: 'productname',
+        render: (text) => {
+            let arr = text.split(';');
+            
+            return arr.length === 1 ? text: <div>
+                {arr.map((t,i)=> <div key={i}>{t}</div>)}
+            </div>
+        },
     }, {
         title: '姓名',
         key: 'truename',
@@ -113,7 +120,7 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
         <Table
             loading={data.fetching}
             dataSource={data.list?data.list:[]}
-            scroll={{ x: 1900, y: 400 }}
+            scroll={{ x: 1950, y: 400 }}
             columns={columns}
             pagination={pagination}
             rowKey='recordid'
