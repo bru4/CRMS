@@ -132,5 +132,7 @@ export const getTrueAnswer = text => {
             return '一般';
         case '2':
             return '不满意';
+        default :
+            return text;
     }
 }
