@@ -108,7 +108,7 @@ function* pointHandle(entity) {
         } else if (json.code === '1000') {
             yield put(fetchUserPoint(json.data.points));
         } else {
-            message.error(json.msg)
+            //message.error(json.msg)
             yield put(resetErrorMessage(error||json))
         }
     }
