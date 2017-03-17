@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductItem from './ProductItem'
-const ProductTrialList = ({data}) => {
+function ProductTrialList({data}) {
     return(
         <div className='product-triallist'>
             <div className="product-triallist-header">目前试用的产品:</div>

@@ -22,26 +22,29 @@ function mapStateToProps({nav}) {
 	};
 }
 
-const Nav = ({curtt, cursubtt}) =>
-<div className='nav-index'>
-	<div className="layout-top">
-		<div className="nav-header">
-			<NavHeader title={title} cur={curtt==='feedback'?'trial':curtt} />
+function Nav ({curtt, cursubtt}) {
+	return (
+		<div className='nav-index'>
+			<div className="layout-top">
+				<div className="nav-header">
+					<NavHeader title={title} cur={curtt==='feedback'?'trial':curtt} />
+				</div>
+				{
+					curtt==='index'?null:
+					<div className="nav-subheader">
+						<NavSubheader title={getSubtitle(title, curtt)} cur={cursubtt} />
+					</div>
+				}
+				{
+					curtt==='index'?null:
+					<div className="nav-breakcrumb">
+						<NavBreakcrumb titleList={gettitleList(title, curtt, cursubtt)}/>
+					</div>
+				}
+			</div>
 		</div>
-		{
-			curtt==='index'?null:
-			<div className="nav-subheader">
-				<NavSubheader title={getSubtitle(title, curtt)} cur={cursubtt} />
-			</div>
-		}
-		{
-			curtt==='index'?null:
-			<div className="nav-breakcrumb">
-				<NavBreakcrumb titleList={gettitleList(title, curtt, cursubtt)}/>
-			</div>
-		}
-	</div>
-</div>
+	)
+}
 
 export default connect(
 	mapStateToProps,

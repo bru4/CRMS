@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button } from 'antd'
-const ProductList = ({data, toggleProductEditor, toggleProductUsable}) => {
+function ProductList ({data, toggleProductEditor, toggleProductUsable}) {
     const columns = [{
         title: '序号',
         key: 'id',

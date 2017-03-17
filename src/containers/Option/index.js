@@ -4,7 +4,7 @@ import { Form, Input, Button, Col, Row, Select } from 'antd'
 import * as actions from './actions'
 import reducer from './reducer'
 
-const Option = ({addCoupon, form}) => {
+function Option ({addCoupon, form}) {
     const formItemLayout = {
       labelCol: { span: 8 },
       wrapperCol: { span: 10 },

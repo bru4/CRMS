@@ -4,7 +4,7 @@ import moment from'moment';
 import {getTrueAnswer} from 'containers/constants'
 
 const getQA = (list, index) => list && list.length > 0 ? list[index].answer : null;
-const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) => {
+function Feedbacklist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) {
     const pagination = {
         total: data.total,
         pageSize: 20,
@@ -113,7 +113,7 @@ const Feedbacklist = ({data, type, toggleDetail, toggleCheckbox, selectRows, sel
                     <a onClick={() => toggleDetail({index, record, type: 'feedback'})}>查看</a> | <a onClick={() => toggleCheckbox({index, record, type: 'feedback', result: 1})}>通过</a> | <a onClick={() => toggleCheckbox({index, record, type: 'feedback', result: 0})}>拒绝</a>
                 </div>,
     }];
-    if(type==='review'){
+    if(type==='review') {
         columns.shift();
     }
     return(

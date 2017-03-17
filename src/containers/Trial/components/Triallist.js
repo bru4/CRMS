@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import moment from'moment';
 import {getState, getStatus} from 'containers/constants'
 
-const Triallist = ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) => {
+function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) {
     const pagination = {
         total: data.total,
         pageSize: 20,
