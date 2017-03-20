@@ -74,7 +74,7 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             key: 'source',
             width: 70,
             dataIndex: 'source',
-            render: (text) => text===0?'微信内':'微信外',
+            render: (text) => text === 0 ? '微信内' : '微信外',
         }, {
             title: '认证状态',
             key: 'state',

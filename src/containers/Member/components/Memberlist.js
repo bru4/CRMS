@@ -82,6 +82,12 @@ function Memberlist ({data, type, toggleDetail, toggleCheckbox, selectRows, sele
             dataIndex: 'restaurantaddress',
             width: 200,
         }, {
+            title: '来源类型',
+            key: 'source',
+            width: 70,
+            dataIndex: 'source',
+            render: (text) => text === 0 ? '微信内' : '微信外',
+        }, {
             title: '状态',
             key: 'state',
             dataIndex: 'state',
