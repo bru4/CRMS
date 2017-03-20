@@ -41,7 +41,7 @@ function Memberlist ({data, type, toggleDetail, toggleCheckbox, selectRows, sele
             key: 'createtime',
             dataIndex: 'createtime',
             width: 90,
-            render: text => moment(text).format('YYYY-MM-DD HH:mm:ss'),
+            render: text => <div>{moment(text).format('YYYY-MM-DD')}<br />{moment(text).format('HH:mm:ss')}</div>,
         }, {
             title: '职位',
             key: 'position',
