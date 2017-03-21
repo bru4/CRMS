@@ -193,8 +193,13 @@ function* loadProduct() {
         yield put(resetErrorMessage(error||json));
     }
 }
-function* queryPorductHandle(data) {
-    const { json, error} = data.type === 'update'?yield call(updateProduct, data):yield call(addProduct, data);
+/**
+ * 添加/修改试用商品
+ * 当传入的type为update时 为根据传入的code进行修改 当为add的时候为添加
+ * @param {any} data 包含type name产品名称 code产品编码 picture产品图片
+ */
+function* updatePorductHandle(data) {
+    const { json, error} = data.type === 'update' ? yield call(updateProduct, data) : yield call(addProduct, data);
     if(error) {
         message.error(error);
         yield put(resetErrorMessage(error));
@@ -207,6 +212,10 @@ function* queryPorductHandle(data) {
         yield put(resetErrorMessage(error||json));
     }
 }
+/**
+ * 获取万象优图上传sign
+ * 只有上传是有效 可上传多次
+ */
 function* wxytSignHandle() {
     const { json, error} = yield call(uploadSign);
     if(error) {
@@ -219,6 +228,11 @@ function* wxytSignHandle() {
         yield put(resetErrorMessage(error||json));
     }
 }
+/**
+ * 删除万象优图上所存图片
+ * 当产品修改图片时 先获取删除图片的sign 再访问万象优图通过sign删除图片
+ * @param {object} entity 包含type 区分上传 查询 删除 下载 fileid 为指定的文件
+ */
 function* imageHandle(entity) {
     const { json, error} = yield call(uploadSign, entity);
     if(error) {
@@ -337,7 +351,7 @@ function* watchQueryUser(){
 function* watchPorductUpdate(){
     while(true) {
         const action = yield take('SUBMIT_PRODUCT_UPDATE');
-        yield fork(queryPorductHandle, action.payload);
+        yield fork(updatePorductHandle, action.payload);
     }
 }
 function* watchWxytSign(){
