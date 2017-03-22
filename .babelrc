@@ -7,7 +7,7 @@
 	"plugins": [
 		["import", {
 			"libraryName": "antd",
-			"style": "css", // or 'css'
+			"style": "css" // or 'css'
 		}]
 	]
 }
