@@ -2,8 +2,8 @@
  * 本项目上线只需修改API接口为正式环境的接口即可
  */
 
-const API_ROOT = 'http://cs.udianhuo.com/crms/api';
-//const API_ROOT = 'http://stest.udianhuo.com/crms/api';
+//const API_ROOT = 'http://cs.udianhuo.com/crms/api';
+const API_ROOT = 'http://stest.udianhuo.com/crms/api';
 
 const getResultList = (index, record, result) => {
     if (typeof index === 'number') {
@@ -63,23 +63,6 @@ export const fetchTable = ({title, timeRange, listtype}) => fetchHandle(`/${titl
 });
 
 export const uploadresult = ({index, record, type, result}) => fetchHandle(`/${type}/uploadresult`, 'post', getResultList(index, record, result));
-/*    fetch(`${API_ROOT}/${type}/uploadresult`, {
-        method: 'post',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(getResultList(index, record, result)),
-    })
-    .then(getJsonRes)
-    .then(checkJson)
-    .then(
-        data => data,
-        error => ({
-            error: error.message || 'Something bad happened'
-        })
-    );
-*/
 
 export const addCoupon = (type, name, id) => fetchHandle('/center/addcoupon', 'post', {
     'title': name,
