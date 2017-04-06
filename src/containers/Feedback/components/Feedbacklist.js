@@ -3,20 +3,8 @@ import { Table } from 'antd';
 import moment from'moment';
 import {getTrueAnswer} from 'containers/constants'
 
-//const getQA = (list, index) => list && list.length > 0 ? list[index].answer : null;
 const getQA = (list, index) => list.find(item => item.questionId === index).answer;
-function Feedbacklist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) {
-    const pagination = {
-        total: data.total,
-        pageSize: 20,
-        onChange: type==='all'
-            ? (current)=>{
-                changePage('feedback', current);
-            }
-            : (current)=>{
-                console.log(current);
-            }
-    }
+function Feedbacklist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, pagination}) {
     const columns = [
         {
             title: '序号',

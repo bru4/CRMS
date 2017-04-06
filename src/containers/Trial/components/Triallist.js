@@ -3,18 +3,7 @@ import { Table } from 'antd';
 import moment from'moment';
 import {getState, getStatus} from 'containers/constants'
 
-function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) {
-    const pagination = {
-        total: data.total,
-        pageSize: 20,
-        onChange: type==='all'
-            ? (current)=>{
-                changePage('trial', current);
-            }
-            : (current)=>{
-                console.log(current);
-            }
-    }
+function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, pagination}) {
     const columns = [
         {
             title: '序号',

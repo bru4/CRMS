@@ -10,6 +10,7 @@ class Member extends Component {
         super(props)
         this.state = {
             type: props.type,
+            page: 1,
         }
     }
 
@@ -26,7 +27,10 @@ class Member extends Component {
                 title: 'member',
                 subtitle: nextProps.type,
             });
-            this.setState({type: nextProps.type});
+            this.setState({
+                type: nextProps.type,
+                page: 1,
+            });
         }
     }
 
@@ -42,15 +46,30 @@ class Member extends Component {
         })
         //this.props.toggleCheckbox
     }
-    addPonintHandle = () => {
-        
+
+    changePageHandle = current => {
+        const { type, changePage } = this.props;
+        this.setState({
+            page: current,
+        });
+        if(type === 'all') {
+            changePage('member', --current);
+        }
     }
+
     render() {
+        const { userlist, type } = this.props;
+        const pagination = {
+            total: userlist.total,
+            pageSize: 20,
+            onChange: this.changePageHandle,
+            current: this.state.page,
+        }
         return (
         <div className='member'>
-            <h2>{this.props.type === 'all'?'全部会员':'餐饮审核'}</h2>
+            <h2>{type === 'all'?'全部会员':'餐饮审核'}</h2>
             <Toolbar
-                type = {this.props.type}
+                type = {type}
                 title = 'member'
                 exportTable = {this.props.exportTable}
                 change = {this.props.changeData}
@@ -58,10 +77,11 @@ class Member extends Component {
                 listtype = {this.props.userlist.listtype}
                 selected = {this.props.selected}
             />
-            {this.props.type==='all'?<Search search={this.props.queryByMobile} />:null}
+            {type==='all'?<Search search={this.props.queryByMobile} />:null}
             <Memberlist
-                type = {this.props.type}
+                type = {type}
                 data = {this.props.userlist}
+                pagination = {pagination}
                 toggleDetail = {this.props.toggleDetail}
                 toggleCheckbox = {this.clickHandleCheckbox}
                 selectRows = {this.props.selectRows}
@@ -72,7 +92,7 @@ class Member extends Component {
                 show = {this.props.base.detail}
                 data = {this.props.cur}
                 toggleDetail = {this.props.toggleDetail}
-                model = {this.props.type}
+                model = {type}
                 toggleCheckbox = {this.clickHandleCheckbox}
                 addPoint = {this.props.addPoint}
                 coupon = {this.props.base.coupon}

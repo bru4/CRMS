@@ -5,8 +5,9 @@ function NavBreakcrumb ({titleList}) {
 	return (
 		<div className="layout-wrapper">
 		<Breadcrumb>
+			<Breadcrumb.Item>首页</Breadcrumb.Item>
 			{
-				titleList.map((t,i)=><Breadcrumb.Item key={i}>{t}</Breadcrumb.Item>)
+				titleList.map((t, i) => t === 'index' ? null : <Breadcrumb.Item key={i}>{t}</Breadcrumb.Item>)
 			}
 		</Breadcrumb>
 		</div>
