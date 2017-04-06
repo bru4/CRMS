@@ -1,6 +1,6 @@
 {
-  "name": "crms用户管理系统",
-  "version": "1.1.0",
+  "name": "crmsadmin",
+  "version": "1.1.2",
   "private": true,
   "homepage": "/crmsadmin/",
   "devDependencies": {
