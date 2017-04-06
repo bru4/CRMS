@@ -11,6 +11,7 @@ import Option from './containers/Option';
 import Order from './containers/Order';
 import Login from './components/Login';
 import Product from './containers/Product'
+import Sendlist from './containers/Sendlist'
 const checkIn = (nextState, replace, next) => {
 	var tokenInfo = sessionStorage.tokenInfo;
 	if(tokenInfo) {
@@ -24,9 +25,12 @@ export default (
 	<Route path='/crmsadmin' component={App}>
 		<IndexRoute component={Index} />
 		<Route component={Content}  onEnter={checkIn}>
-			<Route path='trial/product' component={Product} />
+			<Route path='trial'>
+				<Route path='product' component={Product} />
+				<Route path='sendlist' component={Sendlist} />
+				<Route path=':subtitle' component={Trial} />
+			</Route>
 			<Route path='member/:subtitle' component={Member} />
-			<Route path='trial/:subtitle' component={Trial} />
 			<Route path='feedback/:subtitle' component={Feedback} />
 			<Route path='option/:subtitle' component={Option} />
 			<Route path='order/:subtitle' component={Order} />

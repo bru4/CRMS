@@ -16,6 +16,10 @@ export const title = [{
 		name: 'all',
 		path: '/crmsadmin/trial/all'
 	}, {
+		title: '推送记录表',
+		name: 'sendlist',
+		path: '/crmsadmin/trial/sendlist'
+	}, {
 		title: '反馈审核',
 		name: 'feedbackreview',
 		path: '/crmsadmin/feedback/feedbackreview'
