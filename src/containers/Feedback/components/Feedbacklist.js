@@ -3,7 +3,8 @@ import { Table } from 'antd';
 import moment from'moment';
 import {getTrueAnswer} from 'containers/constants'
 
-const getQA = (list, index) => list && list.length > 0 ? list[index].answer : null;
+//const getQA = (list, index) => list && list.length > 0 ? list[index].answer : null;
+const getQA = (list, index) => list.find(item => item.questionId === index).answer;
 function Feedbacklist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) {
     const pagination = {
         total: data.total,
@@ -53,49 +54,49 @@ function Feedbacklist ({data, type, toggleDetail, toggleCheckbox, selectRows, se
             key: 'q1',
             dataIndex: 'q1',
             width: 200,
-            render: (text, record) => getQA(record.feedBacklist, '0')
+            render: (text, record) => getQA(record.feedBacklist, 0)
         }, {
             title: '您用有点火调料的用法及用量',
             key: 'q2',
             dataIndex: 'q2',
             width: 250,
-            render: (text, record) => getQA(record.feedBacklist, '1')
+            render: (text, record) => getQA(record.feedBacklist, 1)
         }, {
             title: '您觉得有点火产品味道如何',
             key: 'q3',
             dataIndex: 'q3',
             width: 100,
-            render: (text, record) => getTrueAnswer(getQA(record.feedBacklist, '2'))
+            render: (text, record) => getTrueAnswer(getQA(record.feedBacklist, 2))
         }, {
             title: '味道的原因',
             key: 'q4',
             dataIndex: 'q4',
             width: 200,
-            render: (text, record) => getQA(record.feedBacklist, '3')
+            render: (text, record) => getQA(record.feedBacklist, 3)
         }, {
             title: '是否愿意购买',
             key: 'q5',
             dataIndex: 'q5',
             width: 100,
-            render: (text, record) => getTrueAnswer(getQA(record.feedBacklist, '4'))
+            render: (text, record) => getTrueAnswer(getQA(record.feedBacklist, 4))
         }, {
             title: '购买原因',
             key: 'q6',
             dataIndex: 'q6',
             width: 200,
-            render: (text, record) => getQA(record.feedBacklist, '5')
+            render: (text, record) => getQA(record.feedBacklist, 5)
         }, {
             title: '规格大小包装形式评价',
             key: 'q7',
             dataIndex: 'q7',
             width: 100,
-            render: (text, record) => getTrueAnswer(getQA(record.feedBacklist, '6'))
+            render: (text, record) => getTrueAnswer(getQA(record.feedBacklist, 6))
         }, {
             title: '包装原因',
             key: 'q8',
             dataIndex: 'q8',
             width: 200,
-            render: (text, record) => getQA(record.feedBacklist, '7')
+            render: (text, record) => getQA(record.feedBacklist, 7)
         }, {
             title: '申请日期',
             key: 'createtime',
