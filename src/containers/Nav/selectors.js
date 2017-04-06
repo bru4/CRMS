@@ -13,9 +13,10 @@ export const gettitleList = (title, curtt, cursubtt) => {
         curtt = 'trial';
     }
     let result = [],
-        cur = title.filter(t => t.name === curtt)[0];
-    result.push(cur.title);
-    result.push(cur.children.filter(t => t.name === cursubtt)[0].title);
+        cur = title.filter(t => t.name === curtt)[0],
+        curChildren = cur.children.filter(t => t.name === cursubtt)[0];
+    result.push(cur ? cur.title : 'index');
+    result.push(curChildren ? curChildren.title : 'index');
     return result;
 }
 export const typeSelector = createSelector(

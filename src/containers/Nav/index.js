@@ -23,6 +23,8 @@ function mapStateToProps({nav}) {
 }
 
 function Nav ({curtt, cursubtt}) {
+	const subTitle = getSubtitle(title, curtt);
+	const titleList = gettitleList(title, curtt, cursubtt);
 	return (
 		<div className='nav-index'>
 			<div className="layout-top">
@@ -30,15 +32,15 @@ function Nav ({curtt, cursubtt}) {
 					<NavHeader title={title} cur={curtt==='feedback'?'trial':curtt} />
 				</div>
 				{
-					curtt==='index'?null:
+					subTitle.children.length > 0 &&
 					<div className="nav-subheader">
-						<NavSubheader title={getSubtitle(title, curtt)} cur={cursubtt} />
+						<NavSubheader title={subTitle} cur={cursubtt} />
 					</div>
 				}
 				{
-					curtt==='index'?null:
+					curtt !== 'index' &&
 					<div className="nav-breakcrumb">
-						<NavBreakcrumb titleList={gettitleList(title, curtt, cursubtt)}/>
+						<NavBreakcrumb titleList={titleList}/>
 					</div>
 				}
 			</div>
