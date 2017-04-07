@@ -19,7 +19,6 @@ const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = 
 function* loadList(title, type, page){
     if(title && type){
         let entity = {title, type, page};
-        yield put(list.request({title, type}));
         const { json, error} = yield call(fetchList, entity);
         if (json) {
             switch(json.code){
@@ -224,7 +223,7 @@ function* wxytSignHandle() {
     } else if (json.code === '1000') {
         yield put({type:'GET_UPLOAD_SIGN', payload: json.data});
     } else {
-        message.error(json.msg)
+        message.error(json.msg);
         yield put(resetErrorMessage(error||json));
     }
 }
@@ -261,8 +260,13 @@ function* imageHandle(entity) {
         yield put(resetErrorMessage(error||json));
     }
 }
-function* loadTradelist() {
-    const { json, error} = yield call(queryTradelist);
+/**
+ * 获取推送记录表
+ * 根据传入的参数获取订单推送数据 可根据订单状态或者用户手机查询 查询总数及成功列表时 需要分页
+ * @param {any} data type: 推送失败 1 推送成功 2 全部推送 10; mobile: str;[currentpage: int; pagesize: int;]
+ */
+function* loadTradelist(data) {
+    const { json, error} = yield call(queryTradelist, data);
     if(error) {
         message.error(error);
         yield put(resetErrorMessage(error));
@@ -286,22 +290,26 @@ function* watchListFetch() {
     let i = 0;
     while (true) {
         const action = yield take('LOAD_LIST');
-        let title = action.payload.title;
-        let subtitle = action.payload.subtitle;
-        if(subtitle === 'product') {
-            yield fork(loadProduct);
-        }
-        if(subtitle === 'trade') {
-            yield fork(loadTradelist);
-        }
-        if(title === 'member' || title === 'trial' && subtitle !== 'product'  || title === 'feedback'){
-            let type = subtitle.includes('all') ? 10 : 1;
-            yield fork(loadList, title, type);
+        const { title, subtitle } = action.payload;
+        yield put(list.request());
+        switch (subtitle) {
+            case 'product':
+                yield fork(loadProduct);
+                break;
+            case 'trade':
+                yield fork(loadTradelist, {
+                    type: 1,
+                });
+                break;
+            default:
+                let type = subtitle.includes('all') ? 10 : 1;
+                yield fork(loadList, title, type);
+                break;
         }
         if(i === 0) {
             yield fork(loadCoupon);
+            i++;
         }
-        i++;
     }
 }
 function* watchListChange() {

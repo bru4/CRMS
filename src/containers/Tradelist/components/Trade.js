@@ -11,10 +11,18 @@ class Trade extends Component {
     }
     
     render() {
+        const { datalist } = this.props;
+        const pagination = {
+            pageSize: 20
+        }
         return (
             <div>
                 <Toolbar />
-                <Tradelist />
+                <Tradelist
+                    loading = {datalist.fetching}
+                    dataSource = {datalist.list}
+                    pagination = {pagination}
+                />
             </div>
         );
     }

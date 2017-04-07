@@ -6,6 +6,7 @@ const { loadList } = conActions;
 
 const mapStateToProps = (state) => {
     return {
+        datalist: state.content.userlist,
     }
 }
 

@@ -11,61 +11,74 @@ const Tradelist = (props) => {
         }, {
             title: '姓名',
             width: 70,
-            key: 'truename',
-            dataIndex: 'truename',
+            key: 'name',
+            dataIndex: 'name',
         }, {
             title: '手机号',
-            width: 70,
-            key: 'restaurantname',
-            dataIndex: 'restaurantname',
+            width: 100,
+            key: 'mobile',
+            dataIndex: 'mobile',
         }, {
             title: '收货人姓名',
-            width: 100,
-            key: 'receivername',
-            dataIndex: 'receivername',
+            width: 70,
+            key: 'receiverName',
+            dataIndex: 'receiverName',
         }, {
             title: '收货地址',
             width: 250,
-            key: 'receiverdistrict',
-            dataIndex: 'receiverdistrict',
+            key: 'receiverAddress',
+            dataIndex: 'receiverAddress',
         }, {
             title: '收货电话',
             width: 100,
-            key: 'receivermobile',
-            dataIndex: 'receivermobile',
+            key: 'receiverMobile',
+            dataIndex: 'receiverMobile',
         }, {
             title: '试用产品',
-            width: 150,
-            key: 'reason',
-            dataIndex: 'reason',
+            width: 100,
+            key: 'product',
+            dataIndex: 'product',
         }, {
             title: '推送状态',
-            key: 'source',
             width: 70,
-            dataIndex: 'source',
-            render: (text) => text === 0 ? '微信内' : '微信外',
+            key: 'syncStatus',
+            dataIndex: 'syncStatus',
+            render: (text) => {
+                console.log(text);
+                switch (text) {
+                    case 0:
+                        return '未推送';
+                    case 1:
+                        return '推送失败';
+                    case 2:
+                        return '已推送';
+                    default:
+                        return text;
+                }
+            },
         }, {
             title: '快递方式',
-            key: 'state',
             width: 70,
-            dataIndex: 'state',
+            key: 'logisticsType',
+            dataIndex: 'logisticsType',
 
         }, {
             title: '物流单号',
-            key: 'status',
-            dataIndex: 'status',
-            width: 80,
+            width: 100,
+            key: 'logisticsNo',
+            dataIndex: 'logisticsNo',
         }, {
             title: '操作',
             key: 'operation',
-            width: 120,
-            render: (text, record, index) => {
-            },
+            width: 80,
+            render: (text, record) => record.syncStatus === 1 ? <a>重新推送</a> : null,
         }
     ];
     return(
         <Table
-            columns={columns}
+            columns = {columns}
+            rowKey = 'tradeId'
+            {...props}
         />
     )
 }
