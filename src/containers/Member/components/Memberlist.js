@@ -3,18 +3,7 @@ import {Table} from 'antd';
 import moment from 'moment';
 import {averagespend, profession, shoptype, getState} from 'containers/constants'
 
-function Memberlist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, changePage}) {
-    const pagination = {
-        total: data.total,
-        pageSize: 20,
-        onChange: type==='all'
-            ? (current)=>{
-                changePage('member', current);
-            }
-            : (current)=>{
-                console.log(current);
-            }
-    }
+function Memberlist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, pagination}) {
     const columns = [
         {
             title: '序号',

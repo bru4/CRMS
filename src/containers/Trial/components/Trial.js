@@ -9,6 +9,7 @@ class Trial extends Component {
         super(props);
         this.state = {
             type: props.type,
+            page: 1,
         }
     }
 
@@ -25,7 +26,10 @@ class Trial extends Component {
                 title: 'trial',
                 subtitle: nextProps.type,
             });
-            this.setState({type: nextProps.type});
+            this.setState({
+                type: nextProps.type,
+                page: 1,
+            });
         }
     }
     
@@ -42,12 +46,29 @@ class Trial extends Component {
         //this.props.toggleCheckbox
     }
 
+    changePageHandle = current => {
+        const { type, changePage } = this.props;
+        this.setState({
+            page: current,
+        });
+        if(type === 'all') {
+            changePage('trial', --current);
+        }
+    }
+
     render() {
+        const { userlist, type } = this.props;
+        const pagination = {
+            total: userlist.total,
+            pageSize: 20,
+            onChange: this.changePageHandle,
+            current: this.state.page,
+        }
         return (
         <div>
-            <h2>{this.props.type === 'all'?'全部试用':'试用审核'}</h2>
+            <h2>{type === 'all'?'全部试用':'试用审核'}</h2>
             <Toolbar
-                type = {this.props.type}
+                type = {type}
                 title = 'trial'
                 exportTable = {this.props.exportTable}
                 change = {this.props.changeData}
@@ -57,6 +78,7 @@ class Trial extends Component {
             />
             <Triallist
                 type = {this.props.type}
+                pagination = {pagination}
                 data = {this.props.userlist}
                 toggleDetail = {this.props.toggleDetail}
                 toggleCheckbox = {this.clickHandleCheckbox}

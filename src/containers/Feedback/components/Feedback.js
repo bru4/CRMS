@@ -9,6 +9,7 @@ class Feedback extends Component {
         super(props);
         this.state = {
             type: props.type,
+            page: 1,
         }
     }
 
@@ -25,7 +26,10 @@ class Feedback extends Component {
                 title: 'feedback',
                 subtitle: nextProps.type,
             });
-            this.setState({type: nextProps.type});
+            this.setState({
+                type: nextProps.type,
+                page: 1,
+            });
         }
     }
 
@@ -42,22 +46,40 @@ class Feedback extends Component {
         //this.props.toggleCheckbox
     }
 
+    changePageHandle = current => {
+        const { type, changePage } = this.props;
+        this.setState({
+            page: current,
+        });
+        if(type === 'all') {
+            changePage('feedback', --current);
+        }
+    }
+
     render() {
+        const { userlist, type } = this.props;
+        const pagination = {
+            total: userlist.total,
+            pageSize: 20,
+            onChange: this.changePageHandle,
+            current: this.state.page,
+        }
         return (
         <div>
-            <h2>{this.props.type === 'all'?'全部反馈':'反馈审核'}</h2>
+            <h2>{type === 'all'?'全部反馈':'反馈审核'}</h2>
             <Toolbar
-                type = {this.props.type}
+                type = {type}
                 title = 'feedback'
                 exportTable = {this.props.exportTable}
                 change = {this.props.changeData}
                 pass = {this.clickHandleCheckbox}
-                listtype = {this.props.userlist.listtype}
+                listtype = {userlist.listtype}
                 selected = {this.props.selected}
             />
             <Feedbacklist
-                type = {this.props.type}
-                data = {this.props.userlist}
+                type = {type}
+                data = {userlist}
+                pagination= {pagination}
                 toggleDetail = {this.props.toggleDetail}
                 toggleCheckbox = {this.clickHandleCheckbox}
                 selectRows = {this.props.selectRows}
@@ -68,7 +90,7 @@ class Feedback extends Component {
                 show = {this.props.base.detail}
                 data = {this.props.cur}
                 toggleDetail = {this.props.toggleDetail}
-                model = {this.props.type}
+                model = {type}
                 toggleCheckbox = {this.clickHandleCheckbox}
             />
         </div>
