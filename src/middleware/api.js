@@ -116,3 +116,6 @@ export const removeImage = ({sign, fileid}) => fetch(`http://web.image.myqcloud.
         error: error.message || 'Something bad happened'
     })
 );
+export const queryTradelist = () => fetchHandle('/trial/trade/query', 'post', {
+
+});

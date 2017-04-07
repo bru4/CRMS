@@ -1,6 +1,6 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage, queryTradelist } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -261,7 +261,18 @@ function* imageHandle(entity) {
         yield put(resetErrorMessage(error||json));
     }
 }
-
+function* loadTradelist() {
+    const { json, error} = yield call(queryTradelist);
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
+        yield put({type:'GET_TRADE_LIST', payload: json.data});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json));
+    }
+}
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
@@ -279,6 +290,9 @@ function* watchListFetch() {
         let subtitle = action.payload.subtitle;
         if(subtitle === 'product') {
             yield fork(loadProduct);
+        }
+        if(subtitle === 'trade') {
+            yield fork(loadTradelist);
         }
         if(title === 'member' || title === 'trial' && subtitle !== 'product'  || title === 'feedback'){
             let type = subtitle.includes('all') ? 10 : 1;

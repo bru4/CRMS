@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Tradelist = (props) => {
+const Toolbar = (props) => {
     return(
         <div>
-            Tradelist
+            Toolbar
         </div>
     )
 }
 
-export default Tradelist
+export default Toolbar
