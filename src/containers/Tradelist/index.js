@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Sendlist from './components/Sendlist'
+import Tradelist from './components/Tradelist'
 //import {actionCreator} from 'actionCreatorPath'
 
 const mapStateToProps = (state) => {
@@ -17,4 +17,4 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
 
 export default connect(mapStateToProps, {
 
-}, mergeProps)(Sendlist)
+}, mergeProps)(Tradelist)

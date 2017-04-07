@@ -11,7 +11,7 @@ import Option from './containers/Option';
 import Order from './containers/Order';
 import Login from './components/Login';
 import Product from './containers/Product'
-import Sendlist from './containers/Sendlist'
+import Tradelist from './containers/Tradelist'
 const checkIn = (nextState, replace, next) => {
 	var tokenInfo = sessionStorage.tokenInfo;
 	if(tokenInfo) {
@@ -27,7 +27,7 @@ export default (
 		<Route component={Content}  onEnter={checkIn}>
 			<Route path='trial'>
 				<Route path='product' component={Product} />
-				<Route path='sendlist' component={Sendlist} />
+				<Route path='tradelist' component={Tradelist} />
 				<Route path=':subtitle' component={Trial} />
 			</Route>
 			<Route path='member/:subtitle' component={Member} />
