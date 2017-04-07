@@ -290,7 +290,7 @@ function* watchListFetch() {
     let i = 0;
     while (true) {
         const action = yield take('LOAD_LIST');
-        const { title, subtitle } = action.payload;
+        const { title, subtitle, ...other } = action.payload;
         yield put(list.request());
         switch (subtitle) {
             case 'product':
@@ -298,7 +298,8 @@ function* watchListFetch() {
                 break;
             case 'trade':
                 yield fork(loadTradelist, {
-                    type: 1,
+                    type: other.type ? other.type : null,
+                    mobile: other.mobile ? other.mobile : null,
                 });
                 break;
             default:

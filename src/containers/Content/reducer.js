@@ -57,7 +57,8 @@ const list = (state = initstate.list, action) => {
         case 'GET_TRADE_LIST':
             return Object.assign({}, initstate.list, {
                 fetching: false,
-                list: payload,
+                list: payload.datalist,
+                total: payload.total,
             });
         case 'CHANGE_DATA':
             return Object.assign({}, state, {

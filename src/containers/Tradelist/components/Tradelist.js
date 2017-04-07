@@ -44,7 +44,6 @@ const Tradelist = (props) => {
             key: 'syncStatus',
             dataIndex: 'syncStatus',
             render: (text) => {
-                console.log(text);
                 switch (text) {
                     case 0:
                         return '未推送';

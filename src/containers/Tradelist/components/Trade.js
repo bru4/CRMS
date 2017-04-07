@@ -7,17 +7,21 @@ class Trade extends Component {
         this.props.actions.loadList({
             title: 'trial',
             subtitle: 'trade',
+            type: 1,
         })
     }
     
     render() {
-        const { datalist } = this.props;
+        const { datalist, actions } = this.props;
         const pagination = {
-            pageSize: 20
+            total: datalist.total,
+            pageSize: 20,
         }
         return (
             <div>
-                <Toolbar />
+                <Toolbar
+                    loadList = {actions.loadList}
+                />
                 <Tradelist
                     loading = {datalist.fetching}
                     dataSource = {datalist.list}

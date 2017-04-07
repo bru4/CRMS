@@ -5,9 +5,9 @@ const fetchMock = require('fetch-mock/es5/client');
 const startFetchMock = () =>{
     fetchMock.mock(/\/trial\/queryproduct/, {
         body: Mock.mock({
-            'code': '1000',
-            'msg': 'success',
-            'data': [{
+            code: '1000',
+            msg: 'success',
+            data: [{
                 'name': '@cword(3),@cword(5)',
                 'code': '@string("number", 6)',
                 'picture': Mock.Random.image('224x224'),
@@ -271,37 +271,40 @@ const startFetchMock = () =>{
     });
     fetchMock.mock(/\/member\/addpoints/, {
         body: {
-            'code': '1000',
-            'msg': 'success',
-            'data': {
+            code: '1000',
+            msg: 'success',
+            data: {
                 'totalpoints': 9999
             }
         }
     });
     fetchMock.mock(/\/member\/takecoupon/, {
         body: {
-            'code': '1000',
-            'msg': 'success',
+            code: '1000',
+            msg: 'success',
         }
     });
     fetchMock.mock(/\/trial\/trade\/query/, {
         body: Mock.mock({
-            'code': '1000',
-            'msg': 'success',
-            'data|20': [
-                {
-                    'tradeId|+1': 0,
-                    'name': '@cname',
-                    'mobile': '@natural(10000000000,19999999999)',
-                    'receiverName': '@cname',
-                    'receiverMobile': '@natural(10000000000,19999999999)',
-                    'receiverAddress': '@county(true)',
-                    'product': 'string',
-                    'logisticsType': 1,
-                    'logisticsNo': 'SDA35481224',
-                    'syncStatus': '@natural(0,2)'
-                }
-            ]
+            code: '1000',
+            msg: 'success',
+            data: {
+                total: '@natural(33,77)',
+                'datalist|20': [
+                    {
+                        'tradeId|+1': 0,
+                        'name': '@cname',
+                        'mobile': '@natural(10000000000,19999999999)',
+                        'receiverName': '@cname',
+                        'receiverMobile': '@natural(10000000000,19999999999)',
+                        'receiverAddress': '@county(true)',
+                        'product': 'string',
+                        'logisticsType': 1,
+                        'logisticsNo': 'SDA35481224',
+                        'syncStatus': '@natural(0,2)'
+                    }
+                ]
+            }
         })
     });
 }
