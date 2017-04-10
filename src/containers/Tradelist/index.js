@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import Trade from './components/Trade'
 import * as actions from './actions'
 import { actions as conActions } from 'containers/Content'
+import * as contant from './contant'
 const { loadList } = conActions;
 
 const mapStateToProps = (state) => {
@@ -24,4 +25,5 @@ export default connect(mapStateToProps, {
 }, mergeProps)(Trade);
 export {
     actions,
+    contant,
 }

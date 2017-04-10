@@ -69,6 +69,9 @@ const startFetchMock = () =>{
                 'total': '@natural(50,72)',
                 'datalist|20':[
                     {
+                        syncStatus: '@natural(0,2)',
+                        'logisticsNo|+2': ['无', '待出库', 'SDA35481224'],
+                        logisticsType: 1,
                         'state': '@natural(0,2)',
                         'reason': '@cword(5, 20)',
                         'position': null,

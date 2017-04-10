@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table } from 'antd'
-
+import { getSyncState } from '../contant'
 const Tradelist = ({resend, resendByHuman, ...other}) => {
     const columns = [
         {
@@ -43,18 +43,7 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
             width: 70,
             key: 'syncStatus',
             dataIndex: 'syncStatus',
-            render: (text) => {
-                switch (text) {
-                    case 0:
-                        return '未推送';
-                    case 1:
-                        return '推送失败';
-                    case 2:
-                        return '已推送';
-                    default:
-                        return text;
-                }
-            },
+            render: (text, record) => text === 1 ?<a onClick={() => resend(record.tradeId)}>{getSyncState(text)}</a> : getSyncState(text) ,
         }, {
             title: '快递方式',
             width: 70,
@@ -77,12 +66,12 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
                         break;
                 }
                 return text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
-            }
+            },
         }, {
             title: '操作',
             key: 'operation',
             width: 120,
-            render: (text, record) => record.syncStatus === 1 ? <span><a onClick={() => resend(record.tradeId)}>重新推送</a> | <a onClick={() => resendByHuman(record.tradeId)}>手动建单</a></span> : null,
+            render: (text, record) => record.syncStatus === 1 && <span><a onClick={() => resend(record.tradeId)}>重新推送</a> | <a onClick={() => resendByHuman(record.tradeId)}>手动建单</a></span>,
         }
     ];
     return(

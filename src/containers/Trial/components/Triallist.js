@@ -2,7 +2,8 @@ import React from 'react'
 import { Table } from 'antd';
 import moment from'moment';
 import {getState, getStatus} from 'containers/constants'
-
+import { contant } from '../../Tradelist'
+const { getSyncState } = contant;
 function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, pagination}) {
     const columns = [
         {
@@ -58,6 +59,29 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             width: 150,
             key: 'reason',
             dataIndex: 'reason',
+        }, {
+            title: '推送状态',
+            width: 80,
+            key: 'syncStatus',
+            dataIndex: 'syncStatus',
+            render: (text) => getSyncState(text),
+        }, {
+            title: '物流单号',
+            width: 120,
+            key: 'logisticsNo',
+            dataIndex: 'logisticsNo',
+            render: (text, record) => {
+                let lt = record.logisticsType;
+                let type = '';
+                switch (lt) {
+                    case 1:
+                        type = '1111'
+                        break;
+                    default:
+                        break;
+                }
+                return text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
+            },
         }, {
             title: '来源类型',
             key: 'source',
