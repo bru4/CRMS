@@ -66,6 +66,18 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
             width: 100,
             key: 'logisticsNo',
             dataIndex: 'logisticsNo',
+            render: (text, record) => {
+                let lt = record.logisticsType;
+                let type = '';
+                switch (lt) {
+                    case 1:
+                        type = '1111'
+                        break;
+                    default:
+                        break;
+                }
+                return text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
+            }
         }, {
             title: '操作',
             key: 'operation',

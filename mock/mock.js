@@ -300,7 +300,7 @@ const startFetchMock = () =>{
                         'receiverAddress': '@county(true)',
                         'product': 'string',
                         'logisticsType': 1,
-                        'logisticsNo': 'SDA35481224',
+                        'logisticsNo|+2': ['无', '待出库', 'SDA35481224'],
                         'syncStatus': '@natural(0,2)'
                     }
                 ]
