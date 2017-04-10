@@ -122,3 +122,6 @@ export const queryTradelist = (data) => fetchHandle('/trial/trade/query', 'post'
 export const resendTrade = id => fetchHandle('/trial/trade/resend', 'post', {
     ...id,
 });
+export const resendTradeUpdate = id => fetchHandle('/trial/trade/updatesync', 'post', {
+    ...id,
+});

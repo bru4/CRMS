@@ -1,6 +1,6 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage, queryTradelist, resendTrade } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage, queryTradelist, resendTrade, resendTradeUpdate } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -278,8 +278,8 @@ function* loadTradelist(data) {
     }
 }
 
-function* resendTradeHandle(id) {
-    const { json, error} = yield call(resendTrade, {tradeId: id});
+function* resendTradeHandle(id, type) {
+    const { json, error} = type ? yield call(resendTradeUpdate, {tradeId: id}) : yield call(resendTrade, {tradeId: id});
     if(error) {
         message.error(error);
         yield put(resetErrorMessage(error));
@@ -422,6 +422,12 @@ function* watchResendTrade() {
 
     }
 }
+function* watchResendTradeHuman() {
+    while(1) {
+        const action = yield take('RESEND_TRADE_HUMAN');
+        yield fork(resendTradeHandle, action.payload, 'update');
+    }
+}
 /******************************************************************************/
 export default function* root() {
     yield [
@@ -440,5 +446,6 @@ export default function* root() {
         fork(watchWxytSign),
         fork(watchImageDel),
         fork(watchResendTrade),
+        fork(watchResendTradeHuman),
     ]
 }

@@ -313,6 +313,12 @@ const startFetchMock = () =>{
             msg: 'success',
         }
     });
+    fetchMock.mock(/\/trial\/trade\/updatesync/, {
+        body: {
+            code: '1000',
+            msg: 'success',
+        }
+    });
     
 }
 

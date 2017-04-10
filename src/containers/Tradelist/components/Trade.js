@@ -8,6 +8,7 @@ class Trade extends Component {
         type: '1',
         currentpage: 1,
     }
+
     componentWillMount() {
         this.props.actions.loadList({
             title: 'trial',
@@ -15,6 +16,7 @@ class Trade extends Component {
             type: 1,
         });
     }
+
     changeMobileHandle = e => {
         const val = e.target.value;
         if(Number(val) || e.target.value === '') {
@@ -23,6 +25,7 @@ class Trade extends Component {
             });
         }
     };
+
     searchByMobile = () => {
         const { mobile } = this.state;
         const { loadList } = this.props.actions;
@@ -95,6 +98,11 @@ class Trade extends Component {
         resendTrade(id);
     }
 
+    resendByHuman = (id) => {
+        const { resendTradeHuman } = this.props.actions;
+        resendTradeHuman(id);
+    }
+
     render() {
         const { mobile, type, currentpage } = this.state;
         const { datalist } = this.props;
@@ -119,6 +127,7 @@ class Trade extends Component {
                     dataSource = {datalist.list}
                     pagination = {pagination}
                     resend = {this.resendHandle}
+                    resendByHuman = {this.resendByHuman}
                 />
             </div>
         );
