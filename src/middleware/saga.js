@@ -297,14 +297,16 @@ function* watchListFetch() {
                 yield fork(loadProduct);
                 break;
             case 'trade':
+                const { type, mobile, ...pagination } = other;
                 yield fork(loadTradelist, {
-                    type: other.type ? other.type : null,
-                    mobile: other.mobile ? other.mobile : null,
+                    type: type ? type : null,
+                    mobile: mobile ? mobile : null,
+                    ...pagination,
                 });
                 break;
             default:
-                let type = subtitle.includes('all') ? 10 : 1;
-                yield fork(loadList, title, type);
+                let datatype = subtitle.includes('all') ? 10 : 1;
+                yield fork(loadList, title, datatype);
                 break;
         }
         if(i === 0) {
