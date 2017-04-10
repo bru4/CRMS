@@ -307,6 +307,13 @@ const startFetchMock = () =>{
             }
         })
     });
+    fetchMock.mock(/\/trial\/trade\/resend/, {
+        body: {
+            code: '1000',
+            msg: 'success',
+        }
+    });
+    
 }
 
 module.exports = startFetchMock;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Trade from './components/Trade'
-//import {actionCreator} from 'actionCreatorPath'
+import * as actions from './actions'
 import { actions as conActions } from 'containers/Content'
 const { loadList } = conActions;
 
@@ -20,4 +20,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
 
 export default connect(mapStateToProps, {
     loadList,
-}, mergeProps)(Trade)
+    ...actions,
+}, mergeProps)(Trade);
+export {
+    actions,
+}

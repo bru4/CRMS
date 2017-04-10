@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'antd'
 
-const Tradelist = (props) => {
+const Tradelist = ({resend, ...other}) => {
     const columns = [
         {
             title: '序号',
@@ -70,14 +70,14 @@ const Tradelist = (props) => {
             title: '操作',
             key: 'operation',
             width: 80,
-            render: (text, record) => record.syncStatus === 1 ? <a>重新推送</a> : null,
+            render: (text, record) => record.syncStatus === 1 ? <a onClick={() => resend(record.tradeId)}>重新推送</a> : null,
         }
     ];
     return(
         <Table
             columns = {columns}
             rowKey = 'tradeId'
-            {...props}
+            {...other}
         />
     )
 }

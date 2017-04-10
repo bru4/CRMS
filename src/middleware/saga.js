@@ -1,6 +1,6 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage, queryTradelist } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage, queryTradelist, resendTrade } from './api'
 import { message } from 'antd';
 
 const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
@@ -277,6 +277,20 @@ function* loadTradelist(data) {
         yield put(resetErrorMessage(error||json));
     }
 }
+
+function* resendTradeHandle(id) {
+    const { json, error} = yield call(resendTrade, {tradeId: id});
+    if(error) {
+        message.error(error);
+        yield put(resetErrorMessage(error));
+    } else if (json.code === '1000') {
+        message.success(json.msg);
+        yield put({type:'RESEND_TRADE_SUCCESS', payload: id});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json));
+    }
+}
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
@@ -401,6 +415,13 @@ function* watchImageDel(){
         }
     }
 }
+function* watchResendTrade() {
+    while(1) {
+        const action = yield take('RESEND_TRADE');
+        yield fork(resendTradeHandle, action.payload);
+
+    }
+}
 /******************************************************************************/
 export default function* root() {
     yield [
@@ -418,5 +439,6 @@ export default function* root() {
         fork(watchPorductUpdate),
         fork(watchWxytSign),
         fork(watchImageDel),
+        fork(watchResendTrade),
     ]
 }

@@ -119,3 +119,6 @@ export const removeImage = ({sign, fileid}) => fetch(`http://web.image.myqcloud.
 export const queryTradelist = (data) => fetchHandle('/trial/trade/query', 'post', {
     ...data,
 });
+export const resendTrade = id => fetchHandle('/trial/trade/resend', 'post', {
+    ...id,
+});

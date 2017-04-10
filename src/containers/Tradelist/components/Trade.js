@@ -90,6 +90,11 @@ class Trade extends Component {
         }
     }
 
+    resendHandle = (id) => {
+        const { resendTrade } = this.props.actions;
+        resendTrade(id);
+    }
+
     render() {
         const { mobile, type, currentpage } = this.state;
         const { datalist } = this.props;
@@ -113,6 +118,7 @@ class Trade extends Component {
                     loading = {datalist.fetching}
                     dataSource = {datalist.list}
                     pagination = {pagination}
+                    resend = {this.resendHandle}
                 />
             </div>
         );

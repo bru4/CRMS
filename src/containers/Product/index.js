@@ -28,6 +28,7 @@ export default connect(
     loadList,
 }, mergeProps)(Product);
 export {
+    actions,
     reducer,
     selectors,
 }
