@@ -59,8 +59,17 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
                 let lt = record.logisticsType;
                 let type = '';
                 switch (lt) {
-                    case 1:
-                        type = '1111'
+                    case 3:
+                        type = 'ems';
+                        break;
+                    case 5:
+                        type = 'zhongtong';
+                        break;
+                    case 16:
+                        type = 'tiantian';
+                        break;
+                    case 20:
+                        type = 'huitongkuaidi';
                         break;
                     default:
                         break;
