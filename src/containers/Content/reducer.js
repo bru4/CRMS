@@ -44,6 +44,10 @@ const list = (state = initstate.list, action) => {
     switch (action.type) {
         case 'REMOVE_USERLIST':
             return initstate.list;
+        case 'FETCH_ERROR_MESSAGE':
+            return Object.assign({}, initstate.list, {
+                fetching: false,
+            });
         case 'LIST_REQUEST':
             return Object.assign({}, initstate.list, {
                 fetching: true,

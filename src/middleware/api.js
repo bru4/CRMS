@@ -43,12 +43,9 @@ const fetchHandle = (url, type, data) => fetch(API_ROOT + url, {
 })
 .then(getJsonRes)
 .then(checkJson)
-.then(
-    data => data,
-    error => ({
-        error: error.message || 'Something bad happened'
-    })
-);
+.catch(error => ({
+    error: error.message || 'Something bad happened',
+}));
 export const fetchList = ({title, type, page}) => fetchHandle(`/${title}/query`, 'post', {
     'currentpage': page ? page : 0,
     'pagesize': 20,
@@ -110,12 +107,9 @@ export const removeImage = ({sign, fileid}) => fetch(`http://web.image.myqcloud.
 })
 .then(getJsonRes)
 .then(checkJson)
-.then(
-    data => data,
-    error => ({
-        error: error.message || 'Something bad happened'
-    })
-);
+.catch(error => ({
+    error: error.message || 'Something bad happened'
+}));
 export const queryTradelist = (data) => fetchHandle('/trial/trade/query', 'post', {
     ...data,
 });

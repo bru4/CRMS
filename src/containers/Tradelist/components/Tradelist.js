@@ -74,7 +74,7 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
                     default:
                         break;
                 }
-                return text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
+                return text && text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
             },
         }, {
             title: '操作',

@@ -31,5 +31,6 @@ export const review = {
     failure: createAction(REVIEW.FAILURE, error => ({error}))
 }
 export const resetErrorMessage = createAction('RESET_ERROR_MESSAGE');
+export const fetchErrorMessage = createAction('FETCH_ERROR_MESSAGE');
 export const fetchUserPoint = createAction('FETCH_USER_POINT');
 export const fetchCoupon = createAction('FETCH_COUPON');
