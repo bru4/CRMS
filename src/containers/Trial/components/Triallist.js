@@ -18,7 +18,6 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             dataIndex: 'productname',
             render: (text) => {
                 let arr = text.split(';');
-                
                 return arr.length === 1 ? text: <div>
                     {arr.map((t,i)=> <div key={i}>{t}</div>)}
                 </div>
@@ -132,15 +131,16 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             },
         }
     ];
-    if(type==='review'){
-        columns.shift();
-    }
+    const newCol = type === 'review' ? [
+        ...columns.slice(1, 8),
+        ...columns.slice(11),
+    ] : columns;
     return(
         <Table
             loading={data.fetching}
             dataSource={data.list?data.list:[]}
             scroll={{ x: 1200 }}
-            columns={columns}
+            columns={newCol}
             pagination={pagination}
             rowKey='recordid'
             rowSelection={type === 'all' ? null : {
