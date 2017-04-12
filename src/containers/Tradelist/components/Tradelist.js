@@ -68,7 +68,7 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
                     case 16:
                         type = 'tiantian';
                         break;
-                    case 20:
+                    case 10:
                         type = 'huitongkuaidi';
                         break;
                     default:
