@@ -14,6 +14,10 @@ class Trade extends Component {
             title: 'trial',
             subtitle: 'trade',
             type: 1,
+            pagination: {
+                currentpage: 0,
+                pagesize: 20,
+            },
         });
     }
 
@@ -50,7 +54,7 @@ class Trade extends Component {
             title: 'trial',
             subtitle: 'trade',
             type: val,
-            pagination: val === '1' ? null : {
+            pagination: {
                 currentpage: 0,
                 pagesize: 20,
             }

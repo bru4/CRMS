@@ -311,7 +311,7 @@ function* watchListFetch() {
                 yield fork(loadProduct);
                 break;
             case 'trade':
-                const { type, mobile, ...pagination } = other;
+                const { type, mobile, pagination } = other;
                 yield fork(loadTradelist, {
                     type: type ? type : null,
                     mobile: mobile ? mobile : null,
