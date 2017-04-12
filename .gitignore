@@ -15,3 +15,4 @@ build
 npm-debug.log.*
 npm-debug.log
 config.*
+.vscode
