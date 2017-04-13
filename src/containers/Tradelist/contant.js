@@ -22,6 +22,6 @@ export const getLogisticsType = (type) => {
         case 10:
             return '百世汇通';
         default:
-            return type;
+            return '无';
     }
 }

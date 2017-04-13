@@ -86,6 +86,7 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
                         type = 'huitongkuaidi';
                         break;
                     default:
+                        type = '无';
                         break;
                 }
                 return text && text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
