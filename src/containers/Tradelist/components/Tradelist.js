@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table } from 'antd'
-import { getSyncState } from '../contant'
+import { getSyncState, getLogisticsType } from '../contant'
 const Tradelist = ({resend, resendByHuman, ...other}) => {
     const columns = [
         {
@@ -49,7 +49,7 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
             width: 70,
             key: 'logisticsType',
             dataIndex: 'logisticsType',
-
+            render: text => getLogisticsType(text),
         }, {
             title: '物流单号',
             width: 100,
