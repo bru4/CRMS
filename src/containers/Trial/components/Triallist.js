@@ -72,6 +72,7 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             render: (text, record) => {
                 let lt = record.logisticsType;
                 let type = '';
+                console.log(lt);
                 switch (lt) {
                     case 3:
                         type = 'ems';

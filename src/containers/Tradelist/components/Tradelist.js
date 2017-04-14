@@ -25,7 +25,7 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
             dataIndex: 'receiverName',
         }, {
             title: '收货地址',
-            width: 250,
+            width: 200,
             key: 'receiverAddress',
             dataIndex: 'receiverAddress',
         }, {
@@ -35,9 +35,15 @@ const Tradelist = ({resend, resendByHuman, ...other}) => {
             dataIndex: 'receiverMobile',
         }, {
             title: '试用产品',
-            width: 100,
+            width: 120,
             key: 'product',
             dataIndex: 'product',
+            render: (text) => {
+                let arr = text.split(';');
+                return arr.length === 1 ? text: <div>
+                    {arr.map((t,i)=> <div key={i}>{t}</div>)}
+                </div>
+            },
         }, {
             title: '推送状态',
             width: 70,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Toolbar from './Toolbar'
 import Tradelist from './Tradelist'
-import { message } from 'antd'
+import { message, Modal } from 'antd'
 class Trade extends Component {
     state = {
         mobile: '',
@@ -99,12 +99,26 @@ class Trade extends Component {
 
     resendHandle = (id) => {
         const { resendTrade } = this.props.actions;
-        resendTrade(id);
+        Modal.confirm({
+            title: '操作确认',
+            text: '是否确认 重新推送 该条试用记录？',
+            onOk() {
+                resendTrade(id);
+            },
+            onCancel() {},
+        });
     }
 
     resendByHuman = (id) => {
         const { resendTradeHuman } = this.props.actions;
-        resendTradeHuman(id);
+        Modal.confirm({
+            title: '操作确认',
+            text: '请确认是否已经在旺店通手动推单该条试用记录？',
+            onOk() {
+                resendTradeHuman(id);
+            },
+            onCancel() {},
+        });
     }
 
     render() {
