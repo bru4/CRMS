@@ -1,7 +1,7 @@
 /**
  * 本项目上线只需修改API接口为正式环境的接口即可
  */
-import config from '../config.json';
+import config from '../config';
 
 const API_ROOT = config.api;
 const getResultList = (index, record, result) => {
