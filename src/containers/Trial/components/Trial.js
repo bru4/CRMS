@@ -73,13 +73,13 @@ class Trial extends Component {
                 exportTable = {this.props.exportTable}
                 change = {this.props.changeData}
                 pass = {this.clickHandleCheckbox}
-                listtype = {this.props.userlist.listtype}
+                listtype = {userlist.listtype}
                 selected = {this.props.selected}
             />
             <Triallist
-                type = {this.props.type}
+                type = {type}
                 pagination = {pagination}
-                data = {this.props.userlist}
+                data = {userlist}
                 toggleDetail = {this.props.toggleDetail}
                 toggleCheckbox = {this.clickHandleCheckbox}
                 selectRows = {this.props.selectRows}
@@ -90,7 +90,7 @@ class Trial extends Component {
                 show = {this.props.base.detail}
                 data = {this.props.cur}
                 toggleDetail = {this.props.toggleDetail}
-                model = {this.props.type}
+                model = {type}
                 toggleCheckbox = {this.clickHandleCheckbox}
             />
         </div>

@@ -38,18 +38,6 @@ class DetailBox extends React.Component {
     render() {
         let {show, toggleDetail, data, model, toggleCheckbox, addPoint, coupon} = this.props;
         let footer = [];
-        console.log(data.type);
-        /*if(model === 'all'){
-            footer = [<Button key = "back" onClick={()=>toggleDetail(null)}>返回</Button>];
-        }else if(data.record.state === 1 && data.type === 'trial'){
-            footer = [<Button key = "back" onClick={()=>toggleDetail(null)}>返回</Button>];
-        }else {
-            footer = [
-                <Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,
-                <Button key="pass" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result: 1})}}>通过</Button>,
-                <Button key="submit" onClick={()=>{toggleDetail(null);toggleCheckbox({index:data.index, record:data.record, type:data.type, result: 0})}}>拒绝</Button>
-            ]
-        }*/
         if(model === 'review' && (data.type === 'trial' && data.record.state === 2 || data.type === 'member')){
             footer = [
                 <Button key="back" onClick={()=>toggleDetail(null)}>返回</Button>,

@@ -3,7 +3,10 @@ import { Table } from 'antd';
 import moment from'moment';
 import {getTrueAnswer} from 'containers/constants'
 
-const getQA = (list, index) => list.find(item => item.questionId === index).answer;
+const getQA = (list, index) => {
+    let item = list.find(item => item.questionId === index);
+    return item && item.answer ? item.answer : '';
+};
 function Feedbacklist ({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, pagination}) {
     const columns = [
         {

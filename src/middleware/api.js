@@ -1,7 +1,7 @@
 /**
  * 本项目上线只需修改API接口为正式环境的接口即可
  */
-import config from '../config.json';
+import config from '../config';
 
 const API_ROOT = config.api;
 const getResultList = (index, record, result) => {
@@ -43,12 +43,9 @@ const fetchHandle = (url, type, data) => fetch(API_ROOT + url, {
 })
 .then(getJsonRes)
 .then(checkJson)
-.then(
-    data => data,
-    error => ({
-        error: error.message || 'Something bad happened'
-    })
-);
+.catch(error => ({
+    error: error.message || 'Something bad happened',
+}));
 export const fetchList = ({title, type, page}) => fetchHandle(`/${title}/query`, 'post', {
     'currentpage': page ? page : 0,
     'pagesize': 20,
@@ -110,9 +107,15 @@ export const removeImage = ({sign, fileid}) => fetch(`http://web.image.myqcloud.
 })
 .then(getJsonRes)
 .then(checkJson)
-.then(
-    data => data,
-    error => ({
-        error: error.message || 'Something bad happened'
-    })
-);
+.catch(error => ({
+    error: error.message || 'Something bad happened'
+}));
+export const queryTradelist = (data) => fetchHandle('/trial/trade/query', 'post', {
+    ...data,
+});
+export const resendTrade = id => fetchHandle('/trial/trade/resend', 'post', {
+    ...id,
+});
+export const resendTradeUpdate = id => fetchHandle('/trial/trade/updatesync', 'post', {
+    ...id,
+});

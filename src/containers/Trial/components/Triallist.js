@@ -2,7 +2,8 @@ import React from 'react'
 import { Table } from 'antd';
 import moment from'moment';
 import {getState, getStatus} from 'containers/constants'
-
+import { contant } from '../../Tradelist'
+const { getSyncState } = contant;
 function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, selectedKeys, pagination}) {
     const columns = [
         {
@@ -17,7 +18,6 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             dataIndex: 'productname',
             render: (text) => {
                 let arr = text.split(';');
-                
                 return arr.length === 1 ? text: <div>
                     {arr.map((t,i)=> <div key={i}>{t}</div>)}
                 </div>
@@ -59,6 +59,40 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             key: 'reason',
             dataIndex: 'reason',
         }, {
+            title: '推送状态',
+            width: 80,
+            key: 'syncStatus',
+            dataIndex: 'syncStatus',
+            render: (text) => getSyncState(text),
+        }, {
+            title: '物流单号',
+            width: 120,
+            key: 'logisticsNo',
+            dataIndex: 'logisticsNo',
+            render: (text, record) => {
+                let lt = record.logisticsType;
+                let type = '';
+                console.log(lt);
+                switch (lt) {
+                    case 3:
+                        type = 'ems';
+                        break;
+                    case 5:
+                        type = 'zhongtong';
+                        break;
+                    case 16:
+                        type = 'tiantian';
+                        break;
+                    case 10:
+                        type = 'huitongkuaidi';
+                        break;
+                    default:
+                        type = '无';
+                        break;
+                }
+                return text && text.length > 4 ? <a target='_blank' href={`https://www.kuaidi100.com/chaxun?com=${type}&nu=${text}`}>{text}</a> : text
+            },
+        }, {
             title: '来源类型',
             key: 'source',
             width: 70,
@@ -99,15 +133,16 @@ function Triallist({data, type, toggleDetail, toggleCheckbox, selectRows, select
             },
         }
     ];
-    if(type==='review'){
-        columns.shift();
-    }
+    const newCol = type === 'review' ? [
+        ...columns.slice(1, 8),
+        ...columns.slice(11),
+    ] : columns;
     return(
         <Table
             loading={data.fetching}
             dataSource={data.list?data.list:[]}
             scroll={{ x: 1200 }}
-            columns={columns}
+            columns={newCol}
             pagination={pagination}
             rowKey='recordid'
             rowSelection={type === 'all' ? null : {

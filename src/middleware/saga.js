@@ -1,9 +1,9 @@
 import { fork, take, put, call } from 'redux-saga/effects'
 import * as actions from './actions'
-import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage } from './api'
+import { fetchList, fetchTable, uploadresult, addCoupon, queryPoint, queryCoupon, addPoint, takeCoupon, queryUser, queryProduct, updateProduct, uploadSign, addProduct, removeImage, queryTradelist, resendTrade, resendTradeUpdate } from './api'
 import { message } from 'antd';
 
-const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = actions;
+const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon, fetchErrorMessage } = actions;
 
 /******************************************************************************/
 /***************************** Subroutines ************************************/
@@ -19,7 +19,6 @@ const { list, tabel, review, resetErrorMessage, fetchUserPoint, fetchCoupon } = 
 function* loadList(title, type, page){
     if(title && type){
         let entity = {title, type, page};
-        yield put(list.request({title, type}));
         const { json, error} = yield call(fetchList, entity);
         if (json) {
             switch(json.code){
@@ -46,7 +45,7 @@ function* fetchTableUrl(data){
     const { json, error} = yield call(fetchTable, data);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         yield put(tabel.success(json));
         location.href = json.data;
@@ -64,7 +63,7 @@ function* uploadReviewResult(data){
     const { json, error} = yield call(uploadresult, data);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         yield put(review.success({
             type: data.type,
@@ -84,7 +83,7 @@ function* addCouponHandle({type, name, id}) {
     const { json, error} = yield call(addCoupon, type, name, id);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         message.success('添加成功');
     } else {
@@ -104,7 +103,7 @@ function* pointHandle(entity) {
         const { json, error} = yield call(queryPoint, entity);
         if(error) {
             message.error(error);
-            yield put(resetErrorMessage(error));
+            yield put(fetchErrorMessage(error));
         } else if (json.code === '1000') {
             yield put(fetchUserPoint(json.data.points));
         } else {
@@ -116,7 +115,7 @@ function* pointHandle(entity) {
         const { json, error} = yield call(addPoint, entity);
         if(error) {
             message.error(error);
-            yield put(resetErrorMessage(error));
+            yield put(fetchErrorMessage(error));
         } else if (json.code === '1000') {
             message.success('添加成功');
             yield put(fetchUserPoint(json.data.totalpoints));
@@ -134,7 +133,7 @@ function* loadCoupon() {
     const { json, error} = yield call(queryCoupon);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         yield put(fetchCoupon(json.data));
     } else {
@@ -151,7 +150,7 @@ function* takeCouponHandle(entity) {
     const { json, error} = yield call(takeCoupon, entity);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         message.success('添加成功');
         //yield put(fetchCoupon(json.data));
@@ -169,7 +168,7 @@ function* queryUserHandle(mobile) {
     const { json, error} = yield call(queryUser, mobile);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         yield put(list.success({title:'member', type:10}, json.data));
     } else {
@@ -185,7 +184,7 @@ function* loadProduct() {
     const { json, error} = yield call(queryProduct);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
     } else {
@@ -202,7 +201,7 @@ function* updatePorductHandle(data) {
     const { json, error} = data.type === 'update' ? yield call(updateProduct, data) : yield call(addProduct, data);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
         message.success(data.type === 'update'?'修改成功':'添加成功');
@@ -220,11 +219,11 @@ function* wxytSignHandle() {
     const { json, error} = yield call(uploadSign);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if (json.code === '1000') {
         yield put({type:'GET_UPLOAD_SIGN', payload: json.data});
     } else {
-        message.error(json.msg)
+        message.error(json.msg);
         yield put(resetErrorMessage(error||json));
     }
 }
@@ -237,7 +236,7 @@ function* imageHandle(entity) {
     const { json, error} = yield call(uploadSign, entity);
     if(error) {
         message.error(error);
-        yield put(resetErrorMessage(error));
+        yield put(fetchErrorMessage(error));
     } else if(json.code ===  '1000') {
         const sign = json.data.sign;
         console.log(sign, entity)
@@ -248,7 +247,7 @@ function* imageHandle(entity) {
         console.log(data);
         if(data.error){
             message.error(data.error)
-            yield put(resetErrorMessage(data.error));
+            yield put(fetchErrorMessage(data.error));
         } else if (data.json.code === 0) {
             //yield put({type:'GET_TRIAL_PRODUCT', payload: json.data});
             yield put({type:'REMOVE_IMAGE_SUCCESS', payload: data.json.data});
@@ -261,7 +260,37 @@ function* imageHandle(entity) {
         yield put(resetErrorMessage(error||json));
     }
 }
+/**
+ * 获取推送记录表
+ * 根据传入的参数获取订单推送数据 可根据订单状态或者用户手机查询 查询总数及成功列表时 需要分页
+ * @param {any} data type: 推送失败 1 推送成功 2 全部推送 10; mobile: str;[currentpage: int; pagesize: int;]
+ */
+function* loadTradelist(data) {
+    const { json, error} = yield call(queryTradelist, data);
+    if(error) {
+        message.error(error);
+        yield put(fetchErrorMessage(error));
+    } else if (json.code === '1000') {
+        yield put({type:'GET_TRADE_LIST', payload: json.data});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(error||json));
+    }
+}
 
+function* resendTradeHandle(id, type) {
+    const { json, error} = type ? yield call(resendTradeUpdate, {tradeId: id}) : yield call(resendTrade, {tradeId: id});
+    if(error) {
+        message.error(error);
+        yield put(fetchErrorMessage(error));
+    } else if (json.code === '1000') {
+        message.success(json.msg);
+        yield put({type:'RESEND_TRADE_SUCCESS', payload: id});
+    } else {
+        message.error(json.msg)
+        yield put(resetErrorMessage(json.msg));
+    }
+}
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
 /******************************************************************************/
@@ -275,19 +304,29 @@ function* watchListFetch() {
     let i = 0;
     while (true) {
         const action = yield take('LOAD_LIST');
-        let title = action.payload.title;
-        let subtitle = action.payload.subtitle;
-        if(subtitle === 'product') {
-            yield fork(loadProduct);
-        }
-        if(title === 'member' || title === 'trial' && subtitle !== 'product'  || title === 'feedback'){
-            let type = subtitle.includes('all') ? 10 : 1;
-            yield fork(loadList, title, type);
+        const { title, subtitle, ...other } = action.payload;
+        yield put(list.request());
+        switch (subtitle) {
+            case 'product':
+                yield fork(loadProduct);
+                break;
+            case 'trade':
+                const { type, mobile, pagination } = other;
+                yield fork(loadTradelist, {
+                    type: type ? type : null,
+                    mobile: mobile ? mobile : null,
+                    ...pagination,
+                });
+                break;
+            default:
+                let datatype = subtitle.includes('all') ? 10 : 1;
+                yield fork(loadList, title, datatype);
+                break;
         }
         if(i === 0) {
             yield fork(loadCoupon);
+            i++;
         }
-        i++;
     }
 }
 function* watchListChange() {
@@ -376,6 +415,19 @@ function* watchImageDel(){
         }
     }
 }
+function* watchResendTrade() {
+    while(1) {
+        const action = yield take('RESEND_TRADE');
+        yield fork(resendTradeHandle, action.payload);
+
+    }
+}
+function* watchResendTradeHuman() {
+    while(1) {
+        const action = yield take('RESEND_TRADE_HUMAN');
+        yield fork(resendTradeHandle, action.payload, 'update');
+    }
+}
 /******************************************************************************/
 export default function* root() {
     yield [
@@ -393,5 +445,7 @@ export default function* root() {
         fork(watchPorductUpdate),
         fork(watchWxytSign),
         fork(watchImageDel),
+        fork(watchResendTrade),
+        fork(watchResendTradeHuman),
     ]
 }

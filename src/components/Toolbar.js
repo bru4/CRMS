@@ -41,8 +41,8 @@ const Toolbar = ({type, exportTable, change, pass, listtype, title, selected}) =
             <Col span={4} offset={6}>
                 <Select size="large" defaultValue="10" style={{ width: 200 }} onChange={changeData}>
                     <Option value="10">全部会员</Option>
-                    <Option value="2">已认证会员</Option>
-                    <Option value="3">认证失败会员</Option>
+                    <Option value="2">{title === 'member' ? '已认证会员' : '已通过'}</Option>
+                    <Option value="3">{title === 'member' ? '认证失败会员' : '未通过'}</Option>
                 </Select>
             </Col>
         </Row>:
