@@ -74,7 +74,7 @@ class Trade extends Component {
             }
         });
         this.setState({
-            currentpage: 0,
+            currentpage: 1,
         });
     }
 
