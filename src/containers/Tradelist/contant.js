@@ -1,5 +1,7 @@
 export const getSyncState = (text) => {
     switch (text) {
+        case -1:
+            return '手工建单';
         case 0:
             return '未推送';
         case 1:
